@@ -1,2 +1,2 @@
-# landmarking
-Landmarking package
+# landmarkeR
+landmarkeR package

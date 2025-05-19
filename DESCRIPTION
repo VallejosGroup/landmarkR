@@ -1,0 +1,21 @@
+Package: landmarkeR
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    c(person("Nathan", "Constantine-Cooke", , "nathan.constantine-cooke@ed.ac.uk", role = c("aut", "cre")),
+    person("Victor", "Velasco-Pardo", , "vvelasco@ed.ac.uk", role = c("aut")),
+    person("Catalina", "Vallejos", , "catalina.vallejos@ed.ac.uk", role = c("aut")),
+    person("Charlie", "Lees", , "charlie.lees@ed.ac.uk", role = c("aut")))
+Description: What the package does (one paragraph).
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    lme4,
+    methods,
+    nlme,
+    survival
