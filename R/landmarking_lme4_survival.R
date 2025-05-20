@@ -30,9 +30,8 @@ setMethod("longitudinal_wrapper", "LandmarkingLme4Survival", function(x, landmar
 })
 
 setMethod("survival_wrapper", "LandmarkingLme4Survival", function(x, landmark_index) {
-  browser()
   at_risk_individuals <- x@risk_sets[[landmark_index]]
-  dataset <- x@dataset[at_risk_individuals, ]
+  dataset <- x@dataset[at_risk_individuals, ] |> group_by(!! sym(x@ids)) |> slice_tail(n=1) |> ungroup()
   for (i in 1:length(x@biomarkers)) {
     marker <- names(x@biomarkers)[i]
     dataset <- cbind(dataset, x@longitudinal_predictions[[landmark_index]][[marker]])
