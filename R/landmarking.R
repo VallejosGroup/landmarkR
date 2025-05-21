@@ -61,6 +61,7 @@ Landmarking <- function(landmarks, horizons, dataset, event_indicator, baseline_
 }
 
 setValidity("Landmarking", function(object) {
+  # Check that vectors of landmarks and horizons have the same length
   if (length(object@landmarks) != length(object@horizons)) {
     "@landmarks and @horizons must have the same length"
   } else {
