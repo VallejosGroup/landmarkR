@@ -18,8 +18,7 @@ Imports:
     lme4,
     methods,
     nlme,
-    survival,
-    methods
+    survival
 Suggests: 
     testthat (>= 3.0.0),
     xml2
