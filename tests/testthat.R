@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(landmarking)
+library(landmarkeR)
 
-test_check("landmarking")
+test_check("landmarkeR")
