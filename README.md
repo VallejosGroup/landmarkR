@@ -1,5 +1,8 @@
 # landmarkeR
 
+Time-to-event analysis using a wide array of longitudinal and survival
+sub-models.
+
 <!-- badges: start -->
 
 | Usage                                                                                                                                                | Release                                                                                                                         | Development                                                                                                                                                                                                                     |
@@ -12,14 +15,28 @@
 
 ## Introduction
 
-Time-to-event, or survival analysis, is used to analyse the time until an _event of interest_ occurs. Common events include hospitalisation, equipment failure, or a prisoner reoffending. Whilst classic survival methods assume model covariates are static, it is often the case that longitudinal data are collected. Two main forms of survival analysis in the presence of time-dependent covariates exist, joint models and landmarking. This package focuses on the latter. For a set of landmark times, a survival model is fitted up to given horizon times. At landmark times, any time-dependent covariates must be summarised. Most commonly, the last observation carried forward (LOCF) approach is used. However, a more modern approach is to instead fit a linear mixed effects model which accounts for observations being measured with error. 
+Time-to-event, or survival analysis, is used to analyse the time until an
+_event of interest_ occurs. Common events include hospitalisation, equipment
+failure, or a prisoner reoffending. Whilst classic survival methods assume model
+covariates are static, it is often the case that longitudinal data are
+collected. Two main forms of survival analysis in the presence of time-dependent
+covariates exist, joint models and landmarking. This package focuses on the
+latter. For a set of landmark times, a survival model is fitted up to given
+horizon times. At landmark times, any time-dependent covariates must be
+summarised. Most commonly, the last observation carried forward (LOCF) approach
+is used. However, a more modern approach is to instead fit a linear mixed
+effects model which accounts for observations being measured with error. 
 
-Whilst packages already exist which implement landmarking, these packages implement specific longitudinal and survival models. The aim of `landmarkeR` is to support a wide array of longitudinal and survival sub-models using a system which permits others to add their own models. 
+Whilst packages already exist which implement landmarking, these packages
+implement specific longitudinal and survival models. The aim of `landmarkeR` is
+to support a wide array of longitudinal and survival sub-models using a system
+which permits others to add their own models. 
 
 
 ## Installation
 
-We are planning to release the package on CRAN once the software is mature. For now, the package can be installed from this repository using `remotes`. 
+We are planning to release the package on CRAN once the software is mature. For
+now, the package can be installed from this repository using `remotes`. 
 
 ``` R
 # install.packages("remotes")
