@@ -23,5 +23,5 @@ We are planning to release the package on CRAN once the software is mature. For 
 
 ``` R
 # install.packages("remotes")
-remotes::install_github("vallejosgroup/landmarkeR")
+remotes::install_github("vallejosgroup/landmarking")
 ```
