@@ -12,6 +12,7 @@ Description:
   It aims to facilitate the analysis of time-to-event data with time-dependent
   covariates.
 License: GPL (>= 3)
+BugReports: https://github.com/VallejosGroup/landmarking/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -27,4 +28,5 @@ Suggests:
     testthat (>= 3.0.0),
     xml2
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 LazyData: true
