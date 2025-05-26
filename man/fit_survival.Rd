@@ -7,7 +7,14 @@
 fit_survival(x, landmarks, horizons, method, dynamic_covariates = c())
 }
 \arguments{
-\item{dynamic_covariates}{}
+\item{landmarks}{Vector of landmark times.}
+
+\item{horizons}{Vector of horizon times corresponding to the landmark times.}
+
+\item{method}{Method for survival analysis, either "survfit" or "coxph".}
+
+\item{dynamic_covariates}{Vector of names of time-varying covariates to be
+included in the survival analysis.}
 }
 \description{
 Title

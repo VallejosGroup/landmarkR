@@ -129,10 +129,11 @@ setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fit
 #' Title
 #'
 #' @param x
-#' @param landmarks
-#' @param horizons
-#' @param method
-#' @param dynamic_covariates
+#' @param landmarks Vector of landmark times.
+#' @param horizons Vector of horizon times corresponding to the landmark times.
+#' @param method Method for survival analysis, either "survfit" or "coxph".
+#' @param dynamic_covariates Vector of names of time-varying covariates to be
+#'   included in the survival analysis.
 #'
 #' @returns
 #' @export
@@ -183,8 +184,8 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
 #' Title
 #'
 #' @param x
-#' @param landmarks
-#' @param method
+#' @param landmarks Vector of landmark times.
+#' @param method Method for longitudinal analysis, currently only "lme4" is supported.
 #'
 #' @returns
 #' @export
