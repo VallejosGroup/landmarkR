@@ -54,7 +54,7 @@ objective of the analysis is to investigate the effect of drug titration on
 the relative effects of LTG and CBZ on treatment failure (withdrawal of the
 randomized drug). There are several baseline covariates available, and also
 data on the time to withdrawal from randomized drug. This version of the
-data has been modified from the joineR package,
+data has been modified from the joineR package.
 }
 \references{
 Marson AG, Appleton R, Baker GA, et al. A randomised controlled trial
