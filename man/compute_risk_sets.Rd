@@ -12,7 +12,7 @@ compute_risk_sets(x, landmarks, ...)
 
 \item{landmarks}{Vector of landmark times}
 
-\item{...}{}
+\item{...}{Additional arguments (not used)}
 }
 \value{
 An
