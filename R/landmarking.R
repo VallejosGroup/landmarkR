@@ -332,7 +332,7 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
       if (method == "lme4") {
         # Model fit
         lme4_fit <- x@longitudinal_fits[[as.character(landmarks)]][[predictor]]
-        # Model predictions at landmark tiem
+        # Model predictions at landmark time
         x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <-
           predict(
             lme4_fit,
