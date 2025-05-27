@@ -220,7 +220,7 @@ setGeneric("fit_longitudinal", function(x, landmarks, method, static_covariates,
 setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates,...) {
   # Check that the method for longitudinal analysis is implemented
   if (!(method %in% c("lme4", "lcmm"))) {
-    stop("Method ", method, " not supported", "/n")
+    stop("Method ", method, " not supported", "\n")
   }
   # Base case for recursion
   if (length(landmarks) == 1) {
@@ -229,7 +229,7 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
       stop("Risk set for landmark time ",
            landmarks,
            " has not been computed",
-           "/n")
+           "\n")
     }
     # Create list for storing model fits for longitudinal analysis
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
@@ -324,7 +324,7 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
              predictor,
              " at landmark time",
              landmarks,
-             "/n")
+             "\n")
       }
       # Risk set for the landmark time
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
