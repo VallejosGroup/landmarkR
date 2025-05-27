@@ -99,7 +99,7 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #'
 #' @param x An object of type Landmarking
 #' @param landmarks Vector of landmark times
-#' @param ...
+#' @param ... Additional arguments (not used)
 #'
 #' @returns An
 #' @export
@@ -129,10 +129,11 @@ setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fit
 #' Title
 #'
 #' @param x
-#' @param landmarks
-#' @param horizons
-#' @param method
-#' @param dynamic_covariates
+#' @param landmarks Vector of landmark times.
+#' @param horizons Vector of horizon times corresponding to the landmark times.
+#' @param method Method for survival analysis, either "survfit" or "coxph".
+#' @param dynamic_covariates Vector of names of time-varying covariates to be
+#'   included in the survival analysis.
 #'
 #' @returns
 #' @export
@@ -183,8 +184,9 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
 #' Title
 #'
 #' @param x
-#' @param landmarks
-#' @param method
+#' @param landmarks Vector of landmark times.
+#' @param method Method for longitudinal analysis, currently only "lme4" is supported.
+#' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
 #'
 #' @returns
 #' @export
@@ -211,10 +213,10 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Construct dataset for the longitudinal analysis (static measurements + time-varying covariate and its recording time)
       dataframe <- x@data_dynamic |>
-        filter(covariate == predictor) |>
-        filter(id %in% at_risk_individuals) |>
-        filter(measurement_time <= landmarks) |>
-        left_join(data_static, by = join_by(id))
+        dplyr::filter(covariate == predictor) |>
+        dplyr::filter(id %in% at_risk_individuals) |>
+        dplyr::filter(measurement_time <= landmarks) |>
+        dplyr::left_join(data_static, by = join_by(id))
       # Construct formula for longitudinal analysis
       longitudinal_formula <- as.formula(paste0("measurement ~ ", paste(static_covariates, collapse = " + "), " + (measurement_time|id)"))
       # Fit longitudinal model according to chosen method
