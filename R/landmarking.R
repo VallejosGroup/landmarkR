@@ -121,7 +121,7 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #'
 #' @param x An object of type Landmarking
 #' @param landmarks Vector of landmark times
-#' @param ...
+#' @param ... Additional arguments (not used)
 #'
 #' @returns An object of class Landmarking, including desired risk sets for the relevant landmark times.
 #' @export
@@ -148,13 +148,14 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
 setGeneric("getSurvivalFits", function(object) standardGeneric("getSurvivalFits"))
 setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fits)
 
+          
 #' Fits the specified survival model at the landmark times and up to the horizon
 #' times specified by the user
 #'
 #' @param x An object of class Landmarking.
-#' @param landmarks Vector of landmark times.
+#' @param horizons Vector of horizon times corresponding to the landmark times.
 #' @param horizons Vector of horizon times.
-#' @param method Method used to estimate the survival model. Currently survfit and coxph are supported.
+#' @param method Method for survival analysis, either "survfit" or "coxph".
 #' @param dynamic_covariates Vector of time-varying covariates that to be used in the survival model.
 #'
 #' @returns An object of class Landmarking.
@@ -189,6 +190,7 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
       survival_formula <- as.formula(paste0(survival_formula, paste(dynamic_covariates, collapse = " + ")))
       dataset <- cbind(dataset, do.call(cbind, x@longitudinal_predictions[[as.character(landmarks)]]))
     }
+    
     # Call to method that performs survival analysis
     if (method == "coxph") {
      x@survival_fits[[as.character(landmarks)]] <- survival::coxph(survival_formula, data = dataset)
@@ -208,8 +210,8 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
 #'
 #' @param x An object of class Landmarking.
 #' @param landmarks A vector of Landmark times.
-#' @param method Method to be used to fit the longitudinal process.
-#'
+#' @param method Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.
+#' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
 #' @returns An object of class Landmarking.
 #' @export
 #'
@@ -228,6 +230,7 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
     }
     # Create list for storing model fits for longitudinal analysis
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
+
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
     for (predictor in names(landmarking_object@biomarkers)) {
       # Risk set for the landmark time

@@ -7,7 +7,11 @@
 fit_longitudinal(x, landmarks, method, static_covariates)
 }
 \arguments{
-\item{method}{}
+\item{landmarks}{Vector of landmark times.}
+
+\item{method}{Method for longitudinal analysis, currently only "lme4" is supported.}
+
+\item{static_covariates}{Vector of names of static covariates to be included in the longitudinal analysis.}
 }
 \description{
 Title
