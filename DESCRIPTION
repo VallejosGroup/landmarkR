@@ -1,4 +1,4 @@
-Package: landmarkeR
+Package: landmarkR
 Title: Time-to-event landmark analysis using an array of longitudinal and survival sub-models
 Version: 0.0.0.9000
 Authors@R: 
@@ -11,7 +11,8 @@ Description: This package provides a comprehensive framework for conducting
   survival sub-models. It aims to facilitate the analysis of time-to-event data
   with time-dependent covariates.
 License: GPL (>= 3)
-BugReports: https://github.com/VallejosGroup/landmarking/issues
+URL: https://github.com/VallejosGroup/landmarkR
+BugReports: https://github.com/VallejosGroup/landmarkR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
