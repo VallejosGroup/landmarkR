@@ -235,7 +235,7 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
 
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
-    for (predictor in names(landmarking_object@biomarkers)) {
+    for (predictor in names(x@biomarkers)) {
       # Risk set for the landmark time
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Construct dataset for the longitudinal analysis (static measurements + time-varying covariate and its recording time)
@@ -317,7 +317,7 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
     # Create list for storing model predictions, for longitudinal analysis
     x@longitudinal_predictions[[as.character(landmarks)]] <- list()
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
-    for (predictor in names(landmarking_object@biomarkers)) {
+    for (predictor in names(x@biomarkers)) {
       # Check that relevant model fit is available
       if (!(predictor %in% names(x@longitudinal_fits[[as.character(landmarks)]]))) {
         stop("Longitudinal model has not been fit for dynamic covariate ",
