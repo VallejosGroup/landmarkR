@@ -2,20 +2,24 @@
 % Please edit documentation in R/landmarking.R
 \name{fit_survival}
 \alias{fit_survival}
-\title{Title}
+\title{Fits the specified survival model at the landmark times and up to the horizon
+times specified by the user}
 \usage{
 fit_survival(x, landmarks, horizons, method, dynamic_covariates = c())
 }
 \arguments{
-\item{landmarks}{Vector of landmark times.}
+\item{x}{An object of class Landmarking.}
 
-\item{horizons}{Vector of horizon times corresponding to the landmark times.}
+\item{horizons}{Vector of horizon times.}
 
 \item{method}{Method for survival analysis, either "survfit" or "coxph".}
 
-\item{dynamic_covariates}{Vector of names of time-varying covariates to be
-included in the survival analysis.}
+\item{dynamic_covariates}{Vector of time-varying covariates that to be used in the survival model.}
+}
+\value{
+An object of class Landmarking.
 }
 \description{
-Title
+Fits the specified survival model at the landmark times and up to the horizon
+times specified by the user
 }

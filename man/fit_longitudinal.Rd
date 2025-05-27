@@ -2,17 +2,24 @@
 % Please edit documentation in R/landmarking.R
 \name{fit_longitudinal}
 \alias{fit_longitudinal}
-\title{Title}
+\title{Fits the specified longitudinal model for the latent processes underlying the
+relevant time-varying covariates, up until the landmarking times}
 \usage{
-fit_longitudinal(x, landmarks, method, static_covariates)
+fit_longitudinal(x, landmarks, method, static_covariates, ...)
 }
 \arguments{
-\item{landmarks}{Vector of landmark times.}
+\item{x}{An object of class Landmarking.}
 
-\item{method}{Method for longitudinal analysis, currently only "lme4" is supported.}
+\item{landmarks}{A vector of Landmark times.}
+
+\item{method}{Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.}
 
 \item{static_covariates}{Vector of names of static covariates to be included in the longitudinal analysis.}
 }
+\value{
+An object of class Landmarking.
+}
 \description{
-Title
+Fits the specified longitudinal model for the latent processes underlying the
+relevant time-varying covariates, up until the landmarking times
 }
