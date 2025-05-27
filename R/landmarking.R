@@ -148,7 +148,7 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
 setGeneric("getSurvivalFits", function(object) standardGeneric("getSurvivalFits"))
 setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fits)
 
-          
+
 #' Fits the specified survival model at the landmark times and up to the horizon
 #' times specified by the user
 #'
@@ -190,7 +190,7 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
       survival_formula <- as.formula(paste0(survival_formula, paste(dynamic_covariates, collapse = " + ")))
       dataset <- cbind(dataset, do.call(cbind, x@longitudinal_predictions[[as.character(landmarks)]]))
     }
-    
+
     # Call to method that performs survival analysis
     if (method == "coxph") {
      x@survival_fits[[as.character(landmarks)]] <- survival::coxph(survival_formula, data = dataset)
@@ -220,13 +220,16 @@ setGeneric("fit_longitudinal", function(x, landmarks, method, static_covariates,
 setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates,...) {
   # Check that the method for longitudinal analysis is implemented
   if (!(method %in% c("lme4", "lcmm"))) {
-    error("Method ", method, " not supported")
+    stop("Method ", method, " not supported", "/n")
   }
   # Base case for recursion
   if (length(landmarks) == 1) {
     # Check that relevant risk set is available
     if (!(landmarks %in% x@landmarks)) {
-      error("Risk set for landmark time ", landmarks, " has not been computed")
+      stop("Risk set for landmark time ",
+           landmarks,
+           " has not been computed",
+           "/n")
     }
     # Create list for storing model fits for longitudinal analysis
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
@@ -295,17 +298,19 @@ setGeneric("predict_longitudinal", function(x, landmarks, method, static_covaria
 setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates, ...) {
   # Check that the method for longitudinal analysis is implemented
   if (!(method %in% c("lme4", "lcmm"))) {
-    error("Method ", method, " not supported")
+    stop("Method ", method, " not supported\n")
   }
   # Base case for recursion
   if (length(landmarks) == 1) {
     # Check that relevant risk set is available
     if (!(landmarks %in% x@landmarks)) {
-      error("Risk set for landmark time ", landmarks, " has not been computed")
+      stop("Risk set for landmark time ", landmarks, " has not been computed\n")
     }
     # Check that relevant model fit is available
     if (!(as.character(landmarks) %in% names(x@longitudinal_fits))) {
-      error("Longitudinal model has not been fit for landmark time", landmarks)
+      stop("Longitudinal model has not been fit for landmark time",
+           landmarks,
+           "\n")
     }
     # Relevant risk set
     risk_set <- x@risk_sets[[as.character(landmarks)]]
@@ -315,7 +320,11 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
     for (predictor in names(landmarking_object@biomarkers)) {
       # Check that relevant model fit is available
       if (!(predictor %in% names(x@longitudinal_fits[[as.character(landmarks)]]))) {
-        error("Longitudinal model has not been fit for dynamic covariate ", predictor, " at landmark time", landmarks)
+        stop("Longitudinal model has not been fit for dynamic covariate ",
+             predictor,
+             " at landmark time",
+             landmarks,
+             "/n")
       }
       # Risk set for the landmark time
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
