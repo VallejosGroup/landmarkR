@@ -6,7 +6,7 @@
 \alias{landmarkR}
 \title{landmarkR}
 \description{
-This package provides a comprehensive framework for conducting time-to-event landmarking analysis using a variety of longitudinal and survival sub-models. It aims to facilitate the analysis of time-to-event data with time-dependent covariates.
+Provides a comprehensive framework for conducting time-to-event landmarking analysis using a variety of longitudinal and survival sub-models. It aims to facilitate the analysis of time-to-event data with time-dependent covariates.
 }
 \seealso{
 Useful links:

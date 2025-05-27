@@ -15,7 +15,7 @@ compute_risk_sets(x, landmarks, ...)
 \item{...}{Additional arguments (not used)}
 }
 \value{
-An
+An object of class Landmarking, including desired risk sets for the relevant landmark times.
 }
 \description{
 Compute the list of individuals at risk at given landmark times,

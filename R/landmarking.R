@@ -29,6 +29,28 @@ setClass("Landmarking",
   )
 )
 
+#' Validator for object of class Landmarking
+#'
+#' @param object An object of class Landmarking.
+#'
+#' @returns TRUE if the input is valid, else a description of the problem
+#' @export
+#'
+#' @examples
+setValidity("Landmarking", function(object) {
+  if (!(object@event_indicator %in% colnames(object@data_static))) {
+    "@event_indicator must be a column in dataframe @data_static"
+  } else if (!(object@ids %in% colnames(object@data_static))) {
+    "@ids must be a column in dataframe @data_static"
+  } else if (!(object@ids %in% colnames(object@data_dynamic))) {
+    "@ids must be a column in dataframe @data_dynamic"
+  } else if ((!(object@event_time %in% colnames(object@data_static)))) {
+    "@event_time must be a column in dataframe @data_static"
+  } else {
+    TRUE
+  }
+})
+
 #' Creates an S4 class for a landmarking analysis
 #'
 #' @slot data_static Data frame with id, static covariates, censoring indicator and event time.
@@ -42,7 +64,7 @@ setClass("Landmarking",
 #' @export
 Landmarking <- function(data_static, data_dynamic, event_indicator, biomarkers, ids, event_time) {
   new("Landmarking",
-     data_static = data_static,
+      data_static = data_static,
       data_dynamic = data_dynamic,
       event_indicator = event_indicator,
       biomarkers = biomarkers,
@@ -101,7 +123,7 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #' @param landmarks Vector of landmark times
 #' @param ... Additional arguments (not used)
 #'
-#' @returns An
+#' @returns An object of class Landmarking, including desired risk sets for the relevant landmark times.
 #' @export
 #'
 #' @examples
@@ -126,16 +148,17 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
 setGeneric("getSurvivalFits", function(object) standardGeneric("getSurvivalFits"))
 setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fits)
 
-#' Title
+
+#' Fits the specified survival model at the landmark times and up to the horizon
+#' times specified by the user
 #'
-#' @param x
-#' @param landmarks Vector of landmark times.
+#' @param x An object of class Landmarking.
 #' @param horizons Vector of horizon times corresponding to the landmark times.
+#' @param horizons Vector of horizon times.
 #' @param method Method for survival analysis, either "survfit" or "coxph".
-#' @param dynamic_covariates Vector of names of time-varying covariates to be
-#'   included in the survival analysis.
+#' @param dynamic_covariates Vector of time-varying covariates that to be used in the survival model.
 #'
-#' @returns
+#' @returns An object of class Landmarking.
 #' @export
 #'
 #' @examples
@@ -165,8 +188,9 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
       survival_formula <- as.formula(paste0(survival_formula, "1"))
     } else {
       survival_formula <- as.formula(paste0(survival_formula, paste(dynamic_covariates, collapse = " + ")))
-      dataset <- cbind(dataset, do.call(cbind, x@longitudinal_predictions[[as.character(landmarks)]])[at_risk_individuals, ])
+      dataset <- cbind(dataset, do.call(cbind, x@longitudinal_predictions[[as.character(landmarks)]]))
     }
+
     # Call to method that performs survival analysis
     if (method == "coxph") {
      x@survival_fits[[as.character(landmarks)]] <- survival::coxph(survival_formula, data = dataset)
@@ -181,42 +205,45 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
   x
 })
 
-#' Title
+#' Fits the specified longitudinal model for the latent processes underlying the
+#' relevant time-varying covariates, up until the landmarking times
 #'
-#' @param x
-#' @param landmarks Vector of landmark times.
-#' @param method Method for longitudinal analysis, currently only "lme4" is supported.
+#' @param x An object of class Landmarking.
+#' @param landmarks A vector of Landmark times.
+#' @param method Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.
 #' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
-#'
-#' @returns
+#' @returns An object of class Landmarking.
 #' @export
 #'
 #' @examples
-setGeneric("fit_longitudinal", function(x, landmarks, method, static_covariates) standardGeneric("fit_longitudinal"))
-setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates) {
+setGeneric("fit_longitudinal", function(x, landmarks, method, static_covariates,...) standardGeneric("fit_longitudinal"))
+setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates,...) {
   # Check that the method for longitudinal analysis is implemented
-  if (!(method %in% c("lme4"))) {
-    message("Method ", method, " not supported")
+  if (!(method %in% c("lme4", "lcmm"))) {
+    stop("Method ", method, " not supported", "\n")
   }
   # Base case for recursion
   if (length(landmarks) == 1) {
     # Check that relevant risk set is available
     if (!(landmarks %in% x@landmarks)) {
-      message("Risk set for landmark time ", landmarks, " has not been computed")
+      stop("Risk set for landmark time ",
+           landmarks,
+           " has not been computed",
+           "\n")
     }
-    # Create list for storing model fits, and predictions, for longitudinal analysis
+    # Create list for storing model fits for longitudinal analysis
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
-    x@longitudinal_predictions[[as.character(landmarks)]] <- list()
+
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
-    for (predictor in names(landmarking_object@biomarkers)) {
+    for (predictor in names(x@biomarkers)) {
       # Risk set for the landmark time
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Construct dataset for the longitudinal analysis (static measurements + time-varying covariate and its recording time)
       dataframe <- x@data_dynamic |>
-        dplyr::filter(covariate == predictor) |>
-        dplyr::filter(id %in% at_risk_individuals) |>
-        dplyr::filter(measurement_time <= landmarks) |>
-        dplyr::left_join(data_static, by = join_by(id))
+        filter(covariate == predictor) |>         # Subset with records of the relevant time-varying predictor
+        filter(id %in% at_risk_individuals) |>    # Subset with individuals who are at risk only
+        filter(measurement_time <= landmarks) |>  # Subset with observations prior to landmark time
+        left_join(data_static, by = join_by(id))  # Join with static covariates
       # Construct formula for longitudinal analysis
       longitudinal_formula <- as.formula(paste0("measurement ~ ", paste(static_covariates, collapse = " + "), " + (measurement_time|id)"))
       # Fit longitudinal model according to chosen method
@@ -224,21 +251,129 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
         # Model fit
         lme4_fit <- lme4::lmer(longitudinal_formula, data = dataframe)
         x@longitudinal_fits[[as.character(landmarks)]][[predictor]] <- lme4_fit
-        # Model predictions at landmark tiem
-        x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <-
-          predict(lme4_fit,
-                  newdata =x@data_static |> select(id, matches(paste0(static_covariates, collapse="|"))) |> mutate(measurement_time = landmarks),
-                  allow.new.levels = TRUE
-          )
+        ##### # Model predictions at landmark time
+        ##### x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <-
+        #####   predict(lme4_fit,
+        #####           newdata =x@data_static |> select(id, matches(paste0(static_covariates, collapse="|"))) |> mutate(measurement_time = landmarks),
+        #####           allow.new.levels = TRUE
+        #####   )
+      } else if (method == "lcmm") {
+        # Model fit
+        additional_args <- list(...)
+        if (!("ng" %in% names(additional_args))) {
+          stop("Argument ng (number of clusters) missing. ")
+        }
+        # Formula for fixed effects
+        fixed_formula <- as.formula(paste0("measurement ~ ", paste(static_covariates, collapse = " + ")))
+        # Fir LCMM with only one cluster (to facilitate parameter initialisation later n)
+        lcmm_fit_init <- lcmm::hlme(fixed_formula, data = dataframe, subject = x@ids, ng = 1)
+        # Fit LCMM with desired number of clusters
+        lcmm_fit <- lcmm::hlme(fixed_formula, data = dataframe, subject = x@ids, B = lcmm_fit_init, ...)
+        # Store formulas in the LCMM  object
+        lcmm_fit$call$fixed <- fixed_formula
+        lcmm_fit$call$mixture <- additional_args$mixture
+        # Store model results in Landmarking objects
+        x@longitudinal_fits[[as.character(landmarks)]][[predictor]] <- lcmm_fit
       }
     }
   } else {
     # Recursion
-    x <- fit_longitudinal(x, landmarks[1], method, static_covariates)
-    x <- fit_longitudinal(x, landmarks[-1], method, static_covariates)
+    x <- fit_longitudinal(x, landmarks[1], method, static_covariates, ...)
+    x <- fit_longitudinal(x, landmarks[-1], method, static_covariates, ...)
   }
   x
 })
 
-
+#' Make predictions for time-varying covariates at specified landmark times
+#'
+#' @param x An object of class Landmarking.
+#' @param landmarks Vector of landmark times.
+#' @param method Longitudinal data analysis method used to make predictions
+#'
+#' @returns An object of class Landmarking
+#' @export
+#'
+#' @examples
+setGeneric("predict_longitudinal", function(x, landmarks, method, static_covariates, ...) standardGeneric("predict_longitudinal"))
+setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates, ...) {
+  # Check that the method for longitudinal analysis is implemented
+  if (!(method %in% c("lme4", "lcmm"))) {
+    stop("Method ", method, " not supported\n")
+  }
+  # Base case for recursion
+  if (length(landmarks) == 1) {
+    # Check that relevant risk set is available
+    if (!(landmarks %in% x@landmarks)) {
+      stop("Risk set for landmark time ", landmarks, " has not been computed\n")
+    }
+    # Check that relevant model fit is available
+    if (!(as.character(landmarks) %in% names(x@longitudinal_fits))) {
+      stop("Longitudinal model has not been fit for landmark time",
+           landmarks,
+           "\n")
+    }
+    # Relevant risk set
+    risk_set <- x@risk_sets[[as.character(landmarks)]]
+    # Create list for storing model predictions, for longitudinal analysis
+    x@longitudinal_predictions[[as.character(landmarks)]] <- list()
+    # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
+    for (predictor in names(x@biomarkers)) {
+      # Check that relevant model fit is available
+      if (!(predictor %in% names(x@longitudinal_fits[[as.character(landmarks)]]))) {
+        stop("Longitudinal model has not been fit for dynamic covariate ",
+             predictor,
+             " at landmark time",
+             landmarks,
+             "\n")
+      }
+      # Risk set for the landmark time
+      at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
+      # Fit longitudinal model according to chosen method
+      if (method == "lme4") {
+        # Model fit
+        lme4_fit <- x@longitudinal_fits[[as.character(landmarks)]][[predictor]]
+        # Model predictions at landmark time
+        x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <-
+          predict(
+            lme4_fit,
+            newdata = x@data_static |>
+              filter(id %in% risk_set) |>
+              select(id, matches(paste0(static_covariates, collapse="|"))) |>
+              mutate(measurement_time = landmarks),
+            allow.new.levels = TRUE
+          )
+      } else if (method == "lcmm") {
+        # Model fit
+        lcmm_fit <- x@longitudinal_fits[[as.character(landmarks)]][[predictor]]
+        # pprob contains probability of observation belonging to a certain cluster
+        pprob <- lcmm_fit$pprob
+        # Finds out the largest cluster.
+        mode_cluster <- as.integer(names(sort(-table(pprob$class)))[1])
+        # Allocation of clusters for prediction
+        cluster_allocation <- rbind(
+          data.frame(id = pprob$id, cluster = pprob$class),
+          data.frame(id = setdiff(risk_set, pprob$id), cluster = mode_cluster)
+        ) |> arrange(id) |> select(-id)
+        rownames(cluster_allocation) <- risk_set
+        # Make predictions with lcmm package
+        predictions <- lcmm::predictY(
+          lcmm_fit,
+          newdata = x@data_static |>
+            select(id, matches(paste0(static_covariates, collapse="|"))) |>
+            mutate(measurement_time = landmarks)
+        )
+        # Choose correct cluster for prediction
+        predictions <- predictions$pred[risk_set, ] * model.matrix(~as.factor(cluster)-1,data=cluster_allocation)
+        # Store predictions in Landmarking object
+        x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <- rowSums(predictions)
+        names(x@longitudinal_predictions[[as.character(landmarks)]][[predictor]]) <- risk_set
+      }
+    }
+  } else {
+    # Recursion
+    x <- predict_longitudinal(x, landmarks[1], method, static_covariates, ...)
+    x <- predict_longitudinal(x, landmarks[-1], method, static_covariates, ...)
+  }
+  x
+})
 
