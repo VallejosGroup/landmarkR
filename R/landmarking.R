@@ -19,7 +19,7 @@ setClass("Landmarking",
     data_static = "data.frame",
     data_dynamic = "data.frame",
     event_indicator = "character",
-    biomarkers = "list",
+    dynamic_covariates = "character",
     ids = "character",
     event_time = "character",
     risk_sets = "list",
@@ -56,18 +56,18 @@ setValidity("Landmarking", function(object) {
 #' @slot data_static Data frame with id, static covariates, censoring indicator and event time.
 #' @slot data_dynamic Data frame in long format with id, measurement, measurement time and covariate measured.
 #' @slot event_indicator Name of the column indicating event or censoring.
-#' @slot biomarkers List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times
+#' @slot dynamic_covariates Names of dynamic (time-varying) covariates.
 #' @slot ids Name of the column indicating patient id.
 #' @slot event_time Name of the column indicating time of the event/censoring.
 #'
 #' @returns An object of class Landmarking
 #' @export
-Landmarking <- function(data_static, data_dynamic, event_indicator, biomarkers, ids, event_time) {
+Landmarking <- function(data_static, data_dynamic, event_indicator, dynamic_covariates, ids, event_time) {
   new("Landmarking",
       data_static = data_static,
       data_dynamic = data_dynamic,
       event_indicator = event_indicator,
-      biomarkers = biomarkers,
+      dynamic_covariates = dynamic_covariates,
       ids = ids,
       event_time = event_time,
       risk_sets = list(),
@@ -181,8 +181,11 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
     # Recover risk sets (ids of individuals who are at risk at landmark time)
     at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
     # Construct dataset for survival analysis (censor observations of events past horizon time)
-    dataset <- data_static[at_risk_individuals, ] |>
-      mutate(event_status = ifelse(event_time > horizons, 0, event_status), event_time = ifelse(event_time > horizons, horizons, event_time))
+    dataset <- x@data_static[at_risk_individuals, ] |>
+      mutate(
+        event_status = ifelse(get(x@event_time) > horizons, 0, get(x@event_indicator)),
+        event_time = ifelse(get(x@event_time) > horizons, horizons, get(x@event_time))
+      )
     # Add time-varying covariates to formula and dataset for survival analysis
     if (length(dynamic_covariates) == 0) {
       survival_formula <- as.formula(paste0(survival_formula, "1"))
@@ -235,17 +238,21 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
 
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
-    for (predictor in names(x@biomarkers)) {
+    for (predictor in x@dynamic_covariates) {
       # Risk set for the landmark time
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Construct dataset for the longitudinal analysis (static measurements + time-varying covariate and its recording time)
       dataframe <- x@data_dynamic |>
         filter(covariate == predictor) |>         # Subset with records of the relevant time-varying predictor
-        filter(id %in% at_risk_individuals) |>    # Subset with individuals who are at risk only
+        filter(get(x@ids) %in% at_risk_individuals) |>    # Subset with individuals who are at risk only
         filter(measurement_time <= landmarks) |>  # Subset with observations prior to landmark time
-        left_join(data_static, by = join_by(id))  # Join with static covariates
+        left_join(x@data_static, by = x@ids)  # Join with static covariates
       # Construct formula for longitudinal analysis
-      longitudinal_formula <- as.formula(paste0("measurement ~ ", paste(static_covariates, collapse = " + "), " + (measurement_time|id)"))
+      longitudinal_formula <- as.formula(paste0(
+        "measurement ~ ",
+        paste(static_covariates, collapse = " + "),
+        " + (measurement_time|", x@ids, ")")
+      )
       # Fit longitudinal model according to chosen method
       if (method == "lme4") {
         # Model fit
@@ -317,7 +324,7 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
     # Create list for storing model predictions, for longitudinal analysis
     x@longitudinal_predictions[[as.character(landmarks)]] <- list()
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
-    for (predictor in names(x@biomarkers)) {
+    for (predictor in x@dynamic_covariates) {
       # Check that relevant model fit is available
       if (!(predictor %in% names(x@longitudinal_fits[[as.character(landmarks)]]))) {
         stop("Longitudinal model has not been fit for dynamic covariate ",
@@ -337,8 +344,8 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
           predict(
             lme4_fit,
             newdata = x@data_static |>
-              filter(id %in% risk_set) |>
-              select(id, matches(paste0(static_covariates, collapse="|"))) |>
+              filter(get(x@ids) %in% risk_set) |>
+              select(x@ids, matches(paste0(static_covariates, collapse="|"))) |>
               mutate(measurement_time = landmarks),
             allow.new.levels = TRUE
           )
@@ -350,16 +357,20 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
         # Finds out the largest cluster.
         mode_cluster <- as.integer(names(sort(-table(pprob$class)))[1])
         # Allocation of clusters for prediction
-        cluster_allocation <- rbind(
-          data.frame(id = pprob$id, cluster = pprob$class),
-          data.frame(id = setdiff(risk_set, pprob$id), cluster = mode_cluster)
-        ) |> arrange(id) |> select(-id)
+        if (length(risk_set) == nrow(pprob)) {
+          cluster_allocation <- data.frame(id = pprob[,x@ids], cluster = pprob$class)
+        } else {
+          cluster_allocation <- rbind(
+            data.frame(id = pprob[,x@ids], cluster = pprob$class),
+            data.frame(id = setdiff(risk_set, pprob[,x@ids]), cluster = mode_cluster)
+          ) |> arrange(id) |> select(-id)
+        }
         rownames(cluster_allocation) <- risk_set
         # Make predictions with lcmm package
         predictions <- lcmm::predictY(
           lcmm_fit,
           newdata = x@data_static |>
-            select(id, matches(paste0(static_covariates, collapse="|"))) |>
+            select(x@ids, matches(paste0(static_covariates, collapse="|"))) |>
             mutate(measurement_time = landmarks)
         )
         # Choose correct cluster for prediction
