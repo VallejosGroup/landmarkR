@@ -18,7 +18,7 @@ An S4 class for a landmarking analysis
 
 \item{\code{event_indicator}}{Name of the column indicating event or censoring.}
 
-\item{\code{biomarkers}}{List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times}
+\item{\code{dynamic_covariates}}{List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times}
 
 \item{\code{ids}}{Name of the column indicating patient id.}
 

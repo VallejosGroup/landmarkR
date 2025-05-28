@@ -1,10 +1,9 @@
 #' An S4 class for a landmarking analysis
-#'
 #' @slot landmarks Array of landmark times.
 #' @slot data_static Data frame with id, static covariates, censoring indicator and event time.
 #' @slot data_dynamic Data frame in long format with id, measurement, measurement time and covariate measured.
 #' @slot event_indicator Name of the column indicating event or censoring.
-#' @slot biomarkers List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times
+#' @slot dynamic_covariates List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times
 #' @slot ids Name of the column indicating patient id.
 #' @slot event_time Name of the column indicating time of the event/censoring.
 #' @slot risk_sets List of indices.
@@ -29,14 +28,11 @@ setClass("Landmarking",
   )
 )
 
-#' Validator for object of class Landmarking
-#'
-#' @param object An object of class Landmarking.
-#'
-#' @returns TRUE if the input is valid, else a description of the problem
-#' @export
-#'
-#' @examples
+# Validator for object of class Landmarking
+#
+# @param object An object of class Landmarking.
+#
+# @returns TRUE if the input is valid, else a description of the problem
 setValidity("Landmarking", function(object) {
   if (!(object@event_indicator %in% colnames(object@data_static))) {
     "@event_indicator must be a column in dataframe @data_static"
@@ -53,12 +49,12 @@ setValidity("Landmarking", function(object) {
 
 #' Creates an S4 class for a landmarking analysis
 #'
-#' @slot data_static Data frame with id, static covariates, censoring indicator and event time.
-#' @slot data_dynamic Data frame in long format with id, measurement, measurement time and covariate measured.
-#' @slot event_indicator Name of the column indicating event or censoring.
-#' @slot dynamic_covariates Names of dynamic (time-varying) covariates.
-#' @slot ids Name of the column indicating patient id.
-#' @slot event_time Name of the column indicating time of the event/censoring.
+#' @param data_static Data frame with id, static covariates, censoring indicator and event time.
+#' @param data_dynamic Data frame in long format with id, measurement, measurement time and covariate measured.
+#' @param event_indicator Name of the column indicating event or censoring.
+#' @param dynamic_covariates Names of dynamic (time-varying) covariates.
+#' @param ids Name of the column indicating patient id.
+#' @param event_time Name of the column indicating time of the event/censoring.
 #'
 #' @returns An object of class Landmarking
 #' @export
@@ -116,6 +112,8 @@ setMethod("getEventTime", "Landmarking", function(object) object@event_time)
 setGeneric("getRiskSets", function(object) standardGeneric("getRiskSets"))
 setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 
+
+
 #' Compute the list of individuals at risk at given landmark times,
 #' and stores them in an object of class Landmarking
 #'
@@ -128,6 +126,19 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #'
 #' @examples
 setGeneric("compute_risk_sets", function(x, landmarks, ...) standardGeneric("compute_risk_sets"))
+
+
+#' Compute the list of individuals at risk at given landmark times,
+#' and stores them in an object of class Landmarking
+#'
+#' @param x An object of type Landmarking
+#' @param landmarks Vector of landmark times
+#' @param ... Additional arguments (not used)
+#'
+#' @returns An object of class Landmarking, including desired risk sets for the relevant landmark times.
+#' @export
+#'
+#' @examples
 setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
   if (length(landmarks) == 1) { # If the vector of landmark times is of length 1
     if (landmarks %in% x@landmarks) { # Risk set for given landmark time was already in memory

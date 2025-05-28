@@ -5,12 +5,27 @@
 #' @param landmarks A vector of Landmark times.
 #' @param method Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.
 #' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
+#' @param ... Additional arguments passed to the longitudinal model fitting function (e.g. number of classes/clusters for lcmm).
 #' @returns An object of class Landmarking.
 #' @export
 #'
 #' @examples
 setGeneric("fit_longitudinal", function(x, landmarks, method, static_covariates,...) standardGeneric("fit_longitudinal"))
+
+#' Fits the specified longitudinal model for the latent processes underlying the
+#' relevant time-varying covariates, up until the landmarking times
+#'
+#' @param x An object of class Landmarking.
+#' @param landmarks A vector of Landmark times.
+#' @param method Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.
+#' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
+#' @param ... Additional arguments passed to the longitudinal model fitting function (e.g. number of classes/clusters for lcmm).
+#' @returns An object of class Landmarking.
+#' @export
+#'
+#' @examples
 setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates,...) {
+  covariate <- measurement_time <- NULL # global var binding
   # Check that the method for longitudinal analysis is implemented
   if (!(method %in% c("lme4", "lcmm"))) {
     stop("Method ", method, " not supported", "\n")
@@ -86,12 +101,27 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, stat
 #' @param x An object of class Landmarking.
 #' @param landmarks Vector of landmark times.
 #' @param method Longitudinal data analysis method used to make predictions
+#' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
+#' @param ... Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).
 #'
 #' @returns An object of class Landmarking
 #' @export
 #'
 #' @examples
 setGeneric("predict_longitudinal", function(x, landmarks, method, static_covariates, ...) standardGeneric("predict_longitudinal"))
+
+#' Make predictions for time-varying covariates at specified landmark times
+#'
+#' @param x An object of class Landmarking.
+#' @param landmarks Vector of landmark times.
+#' @param method Longitudinal data analysis method used to make predictions
+#' @param static_covariates Vector of names of static covariates to be included in the longitudinal analysis.
+#' @param ... Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).
+#'
+#' @returns An object of class Landmarking
+#' @export
+#'
+#' @examples
 setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, static_covariates, ...) {
   # Check that the method for longitudinal analysis is implemented
   if (!(method %in% c("lme4", "lcmm"))) {

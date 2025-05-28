@@ -8,10 +8,23 @@ Landmarking(
   data_static,
   data_dynamic,
   event_indicator,
-  biomarkers,
+  dynamic_covariates,
   ids,
   event_time
 )
+}
+\arguments{
+\item{data_static}{Data frame with id, static covariates, censoring indicator and event time.}
+
+\item{data_dynamic}{Data frame in long format with id, measurement, measurement time and covariate measured.}
+
+\item{event_indicator}{Name of the column indicating event or censoring.}
+
+\item{dynamic_covariates}{Names of dynamic (time-varying) covariates.}
+
+\item{ids}{Name of the column indicating patient id.}
+
+\item{event_time}{Name of the column indicating time of the event/censoring.}
 }
 \value{
 An object of class Landmarking
@@ -19,19 +32,3 @@ An object of class Landmarking
 \description{
 Creates an S4 class for a landmarking analysis
 }
-\section{Slots}{
-
-\describe{
-\item{\code{data_static}}{Data frame with id, static covariates, censoring indicator and event time.}
-
-\item{\code{data_dynamic}}{Data frame in long format with id, measurement, measurement time and covariate measured.}
-
-\item{\code{event_indicator}}{Name of the column indicating event or censoring.}
-
-\item{\code{biomarkers}}{List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times}
-
-\item{\code{ids}}{Name of the column indicating patient id.}
-
-\item{\code{event_time}}{Name of the column indicating time of the event/censoring.}
-}}
-

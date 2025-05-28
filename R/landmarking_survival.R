@@ -2,8 +2,8 @@
 #' times specified by the user
 #'
 #' @param x An object of class Landmarking.
+#' @param landmarks Vector of landmark times
 #' @param horizons Vector of horizon times corresponding to the landmark times.
-#' @param horizons Vector of horizon times.
 #' @param method Method for survival analysis, either "survfit" or "coxph".
 #' @param dynamic_covariates Vector of time-varying covariates that to be used in the survival model.
 #'
@@ -12,6 +12,20 @@
 #'
 #' @examples
 setGeneric("fit_survival", function(x, landmarks, horizons, method, dynamic_covariates = c()) standardGeneric("fit_survival"))
+
+#' Fits the specified survival model at the landmark times and up to the horizon
+#' times specified by the user
+#'
+#' @param x An object of class Landmarking.
+#' @param landmarks Vector of landmark times
+#' @param horizons Vector of horizon times corresponding to the landmark times.
+#' @param method Method for survival analysis, either "survfit" or "coxph".
+#' @param dynamic_covariates Vector of time-varying covariates that to be used in the survival model.
+#'
+#' @returns An object of class Landmarking.
+#' @export
+#'
+#' @examples
 setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method, dynamic_covariates = c()) {
   # Check that method for survival analysis is available
   if (!(method %in% c("survfit", "coxph"))) {
