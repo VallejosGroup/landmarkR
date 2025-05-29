@@ -135,8 +135,8 @@ landmarking_object@survival_fits
 # Landmarking analysis with lme4 + coxph
 
 Now we use the `lme4` package  to fit a linear mixed model to the time-varying
-covariate, dose. This first step is followed by fitting Cox PH sub-models using
-the longitudinal predictions as covariates.
+covariate, dose. This step is then followed by fitting Cox proportional hazards
+sub-models using the longitudinal predictions as covariates.
 
 ```{r}
 landmarking_object <- Landmarking(
@@ -168,8 +168,8 @@ landmarking_object@survival_fits
 
 # Landmarking analysis with lcmm + coxph
 
-Now we use the `lcmm` package  to fit a latent class mixed model of the
-time-varying covariate, dose. This first step is followed by fitting a Cox PH
+Now we will use the `lcmm` package  to fit a latent class mixed model of the
+time-varying covariate, `dose`. This step is followed by fitting a Cox PH
 sub-model using longitudinal predictions as covariates.
 
 ```{r}
