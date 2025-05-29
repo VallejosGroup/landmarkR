@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the landmarkR package"
+title: "Introduction to the landmarkR package (minor update)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{intro-landmarkR}
