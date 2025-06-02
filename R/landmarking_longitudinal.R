@@ -239,6 +239,9 @@ setGeneric("fit_longitudinal_v2", function(x, landmarks, method, formula,...) st
 setMethod("fit_longitudinal_v2", "Landmarking", function(x, landmarks, method, formula,...) {
   covariate <- measurement_time <- NULL # global var binding
   # Check that method is a function with arguments formula, data, ...
+  if (is(method)[1] == "character" && method == "lcmm") {
+    method <- fit_lcmm_
+  }
   if (!(is(method)[1] == "function")) {
     stop("Argument ",
          method,
@@ -263,15 +266,15 @@ setMethod("fit_longitudinal_v2", "Landmarking", function(x, landmarks, method, f
     # Create list for storing model fits for longitudinal analysis
     x@longitudinal_fits[[as.character(landmarks)]] <- list()
 
+    # Risk set for the landmark time
+    at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
     # Loop that iterates over all time-varying covariates, to fit a longitudinal model for the underlying trajectories
     for (predictor in x@dynamic_covariates) {
-      # Risk set for the landmark time
-      at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Construct dataset for the longitudinal analysis (static measurements + time-varying covariate and its recording time)
       dataframe <- x@data_dynamic |>
-        filter(covariate == predictor) |>         # Subset with records of the relevant time-varying predictor
+        filter(get(x@dynamic_covariate_names) == predictor) |>         # Subset with records of the relevant time-varying predictor
         filter(get(x@ids) %in% at_risk_individuals) |>    # Subset with individuals who are at risk only
-        filter(measurement_time <= landmarks) |>  # Subset with observations prior to landmark time
+        filter(get(x@times) <= landmarks) |>  # Subset with observations prior to landmark time
         left_join(x@data_static, by = x@ids)  # Join with static covariates
       # Fit longitudinal model according to chosen method
       x@longitudinal_fits[[as.character(landmarks)]][[predictor]] <- method(
@@ -313,6 +316,9 @@ setGeneric("predict_longitudinal_v2", function(x, landmarks, method, ...) standa
 #' @examples
 setMethod("predict_longitudinal_v2", "Landmarking", function(x, landmarks, method, ...) {
   # Check that method is a function with arguments formula, data, ...
+  if (is(method)[1] == "character" && method == "lcmm") {
+    method <- predict_lcmm_
+  }
   if (!(is(method)[1] == "function")) {
     stop("Argument method",
          " must be a function",
@@ -344,13 +350,12 @@ setMethod("predict_longitudinal_v2", "Landmarking", function(x, landmarks, metho
              landmarks,
              "\n")
       }
-      # Risk set for the landmark time
-      at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Fit longitudinal model according to chosen method
       newdata <- x@data_static |>
-        filter(get(x@ids) %in% risk_set) |>
-        mutate(measurement_time = landmarks)
+        filter(get(x@ids) %in% risk_set)
+      newdata[, x@times] <- landmarks
 
+      # TODO: If method is lcmm, then fit lme4 first to initialise parameter value
       x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <- method(
         x@longitudinal_fits[[as.character(landmarks)]][[predictor]],
         newdata = newdata,

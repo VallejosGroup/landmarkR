@@ -21,9 +21,7 @@ library(landmarkR)
 
 # Setup
 
-In this vignette, we use the `epileptic` dataset provided alongside `landmarkR`
-to perform landmarking analysis of time-to-event data with time-varying
-covariates. This is the structure of the data:
+In this vignette, we use the `epileptic` dataset provided alongside `landmarkR` to perform landmarking analysis of time-to-event data with time-varying covariates. This is the structure of the data:
 
 ```{r}
 data("epileptic")
@@ -44,9 +42,7 @@ The dataset contains the following variables:
 
 -   treat, age, gender, learn.dis: static (baseline) covariates
 
-The first step is to split the dataset into two, one dataset describing static
-covariates, event time and indicator of event/censoring, and another dataset
-describing dynamic covariates.
+The first step is to split the dataset into two, one dataset describing static covariates, event time and indicator of event/censoring, and another dataset describing dynamic covariates.
 
 ```{r}
 # DF with Static covariates
@@ -69,8 +65,7 @@ head(df_dynamic)
 
 # Create Landmarking object
 
-The next step is to create an object of class `Landmarking` by using the helper
-function of the same name.
+The next step is to create an object of class `Landmarking` by using the helper function of the same name.
 
 ```{r}
 landmarking_object <- Landmarking(
@@ -85,27 +80,19 @@ landmarking_object <- Landmarking(
 
 Arguments for the helper function are defined as follows:
 
-- data_static and data_dynamic: the two datasets we just created.
+-   data_static and data_dynamic: the two datasets we just created.
 
-- event_indicator: name of the column that indicates the censoring indicator
-  in the static dataset.
+-   event_indicator: name of the column that indicates the censoring indicator in the static dataset.
 
-- dynamic_covariates: array column names in the dynamic dataset indicating
-  time-varying covariates.
+-   dynamic_covariates: array column names in the dynamic dataset indicating time-varying covariates.
 
-- ids: name of the column that identifies patients in both datasets.
+-   ids: name of the column that identifies patients in both datasets.
 
-- event_time: name of the column that identifies time of event/censoring in the
-  static dataset.
+-   event_time: name of the column that identifies time of event/censoring in the static dataset.
 
 # Baseline survival analysis (without time-varying covariates)
 
-First, we perform a survival without time-varying covariates. We can then use
-this as a baseline to evaluate the performance of a subsequent landmark analysis
-with such covariates. We first establish the landmark times, and then calculate
-the risk sets for each of the provided landmark times using the
-`compute_risk_sets()` function. In this instance, we will consider landmarks set
-at yearly intervals across five years.
+First, we perform a survival without time-varying covariates. We can then use this as a baseline to evaluate the performance of a subsequent landmark analysis with such covariates. We first establish the landmark times, and then calculate the risk sets for each of the provided landmark times using the `compute_risk_sets()` function. In this instance, we will consider landmarks set at yearly intervals across five years.
 
 ```{r}
 landmarks <- seq(from = 365.25, by = 365.25, length.out = 5)
@@ -116,10 +103,7 @@ landmarking_object <- landmarking_object |>
 landmarking_object
 ```
 
-Now we call the `fit_survival()` function to fit the survival models. We set 
-horizons to be one year after each landmark time, corresponding to the next
-landmark time. For the survival sub-models, we will use Cox proportional hazards
-models and will therefore specify the `coxph` method.
+Now we call the `fit_survival()` function to fit the survival models. We set horizons to be one year after each landmark time, corresponding to the next landmark time. For the survival sub-models, we will use Cox proportional hazards models and will therefore specify the `coxph` method.
 
 ```{r}
 horizons <- 365.25 + landmarks
@@ -134,9 +118,7 @@ landmarking_object@survival_fits
 
 # Landmarking analysis with lme4 + coxph
 
-Now we use the `lme4` package  to fit a linear mixed model to the time-varying
-covariate, dose. This step is then followed by fitting Cox proportional hazards
-sub-models using the longitudinal predictions as covariates.
+Now we use the `lme4` package to fit a linear mixed model to the time-varying covariate, dose. This step is then followed by fitting Cox proportional hazards sub-models using the longitudinal predictions as covariates.
 
 ```{r}
 landmarking_object <- Landmarking(
@@ -168,9 +150,7 @@ landmarking_object@survival_fits
 
 # Landmarking analysis with lcmm + coxph
 
-Now we will use the `lcmm` package  to fit a latent class mixed model of the
-time-varying covariate, `dose`. This step is followed by fitting a Cox PH
-sub-model using longitudinal predictions as covariates.
+Now we will use the `lcmm` package to fit a latent class mixed model of the time-varying covariate, `dose`. This step is followed by fitting a Cox PH sub-model using longitudinal predictions as covariates.
 
 ```{r}
 

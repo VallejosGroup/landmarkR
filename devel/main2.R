@@ -7,8 +7,9 @@ epileptic |> head()
 # DF with Static covariates
 df_static <- epileptic |>
   select(id, with.time, with.status, treat, age, gender, learn.dis) |>
-  rename(patient.id = id, event.time = with.time, event.status = with.status) |>
+  rename(patient_id = id, event.time = with.time, event.status = with.status) |>
   unique()
+df_static$age <- (df_static$age - mean(df_static$age))/sd(df_static$age)
 
 head(df_static)
 str(df_static)
@@ -17,106 +18,100 @@ str(df_static)
 df_dynamic <- epileptic |>
   select(id, time, dose) |>
   mutate(covariate = "dose") |>
-  rename(patient.id = id, measurement = dose, measurement_time = time)
+  rename(patient_id = id, times = time, measurements = dose, covariates = covariate)
 
 landmarking_object <- Landmarking(
   data_static = df_static,
   data_dynamic = df_dynamic,
   event_indicator = "event.status",
   dynamic_covariates = "dose",
-  ids = "patient.id",
-  event_time = "event.time"
+  ids = "patient_id",
+  event_time = "event.time",
+  times = "times",
+  measurements = "measurements",
+  dynamic_covariate_names = "covariates"
 )
 
-landmarks <- 365.25*c(1:5)
+landmarking_object <- landmarking_object |>
+  compute_risk_sets(landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25))
 
 landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks)
+  fit_survival_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    horizons = seq(from = 2*365.25, to = 6*365.25, by = 365.25),
+    method = survival::coxph,
+    dynamic_covariates = c()
+  )
 
-horizons <- 365.25 + landmarks
-method <- "coxph"
-dynamic_covariates <- c()
-
-landmarking_object <- landmarking_object |>
-  fit_survival_v2(landmarks, horizons, survival::coxph, dynamic_covariates)
 
 landmarking_object <- Landmarking(
   data_static = df_static,
   data_dynamic = df_dynamic,
   event_indicator = "event.status",
   dynamic_covariates = "dose",
-  ids = "patient.id",
-  event_time = "event.time"
+  ids = "patient_id",
+  event_time = "event.time",
+  times = "times",
+  measurements = "measurements",
+  dynamic_covariate_names = "covariates"
 )
 
-landmarks <- 365.25*c(1:5)
-
 landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks)
-
-horizons <- 365.25 + landmarks
-method <- "coxph"
-dynamic_covariates <- c("dose")
-
-landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks) |>
+  compute_risk_sets(seq(from = 365.25, to = 5*365.25, by = 365.25)) |>
   fit_longitudinal_v2(
-    landmarks, lme4::lmer,
-    measurement ~ treat + age + gender + learn.dis + (measurement_time|patient.id)) |>
-  predict_longitudinal_v2(landmarks, predict, allow.new.levels = TRUE) |>
-  fit_survival_v2(landmarks, horizons, survival::coxph, dynamic_covariates)
-
-lcmm_wrapper <- function(formula, data, mixture, subject, ng, ...) {
-  model_init <- lcmm::hlme(formula, data = data, subject = subject, ng = 1)
-  model_fit <- lcmm::hlme(formula, data = data, mixture = mixture, subject = subject, ng = ng, B = model_init, ...)
-
-  model_fit$call$fixed <- formula
-  model_fit$call$mixture <- mixture
-
-  model_fit
-}
-
-lcmm_predict_wrapper <- function(x, newdata, subject) {
-  # pprob contains probability of observation belonging to a certain cluster
-  pprob <- x$pprob
-  # Finds out the largest cluster.
-  mode_cluster <- as.integer(names(sort(-table(pprob$class)))[1])
-  # Allocation of clusters for prediction
-  if (length(newdata$patient.id) == nrow(pprob)) {
-    cluster_allocation <- data.frame(id = pprob[,subject], cluster = pprob$class)
-  } else {
-    cluster_allocation <- rbind(
-      data.frame(id = pprob[,subject], cluster = pprob$class),
-      data.frame(id = setdiff(newdata$patient.id, pprob[,subject]), cluster = mode_cluster)
-    ) |> arrange(id) |> select(-id)
-  }
-  rownames(cluster_allocation) <- newdata$patient.id
-  # Make predictions with lcmm package
-  predictions <- lcmm::predictY(x, newdata = newdata)
-  # Choose correct cluster for prediction
-  predictions <- predictions$pred * model.matrix(~as.factor(cluster)-1,data=cluster_allocation)
-  # Store predictions in Landmarking object
-  predictions <- rowSums(predictions)
-  names(predictions) <- newdata$patient.id
-  predictions
-}
-
-landmarking_object <- Landmarking(
-  data_static = df_static,
-  data_dynamic = df_dynamic,
-  event_indicator = "event.status",
-  dynamic_covariates = "dose",
-  ids = "patient.id",
-  event_time = "event.time"
-)
-
-landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks) |>
-  fit_longitudinal_v2(
-    landmarks, lcmm_wrapper,
-    measurement ~ treat + age + gender + learn.dis,
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    method = "lcmm",
+    formula = measurements ~ treat + age + gender + learn.dis,
     mixture = ~treat+age+gender+learn.dis,
-    subject = "patient.id",
-    ng = 2) |>
-  predict_longitudinal_v2(landmarks, lcmm_predict_wrapper, subject = "patient.id") |>
-  fit_survival_v2(landmarks, horizons, survival::coxph, dynamic_covariates)
+    subject = "patient_id",
+    ng = 2
+  ) |>
+  predict_longitudinal_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    method = "lcmm",
+    subject = "patient_id",
+    avg = FALSE
+  ) |>
+  fit_survival_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
+    method = survival::coxph,
+    dynamic_covariates = c("dose")
+  )
+
+
+landmarking_object <- Landmarking(
+  data_static = df_static,
+  data_dynamic = df_dynamic,
+  event_indicator = "event.status",
+  dynamic_covariates = "dose",
+  ids = "patient_id",
+  event_time = "event.time",
+  times = "times",
+  measurements = "measurements",
+  dynamic_covariate_names = "covariates"
+)
+
+landmarking_object <- landmarking_object |>
+  compute_risk_sets(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25)
+  )
+
+landmarking_object <- landmarking_object |>
+  fit_longitudinal_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    method = lme4::lmer,
+    formula = measurements ~ treat + age + gender + learn.dis + (times|patient_id)
+  ) |>
+  predict_longitudinal_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    method = predict,
+    allow.new.levels = TRUE
+  ) |>
+  fit_survival_v2(
+    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
+    method = survival::coxph,
+    dynamic_covariates = c("dose")
+  )
+

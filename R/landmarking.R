@@ -1,10 +1,14 @@
 #' An S4 class for a landmarking analysis
+#'
 #' @slot landmarks Array of landmark times.
 #' @slot data_static Data frame with id, static covariates, censoring indicator and event time.
 #' @slot data_dynamic Data frame in long format with id, measurement, measurement time and covariate measured.
 #' @slot event_indicator Name of the column indicating event or censoring.
 #' @slot dynamic_covariates List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times
 #' @slot ids Name of the column indicating patient id.
+#' @slot times Name of the column indicating time in the dynamic df.
+#' @slot measurements Name of the column indicating measurement values in the dynamic df.
+#' @slot dynamic_covariate_names Name of the column indicating names of the dynamic covariates in the dynamic df.
 #' @slot event_time Name of the column indicating time of the event/censoring.
 #' @slot risk_sets List of indices.
 #' @slot longitudinal_fits List of model fits for the specified landmark times and biomarkers.
@@ -21,6 +25,9 @@ setClass("Landmarking",
     dynamic_covariates = "character",
     ids = "character",
     event_time = "character",
+    times = "character",
+    measurements = "character",
+    dynamic_covariate_names = "character",
     risk_sets = "list",
     longitudinal_fits = "list",
     longitudinal_predictions = "list",
@@ -55,10 +62,13 @@ setValidity("Landmarking", function(object) {
 #' @param dynamic_covariates Names of dynamic (time-varying) covariates.
 #' @param ids Name of the column indicating patient id.
 #' @param event_time Name of the column indicating time of the event/censoring.
+#' @slot times Name of the column indicating time in the dynamic df.
+#' @slot measurements Name of the column indicating measurement values in the dynamic df.
+#' @slot dynamic_covariate_names Name of the column indicating names of the dynamic covariates in the dynamic df.
 #'
 #' @returns An object of class Landmarking
 #' @export
-Landmarking <- function(data_static, data_dynamic, event_indicator, dynamic_covariates, ids, event_time) {
+Landmarking <- function(data_static, data_dynamic, event_indicator, dynamic_covariates, ids, event_time, times, measurements, dynamic_covariate_names) {
   new("Landmarking",
       data_static = data_static,
       data_dynamic = data_dynamic,
@@ -66,6 +76,9 @@ Landmarking <- function(data_static, data_dynamic, event_indicator, dynamic_cova
       dynamic_covariates = dynamic_covariates,
       ids = ids,
       event_time = event_time,
+      times = times,
+      measurements = measurements,
+      dynamic_covariate_names = dynamic_covariate_names,
       risk_sets = list(),
       longitudinal_fits = list(),
       longitudinal_predictions = list(),
