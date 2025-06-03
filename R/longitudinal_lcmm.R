@@ -5,7 +5,7 @@
 #' @param mixture One-sided formula specifying the class-specific fixed effects.
 #' @param subject Name of the column indcating individual ids in data
 #' @param ng Number of clusters in the LCMM model
-#' @param ...
+#' @param ... Additional arguments passed to the lcmm::hlme function.
 #'
 #' @returns An object of class hlme
 #'

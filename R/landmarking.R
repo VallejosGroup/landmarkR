@@ -62,9 +62,9 @@ setValidity("Landmarking", function(object) {
 #' @param dynamic_covariates Names of dynamic (time-varying) covariates.
 #' @param ids Name of the column indicating patient id.
 #' @param event_time Name of the column indicating time of the event/censoring.
-#' @slot times Name of the column indicating time in the dynamic df.
-#' @slot measurements Name of the column indicating measurement values in the dynamic df.
-#' @slot dynamic_covariate_names Name of the column indicating names of the dynamic covariates in the dynamic df.
+#' @param times Name of the column indicating time in the dynamic df.
+#' @param measurements Name of the column indicating measurement values in the dynamic df.
+#' @param dynamic_covariate_names Name of the column indicating names of the dynamic covariates in the dynamic df.
 #'
 #' @returns An object of class Landmarking
 #' @export
