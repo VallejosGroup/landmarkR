@@ -39,7 +39,7 @@ landmarking_object <- landmarking_object |>
   fit_survival(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     horizons = seq(from = 2*365.25, to = 6*365.25, by = 365.25),
-    method = survival::coxph,
+    method = "coxph",
     dynamic_covariates = c()
   )
 
@@ -74,7 +74,7 @@ landmarking_object <- landmarking_object |>
   fit_survival(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
-    method = survival::coxph,
+    method = "coxph",
     dynamic_covariates = c("dose")
   )
 
@@ -99,12 +99,12 @@ landmarking_object <- landmarking_object |>
 landmarking_object <- landmarking_object |>
   fit_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
-    method = lme4::lmer,
+    method = "lme4",
     formula = measurements ~ treat + age + gender + learn.dis + (times|patient_id)
   ) |>
   predict_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
-    method = predict,
+    method = "lme4",
     allow.new.levels = TRUE
   ) |>
   fit_survival(

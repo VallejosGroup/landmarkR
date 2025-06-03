@@ -31,6 +31,8 @@ setMethod("fit_longitudinal", "Landmarking", function(x, landmarks, method, form
   # Check that method is a function with arguments formula, data, ...
   if (is(method)[1] == "character" && method == "lcmm") {
     method <- fit_lcmm_
+  } else if (is(method)[1] == "character" && method == "lme4") {
+    method <- lme4::lmer
   }
   if (!(is(method)[1] == "function")) {
     stop("Argument ",
@@ -108,6 +110,8 @@ setMethod("predict_longitudinal", "Landmarking", function(x, landmarks, method, 
   # Check that method is a function with arguments formula, data, ...
   if (is(method)[1] == "character" && method == "lcmm") {
     method <- predict_lcmm_
+  } else if (is(method)[1] == "character" && method == "lme4") {
+    method <- predict
   }
   if (!(is(method)[1] == "function")) {
     stop("Argument method",

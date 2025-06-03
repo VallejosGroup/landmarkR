@@ -29,6 +29,11 @@ setGeneric("fit_survival", function(x, landmarks, horizons, method, dynamic_cova
 #' @examples
 setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method, dynamic_covariates = c()) {
    # Check that method is a function with arguments formula, data, ...
+  if (is(method)[1] == "character" && method == "survfit") {
+    method <- survival::survfit
+  } else if (is(method)[1] == "character" && method == "coxph") {
+    method <- survival::coxph
+  }
   if (!(is(method)[1] == "function")) {
     stop("Argument ",
          method,
