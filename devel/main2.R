@@ -36,13 +36,12 @@ landmarking_object <- landmarking_object |>
   compute_risk_sets(landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25))
 
 landmarking_object <- landmarking_object |>
-  fit_survival_v2(
+  fit_survival(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     horizons = seq(from = 2*365.25, to = 6*365.25, by = 365.25),
     method = survival::coxph,
     dynamic_covariates = c()
   )
-
 
 landmarking_object <- Landmarking(
   data_static = df_static,
@@ -58,7 +57,7 @@ landmarking_object <- Landmarking(
 
 landmarking_object <- landmarking_object |>
   compute_risk_sets(seq(from = 365.25, to = 5*365.25, by = 365.25)) |>
-  fit_longitudinal_v2(
+  fit_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     method = "lcmm",
     formula = measurements ~ treat + age + gender + learn.dis,
@@ -66,13 +65,13 @@ landmarking_object <- landmarking_object |>
     subject = "patient_id",
     ng = 2
   ) |>
-  predict_longitudinal_v2(
+  predict_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     method = "lcmm",
     subject = "patient_id",
     avg = FALSE
   ) |>
-  fit_survival_v2(
+  fit_survival(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
     method = survival::coxph,
@@ -98,17 +97,17 @@ landmarking_object <- landmarking_object |>
   )
 
 landmarking_object <- landmarking_object |>
-  fit_longitudinal_v2(
+  fit_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     method = lme4::lmer,
     formula = measurements ~ treat + age + gender + learn.dis + (times|patient_id)
   ) |>
-  predict_longitudinal_v2(
+  predict_longitudinal(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     method = predict,
     allow.new.levels = TRUE
   ) |>
-  fit_survival_v2(
+  fit_survival(
     landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
     horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
     method = survival::coxph,
