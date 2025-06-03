@@ -9,11 +9,11 @@
 #' @slot dynamic_covariates List whose name indicate columns for biomarker
 #'   measurements, and values indicate columns for biomarker measurement times
 #' @slot ids Name of the column indicating patient id.
-#' @slot times Name of the column indicating time in the dynamic df.
-#' @slot measurements Name of the column indicating measurement values in the
-#'   dynamic df.
+#' @slot times Name of the column indicating time in \code{data_dynamic}.
+#' @slot measurements Name of the column indicating measurement values in
+#'   \code{data_dynamic}.
 #' @slot dynamic_covariate_names Name of the column indicating names of the
-#'   dynamic covariates in the dynamic df.
+#'   dynamic covariates in \code{data_dynamic}.
 #' @slot event_time Name of the column indicating time of the event/censoring.
 #' @slot risk_sets List of indices.
 #' @slot longitudinal_fits List of model fits for the specified landmark times
@@ -72,11 +72,11 @@ setValidity("Landmarking", function(object) {
 #' @param dynamic_covariates Names of dynamic (time-varying) covariates.
 #' @param ids Name of the column indicating patient id.
 #' @param event_time Name of the column indicating time of the event/censoring.
-#' @param times Name of the column indicating time in the dynamic df.
-#' @param measurements Name of the column indicating measurement values in the
-#'   dynamic df.
+#' @param times Name of the column indicating time in \code{data_dynamic}.
+#' @param measurements Name of the column indicating measurement values in
+#'   \code{data_dynamic}.
 #' @param dynamic_covariate_names Name of the column indicating names of the
-#'   dynamic covariates in the dynamic df.
+#'   dynamic covariates in \code{data_dynamic}.
 #'
 #' @returns An object of class Landmarking
 #' @export

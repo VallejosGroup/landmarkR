@@ -36,7 +36,7 @@ The dataset contains the following variables:
 
 -   with.time: time when the first of event or censoring happened
 
--   with.status: indicates whether event (1) or censoring (0) occurered
+-   with.status: indicates whether event (1) or censoring (0) occurred
 
 -   dose: a time-varying covariate
 

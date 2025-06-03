@@ -31,13 +31,13 @@ measurement time and covariate measured.}
 
 \item{event_time}{Name of the column indicating time of the event/censoring.}
 
-\item{times}{Name of the column indicating time in the dynamic df.}
+\item{times}{Name of the column indicating time in \code{data_dynamic}.}
 
-\item{measurements}{Name of the column indicating measurement values in the
-dynamic df.}
+\item{measurements}{Name of the column indicating measurement values in
+\code{data_dynamic}.}
 
 \item{dynamic_covariate_names}{Name of the column indicating names of the
-dynamic covariates in the dynamic df.}
+dynamic covariates in \code{data_dynamic}.}
 }
 \value{
 An object of class Landmarking

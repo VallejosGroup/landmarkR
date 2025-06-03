@@ -25,13 +25,13 @@ measurements, and values indicate columns for biomarker measurement times}
 
 \item{\code{ids}}{Name of the column indicating patient id.}
 
-\item{\code{times}}{Name of the column indicating time in the dynamic df.}
+\item{\code{times}}{Name of the column indicating time in \code{data_dynamic}.}
 
-\item{\code{measurements}}{Name of the column indicating measurement values in the
-dynamic df.}
+\item{\code{measurements}}{Name of the column indicating measurement values in
+\code{data_dynamic}.}
 
 \item{\code{dynamic_covariate_names}}{Name of the column indicating names of the
-dynamic covariates in the dynamic df.}
+dynamic covariates in \code{data_dynamic}.}
 
 \item{\code{event_time}}{Name of the column indicating time of the event/censoring.}
 
