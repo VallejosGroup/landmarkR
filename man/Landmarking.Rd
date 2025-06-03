@@ -10,7 +10,10 @@ Landmarking(
   event_indicator,
   dynamic_covariates,
   ids,
-  event_time
+  event_time,
+  times,
+  measurements,
+  dynamic_covariate_names
 )
 }
 \arguments{
@@ -25,6 +28,12 @@ Landmarking(
 \item{ids}{Name of the column indicating patient id.}
 
 \item{event_time}{Name of the column indicating time of the event/censoring.}
+
+\item{times}{Name of the column indicating time in the dynamic df.}
+
+\item{measurements}{Name of the column indicating measurement values in the dynamic df.}
+
+\item{dynamic_covariate_names}{Name of the column indicating names of the dynamic covariates in the dynamic df.}
 }
 \value{
 An object of class Landmarking

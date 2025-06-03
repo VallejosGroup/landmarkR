@@ -5,16 +5,17 @@
 \title{Fits the specified longitudinal model for the latent processes underlying the
 relevant time-varying covariates, up until the landmarking times}
 \usage{
-\S4method{fit_longitudinal}{Landmarking}(x, landmarks, method, static_covariates, ...)
+\S4method{fit_longitudinal}{Landmarking}(x, landmarks, method, formula, ...)
 }
 \arguments{
 \item{x}{An object of class Landmarking.}
 
 \item{landmarks}{A vector of Landmark times.}
 
-\item{method}{Method for longitudinal analysis, currently only "lme4" or "lcmm" is supported.}
+\item{method}{A function for fitting a longitudinal data model, whose first
+argument is a formula, and has at least an argument "data".}
 
-\item{static_covariates}{Vector of names of static covariates to be included in the longitudinal analysis.}
+\item{formula}{A formula to be used in longitudinal submodel fitting.}
 
 \item{...}{Additional arguments passed to the longitudinal model fitting function (e.g. number of classes/clusters for lcmm).}
 }
