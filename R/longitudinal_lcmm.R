@@ -5,9 +5,9 @@
 #' @param mixture One-sided formula specifying the class-specific fixed effects.
 #' @param subject Name of the column indicating individual ids in data
 #' @param ng Number of clusters in the LCMM model
-#' @param ... Additional arguments passed to the \link{\code{lcmm::hlme}}
+#' @param ... Additional arguments passed to the \code{\link[lcmm]{hlme}}
 #'   function.
-#' @seealso [lcmm::hlme()]
+#' @seealso  [lcmm::hlme()]
 #'
 #' @returns An object of class hlme
 #'
@@ -31,7 +31,7 @@ fit_lcmm_ <- function(formula, data, mixture, subject, ng, ...) {
 
 #' Makes predictions from an LCMM model
 #'
-#' @param x An object of class \code{\link{hlme}{lcmm}}.
+#' @param x An object of class \code{\link[lcmm]{hlme}}.
 #' @param newdata A data frame containing static covariates and individual
 #'   IDs
 #' @param subject Name of the column in newdata where individual IDs are stored.

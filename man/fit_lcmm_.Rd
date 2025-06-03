@@ -17,7 +17,7 @@ fit_lcmm_(formula, data, mixture, subject, ng, ...)
 
 \item{ng}{Number of clusters in the LCMM model}
 
-\item{...}{Additional arguments passed to the \link{\code{lcmm::hlme}}
+\item{...}{Additional arguments passed to the \code{\link[lcmm]{hlme}}
 function.}
 }
 \value{

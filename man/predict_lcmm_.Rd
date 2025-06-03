@@ -7,7 +7,7 @@
 predict_lcmm_(x, newdata, subject, avg = FALSE)
 }
 \arguments{
-\item{x}{An object of class \code{\link{hlme}{lcmm}}.}
+\item{x}{An object of class \code{\link[lcmm]{hlme}}.}
 
 \item{newdata}{A data frame containing static covariates and individual
 IDs}

@@ -6,6 +6,8 @@
 \alias{landmarkR}
 \title{landmarkR}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Provides a comprehensive framework for conducting time-to-event landmarking analysis using a variety of longitudinal and survival sub-models. It aims to facilitate the analysis of time-to-event data with time-dependent covariates.
 }
 \seealso{
