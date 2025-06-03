@@ -4,7 +4,7 @@
 \alias{predict_longitudinal}
 \title{Make predictions for time-varying covariates at specified landmark times}
 \usage{
-predict_longitudinal(x, landmarks, method, static_covariates, ...)
+predict_longitudinal(x, landmarks, method, ...)
 }
 \arguments{
 \item{x}{An object of class Landmarking.}
@@ -12,8 +12,6 @@ predict_longitudinal(x, landmarks, method, static_covariates, ...)
 \item{landmarks}{Vector of landmark times.}
 
 \item{method}{Longitudinal data analysis method used to make predictions}
-
-\item{static_covariates}{Vector of names of static covariates to be included in the longitudinal analysis.}
 
 \item{...}{Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).}
 }

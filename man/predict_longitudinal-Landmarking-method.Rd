@@ -4,16 +4,15 @@
 \alias{predict_longitudinal,Landmarking-method}
 \title{Make predictions for time-varying covariates at specified landmark times}
 \usage{
-\S4method{predict_longitudinal}{Landmarking}(x, landmarks, method, static_covariates, ...)
+\S4method{predict_longitudinal}{Landmarking}(x, landmarks, method, ...)
 }
 \arguments{
 \item{x}{An object of class Landmarking.}
 
 \item{landmarks}{Vector of landmark times.}
 
-\item{method}{Longitudinal data analysis method used to make predictions}
-
-\item{static_covariates}{Vector of names of static covariates to be included in the longitudinal analysis.}
+\item{method}{Function used to make predictions, whose first argument is a
+model fit, and with at least an additional argument newdata.}
 
 \item{...}{Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).}
 }

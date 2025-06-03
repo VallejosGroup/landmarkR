@@ -22,6 +22,12 @@ An S4 class for a landmarking analysis
 
 \item{\code{ids}}{Name of the column indicating patient id.}
 
+\item{\code{times}}{Name of the column indicating time in the dynamic df.}
+
+\item{\code{measurements}}{Name of the column indicating measurement values in the dynamic df.}
+
+\item{\code{dynamic_covariate_names}}{Name of the column indicating names of the dynamic covariates in the dynamic df.}
+
 \item{\code{event_time}}{Name of the column indicating time of the event/censoring.}
 
 \item{\code{risk_sets}}{List of indices.}

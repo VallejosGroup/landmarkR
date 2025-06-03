@@ -10,7 +10,10 @@ Landmarking(
   event_indicator,
   dynamic_covariates,
   ids,
-  event_time
+  event_time,
+  times,
+  measurements,
+  dynamic_covariate_names
 )
 }
 \arguments{
@@ -32,3 +35,13 @@ An object of class Landmarking
 \description{
 Creates an S4 class for a landmarking analysis
 }
+\section{Slots}{
+
+\describe{
+\item{\code{times}}{Name of the column indicating time in the dynamic df.}
+
+\item{\code{measurements}}{Name of the column indicating measurement values in the dynamic df.}
+
+\item{\code{dynamic_covariate_names}}{Name of the column indicating names of the dynamic covariates in the dynamic df.}
+}}
+
