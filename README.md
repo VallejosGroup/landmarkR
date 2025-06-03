@@ -20,22 +20,22 @@ _event of interest_ occurs. Common events include hospitalisation, equipment
 failure, or a prisoner reoffending. Whilst classic survival methods assume model
 covariates are static, it is often the case that longitudinal data related to
 the outcome of interest are collected. Two main forms of survival analysis
-incorporating time-dependent covariates exist, joint models and landmarking.
-This package focuses on the latter.
+incorporating time-dependent covariates exist, joint models and landmarking
+[^1]. This package focuses on the latter.
 
 For a set of landmark times, a survival model is fitted up to specified
 horizon times. At landmark times, any time-dependent covariates must be
 summarised. Most commonly, the last observation carried forward (LOCF) approach
 is used. However, a more modern approach is to instead fit a linear mixed
-effects model which accounts for observations being measured with error.
+effects model which accounts for observations being measured with error [^2].
 However, any method which summarises longitudinal observations can be used. 
 Moreover, whilst landmarking methods typically reply on Cox proportional
 hazards models, nearly any survival model can also be used.
 
 Whilst packages already exist which implement landmarking, these packages
 implement specific longitudinal and survival models. The aim of `landmarkR` is
-to support a wide array of longitudinal and survival sub-models whilst using a
-modular system which permits others incorporating their own models. 
+to support a wide array of longitudinal and survival sub-models whilst providing
+a modular system which allows others to incorporate their own models. 
 
 ## Installation
 
@@ -59,3 +59,9 @@ vignette("landmarkR")
 
 Alternatively, you can view the vignette
 [online](https://vallejosgroup.github.io/landmarkR/articles/landmarkR.html).
+
+## References
+
+[^1]: Rizopoulos D, Molenberghs G, Lesaffre EMEH. Dynamic predictions with time-dependent covariates in survival analysis using joint modeling and landmarking. Biometrical Journal. 2017;59(6):1261-1276. doi: [10.1002/bimj.201600238](https://doi.org/10.1002/bimj.201600238)
+[^2]: Paige E, Barrett J, Stevens D, et al. Landmark models for optimizing the use of repeated measurements of risk factors in electronic health records to predict future disease risk. American Journal of Epidemiology. 2018;187(7):1530-1538. doi: [10.1093/aje/kwy018](https://doi.org/10.1093/aje/kwy018)
+
