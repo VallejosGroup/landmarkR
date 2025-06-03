@@ -1,6 +1,6 @@
 #' landmarkR
 ## usethis namespace: start
-#' @importFrom methods new
+#' @importFrom methods new is
 #' @importFrom stats as.formula predict model.matrix
 #' @importFrom utils head
 #' @import dplyr
