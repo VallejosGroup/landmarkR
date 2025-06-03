@@ -9,10 +9,10 @@ predict_lcmm_(x, newdata, subject, avg = FALSE)
 \arguments{
 \item{x}{An object of class hlme.}
 
-\item{newdata}{A dataframe containing static covariates, individual identifiers
-time when predictions are required.}
+\item{newdata}{A data frame containing static covariates and individual
+IDs}
 
-\item{subject}{Name of the column in newdata where individual ids are stored.}
+\item{subject}{Name of the column in newdata where individual IDs are stored.}
 
 \item{avg}{Boolean indicating whether to make predictions based on the
 most likely cluster (FALSE, default) or averaging over clusters (TRUE).}

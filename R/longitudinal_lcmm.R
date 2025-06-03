@@ -12,7 +12,14 @@
 #' @examples
 fit_lcmm_ <- function(formula, data, mixture, subject, ng, ...) {
   model_init <- lcmm::hlme(formula, data = data, subject = subject, ng = 1)
-  model_fit <- lcmm::hlme(formula, data = data, mixture = mixture, subject = subject, ng = ng, B = model_init, ...)
+  model_fit <- lcmm::hlme(formula,
+    data = data,
+    mixture = mixture,
+    subject = subject,
+    ng = ng,
+    B = model_init,
+    ...
+  )
 
   model_fit$call$fixed <- formula
   model_fit$call$mixture <- mixture
@@ -23,11 +30,11 @@ fit_lcmm_ <- function(formula, data, mixture, subject, ng, ...) {
 #' Makes predictions from an LCMM model
 #'
 #' @param x An object of class hlme.
-#' @param newdata A dataframe containing static covariates, individual identifiers
-#' time when predictions are required.
-#' @param subject Name of the column in newdata where individual ids are stored.
+#' @param newdata A data frame containing static covariates and individual
+#'   IDs
+#' @param subject Name of the column in newdata where individual IDs are stored.
 #' @param avg Boolean indicating whether to make predictions based on the
-#' most likely cluster (FALSE, default) or averaging over clusters (TRUE).
+#'   most likely cluster (FALSE, default) or averaging over clusters (TRUE).
 #'
 #' @returns A vector of predictions.
 #'

@@ -17,9 +17,11 @@ Landmarking(
 )
 }
 \arguments{
-\item{data_static}{Data frame with id, static covariates, censoring indicator and event time.}
+\item{data_static}{Data frame with id, static covariates, censoring indicator
+and event time.}
 
-\item{data_dynamic}{Data frame in long format with id, measurement, measurement time and covariate measured.}
+\item{data_dynamic}{Data frame in long format with id, measurement,
+measurement time and covariate measured.}
 
 \item{event_indicator}{Name of the column indicating event or censoring.}
 
@@ -31,9 +33,11 @@ Landmarking(
 
 \item{times}{Name of the column indicating time in the dynamic df.}
 
-\item{measurements}{Name of the column indicating measurement values in the dynamic df.}
+\item{measurements}{Name of the column indicating measurement values in the
+dynamic df.}
 
-\item{dynamic_covariate_names}{Name of the column indicating names of the dynamic covariates in the dynamic df.}
+\item{dynamic_covariate_names}{Name of the column indicating names of the
+dynamic covariates in the dynamic df.}
 }
 \value{
 An object of class Landmarking

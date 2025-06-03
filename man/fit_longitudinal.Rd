@@ -17,7 +17,8 @@ argument is a formula, and has at least an argument "data".}
 
 \item{formula}{A formula to be used in longitudinal submodel fitting.}
 
-\item{...}{Additional arguments passed to the longitudinal model fitting function (e.g. number of classes/clusters for lcmm).}
+\item{...}{Additional arguments passed to the longitudinal model fitting
+function (e.g. number of classes/clusters for lcmm).}
 }
 \value{
 An object of class Landmarking.

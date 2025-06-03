@@ -15,7 +15,8 @@ and stores them in an object of class Landmarking}
 \item{...}{Additional arguments (not used)}
 }
 \value{
-An object of class Landmarking, including desired risk sets for the relevant landmark times.
+An object of class Landmarking, including desired risk sets for the
+relevant landmark times.
 }
 \description{
 Compute the list of individuals at risk at given landmark times,

@@ -14,7 +14,8 @@
 \item{method}{Function used to make predictions, whose first argument is a
 model fit, and with at least an additional argument newdata.}
 
-\item{...}{Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).}
+\item{...}{Additional arguments passed to the prediction function (e.g.
+number of classes/clusters for lcmm).}
 }
 \value{
 An object of class Landmarking

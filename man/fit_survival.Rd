@@ -16,7 +16,8 @@ fit_survival(x, landmarks, horizons, method, dynamic_covariates = c())
 
 \item{method}{Method for survival analysis, either "survfit" or "coxph".}
 
-\item{dynamic_covariates}{Vector of time-varying covariates that to be used in the survival model.}
+\item{dynamic_covariates}{Vector of time-varying covariates to be used
+in the survival model.}
 }
 \value{
 An object of class Landmarking.

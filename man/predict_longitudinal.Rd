@@ -13,7 +13,8 @@ predict_longitudinal(x, landmarks, method, ...)
 
 \item{method}{Longitudinal data analysis method used to make predictions}
 
-\item{...}{Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).}
+\item{...}{Additional arguments passed to the prediction function (e.g.
+number of classes/clusters for lcmm).}
 }
 \value{
 An object of class Landmarking
