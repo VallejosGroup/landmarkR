@@ -40,7 +40,15 @@ a modular system which allows others to incorporate their own models.
 ## Installation
 
 We are planning to release the package on CRAN once the software is mature. For
-now, the package can be installed from this repository using `remotes`. 
+now, you can get a CRAN-like experience by installing from our r-universe 
+
+``` R
+install.packages("landmarkR",
+                 repos = c("https://vallejosgroup.r-universe.dev",
+                           "https://cloud.r-project.org"))
+```
+
+Alternatively, the package can be built from source using `remotes`
 
 ``` R
 # install.packages("remotes")
