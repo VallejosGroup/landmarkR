@@ -22,10 +22,15 @@ Imports:
     dplyr,
     lme4,
     methods,
-    survival
+    survival,
+    lcmm
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0),
-    xml2
+    xml2,
+    tidyverse
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 LazyData: true
+VignetteBuilder: knitr
