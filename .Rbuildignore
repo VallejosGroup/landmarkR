@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^\.github
 ^LICENSE.md
-^data-raw
+data-raw
 ^.vscode/
 devel/
+\_pkgdown.yml
