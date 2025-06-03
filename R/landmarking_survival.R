@@ -1,8 +1,8 @@
 #' Fits the specified survival model at the landmark times and up to the horizon
 #' times specified by the user
 #'
-#' @param x An object of class Landmarking.
-#' @param landmarks Vector of landmark times
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks Numeric vector of landmark times
 #' @param horizons Vector of horizon times corresponding to the landmark times.
 #' @param method Method for survival analysis, either "survfit" or "coxph".
 #' @param dynamic_covariates Vector of time-varying covariates to be used
@@ -26,12 +26,7 @@ setGeneric(
 #' Fits the specified survival model at the landmark times and up to the horizon
 #' times specified by the user
 #'
-#' @param x An object of class Landmarking.
-#' @param landmarks Vector of landmark times
-#' @param horizons Vector of horizon times corresponding to the landmark times.
-#' @param method Method for survival analysis, either "survfit" or "coxph".
-#' @param dynamic_covariates Vector of time-varying covariates that to be used
-#'   in the survival model.
+#' @inheritParams fit_survival
 #'
 #' @returns An object of class Landmarking.
 #' @export

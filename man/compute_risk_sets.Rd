@@ -8,15 +8,15 @@ and stores them in an object of class Landmarking}
 compute_risk_sets(x, landmarks, ...)
 }
 \arguments{
-\item{x}{An object of type Landmarking}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
-\item{landmarks}{Vector of landmark times}
+\item{landmarks}{Numeric vector of landmark times}
 
 \item{...}{Additional arguments (not used)}
 }
 \value{
-An object of class Landmarking, including desired risk sets for the
-relevant landmark times.
+An object of class \code{\link{Landmarking}} including desired risk
+sets for the specified landmark times.
 }
 \description{
 Compute the list of individuals at risk at given landmark times,

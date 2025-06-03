@@ -1,15 +1,16 @@
-#' An S4 class for a landmarking analysis
+#' S4 class for performing a landmarking analysis
 #'
-#' @slot landmarks Array of landmark times.
-#' @slot data_static Data frame with id, static covariates, censoring indicator
-#'   and event time.
-#' @slot data_dynamic Data frame in long format with id, measurement,
-#'   measurement time and covariate measured.
+#' @slot landmarks A numeric vector of landmark times.
+#' @slot data_static A data frame containing subject ids, static covariates,
+#     censoring indicators  and event times.
+#' @slot data_dynamic Data frame in long format with subject ids, measurement
+#'  values, measurement times and measurement name.
 #' @slot event_indicator Name of the column indicating event or censoring.
-#' @slot dynamic_covariates List whose name indicate columns for biomarker
-#'   measurements, and values indicate columns for biomarker measurement times
-#' @slot ids Name of the column indicating patient id.
-#' @slot times Name of the column indicating time in \code{data_dynamic}.
+#' @slot dynamic_covariates Names of dynamic (time-varying) covariates.
+#' Character vector.
+#' @slot ids Name of the column indicating subject ids.
+#' @slot times Name of the column indicating observation time in
+#'   \code{data_dynamic}.
 #' @slot measurements Name of the column indicating measurement values in
 #'   \code{data_dynamic}.
 #' @slot dynamic_covariate_names Name of the column indicating names of the
@@ -64,15 +65,17 @@ setValidity("Landmarking", function(object) {
 
 #' Creates an S4 class for a landmarking analysis
 #'
-#' @param data_static Data frame with id, static covariates, censoring indicator
-#'   and event time.
-#' @param data_dynamic Data frame in long format with id, measurement,
-#'   measurement time and covariate measured.
-#' @param event_indicator Name of the column indicating event or censoring.
+#' @param data_static A data frame containing subject ids, static covariates,
+#     censoring indicators  and event times.
+#' @param data_dynamic Data frame in long format with subject ids, measurement
+#'  values, measurement times and measurement name.
+#' @param event_indicator  Name of the column indicating event or censoring.
 #' @param dynamic_covariates Names of dynamic (time-varying) covariates.
-#' @param ids Name of the column indicating patient id.
+#' Character vector.
+#' @param ids Name of the column indicating subject ids.
 #' @param event_time Name of the column indicating time of the event/censoring.
-#' @param times Name of the column indicating time in \code{data_dynamic}.
+#' @param times Name of the column indicating observation time in
+#'   \code{data_dynamic}.
 #' @param measurements Name of the column indicating measurement values in
 #'   \code{data_dynamic}.
 #' @param dynamic_covariate_names Name of the column indicating names of the
@@ -155,13 +158,12 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 
 #' Compute the list of individuals at risk at given landmark times,
 #' and stores them in an object of class Landmarking
-#'
-#' @param x An object of type Landmarking
-#' @param landmarks Vector of landmark times
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks Numeric vector of landmark times
 #' @param ... Additional arguments (not used)
 #'
-#' @returns An object of class Landmarking, including desired risk sets for the
-#'   relevant landmark times.
+#' @returns An object of class \code{\link{Landmarking}} including desired risk
+#'   sets for the specified landmark times.
 #' @export
 #'
 #' @examples
@@ -174,9 +176,7 @@ setGeneric(
 #' Compute the list of individuals at risk at given landmark times,
 #' and stores them in an object of class Landmarking
 #'
-#' @param x An object of type Landmarking
-#' @param landmarks Vector of landmark times
-#' @param ... Additional arguments (not used)
+#' @inheritParams compute_risk_sets
 #'
 #' @returns An object of class Landmarking, including desired risk sets for the
 #'   relevant landmark times.

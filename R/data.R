@@ -49,6 +49,7 @@
 #' @source SANAD Trial Group, University of Liverpool. Data modified from the
 #'   joineR package.
 #' @docType data
+#' @seealso [joineR::epileptic]
 #' @references
 #'
 #' Marson AG, Appleton R, Baker GA, et al. A randomised controlled trial

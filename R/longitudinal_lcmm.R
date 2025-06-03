@@ -1,11 +1,13 @@
 #' Fits an LCMM model
 #'
 #' @param formula Two-sided linear formula for the fixed effects in the LCMM.
-#' @param data Dataframe with data
+#' @param data Data frame with data
 #' @param mixture One-sided formula specifying the class-specific fixed effects.
 #' @param subject Name of the column indicating individual ids in data
 #' @param ng Number of clusters in the LCMM model
-#' @param ... Additional arguments passed to the lcmm::hlme function.
+#' @param ... Additional arguments passed to the \link{\code{lcmm::hlme}}
+#'   function.
+#' @seealso [lcmm::hlme()]
 #'
 #' @returns An object of class hlme
 #'
@@ -29,7 +31,7 @@ fit_lcmm_ <- function(formula, data, mixture, subject, ng, ...) {
 
 #' Makes predictions from an LCMM model
 #'
-#' @param x An object of class hlme.
+#' @param x An object of class \code{\link{hlme}{lcmm}}.
 #' @param newdata A data frame containing static covariates and individual
 #'   IDs
 #' @param subject Name of the column in newdata where individual IDs are stored.
@@ -41,11 +43,10 @@ fit_lcmm_ <- function(formula, data, mixture, subject, ng, ...) {
 #' @examples
 predict_lcmm_ <- function(x, newdata, subject, avg = FALSE) {
   # pprob contains probability of observation belonging to a certain cluster
-  # But it is posible that pprob does not contain predictions for some individuals
+  # But it is possible that pprob does not contain predictions for some individuals
   # in newdata. That is because those individuals have not been use in training.
   # We will augment pprob using the sample average for individuals not used in
-  # training
-  # First, find out the largest cluster.
+  # training first, find out the largest cluster.
   pprob <- x$pprob
   mode_cluster <- as.integer(names(sort(-table(pprob$class)))[1])
   # Allocation of clusters for prediction

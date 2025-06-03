@@ -8,9 +8,9 @@ and stores them in an object of class Landmarking}
 \S4method{compute_risk_sets}{Landmarking}(x, landmarks, ...)
 }
 \arguments{
-\item{x}{An object of type Landmarking}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
-\item{landmarks}{Vector of landmark times}
+\item{landmarks}{Numeric vector of landmark times}
 
 \item{...}{Additional arguments (not used)}
 }

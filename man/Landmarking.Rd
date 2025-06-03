@@ -17,21 +17,22 @@ Landmarking(
 )
 }
 \arguments{
-\item{data_static}{Data frame with id, static covariates, censoring indicator
-and event time.}
+\item{data_static}{A data frame containing subject ids, static covariates,}
 
-\item{data_dynamic}{Data frame in long format with id, measurement,
-measurement time and covariate measured.}
+\item{data_dynamic}{Data frame in long format with subject ids, measurement
+values, measurement times and measurement name.}
 
 \item{event_indicator}{Name of the column indicating event or censoring.}
 
-\item{dynamic_covariates}{Names of dynamic (time-varying) covariates.}
+\item{dynamic_covariates}{Names of dynamic (time-varying) covariates.
+Character vector.}
 
-\item{ids}{Name of the column indicating patient id.}
+\item{ids}{Name of the column indicating subject ids.}
 
 \item{event_time}{Name of the column indicating time of the event/censoring.}
 
-\item{times}{Name of the column indicating time in \code{data_dynamic}.}
+\item{times}{Name of the column indicating observation time in
+\code{data_dynamic}.}
 
 \item{measurements}{Name of the column indicating measurement values in
 \code{data_dynamic}.}

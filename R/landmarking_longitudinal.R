@@ -1,14 +1,14 @@
 #' Fits the specified longitudinal model for the latent processes underlying the
 #' relevant time-varying covariates, up until the landmarking times
 #'
-#' @param x An object of class Landmarking.
+#' @param x An object of class \code{\link{Landmarking}}.
 #' @param landmarks A vector of Landmark times.
 #' @param method A function for fitting a longitudinal data model, whose first
 #' argument is a formula, and has at least an argument "data".
 #' @param formula A formula to be used in longitudinal submodel fitting.
 #' @param ... Additional arguments passed to the longitudinal model fitting
 #'   function (e.g. number of classes/clusters for lcmm).
-#' @returns An object of class Landmarking.
+#' @returns An object of class \code{\link{Landmarking}}.
 #' @export
 #'
 #' @examples
@@ -26,14 +26,8 @@ setGeneric(
 #' Fits the specified longitudinal model for the latent processes underlying the
 #' relevant time-varying covariates, up until the landmarking times
 #'
-#' @param x An object of class Landmarking.
-#' @param landmarks A vector of Landmark times.
-#' @param method A function for fitting a longitudinal data model, whose first
-#' argument is a formula, and has at least an argument "data".
-#' @param formula A formula to be used in longitudinal submodel fitting.
-#' @param ... Additional arguments passed to the longitudinal model fitting
-#'   function (e.g. number of classes/clusters for lcmm).
-#' @returns An object of class Landmarking.
+#' @inheritParams fit_longitudinal
+#' @returns An object of class \code{\link{Landmarking}}.
 #' @export
 #'
 #' @examples
@@ -110,13 +104,13 @@ setMethod(
 
 #' Make predictions for time-varying covariates at specified landmark times
 #'
-#' @param x An object of class Landmarking.
-#' @param landmarks Vector of landmark times.
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks A numeric vector of landmark times.
 #' @param method Longitudinal data analysis method used to make predictions
 #' @param ... Additional arguments passed to the prediction function (e.g.
 #'   number of classes/clusters for lcmm).
 #'
-#' @returns An object of class Landmarking
+#' @returns An object of class \code{\link{Landmarking}}.
 #' @export
 #'
 #' @examples
@@ -129,14 +123,9 @@ setGeneric(
 
 #' Make predictions for time-varying covariates at specified landmark times
 #'
-#' @param x An object of class Landmarking.
-#' @param landmarks Vector of landmark times.
-#' @param method Function used to make predictions, whose first argument is a
-#' model fit, and with at least an additional argument newdata.
-#' @param ... Additional arguments passed to the prediction function (e.g.
-#'   number of classes/clusters for lcmm).
+#' @inheritParams predict_longitudinal
 #'
-#' @returns An object of class Landmarking
+#' @returns An object of class \code{\link{Landmarking}}.
 #' @export
 #'
 #' @examples
