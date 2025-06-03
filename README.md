@@ -18,20 +18,24 @@ sub-models.
 Time-to-event, or survival analysis, is used to analyse the time until an
 _event of interest_ occurs. Common events include hospitalisation, equipment
 failure, or a prisoner reoffending. Whilst classic survival methods assume model
-covariates are static, it is often the case that longitudinal data are
-collected. Two main forms of survival analysis in the presence of time-dependent
-covariates exist, joint models and landmarkR. This package focuses on the
-latter. For a set of landmark times, a survival model is fitted up to given
+covariates are static, it is often the case that longitudinal data related to
+the outcome of interest are collected. Two main forms of survival analysis
+incorporating time-dependent covariates exist, joint models and landmarking.
+This package focuses on the latter.
+
+For a set of landmark times, a survival model is fitted up to specified
 horizon times. At landmark times, any time-dependent covariates must be
 summarised. Most commonly, the last observation carried forward (LOCF) approach
 is used. However, a more modern approach is to instead fit a linear mixed
-effects model which accounts for observations being measured with error. 
+effects model which accounts for observations being measured with error.
+However, any method which summarises longitudinal observations can be used. 
+Moreover, whilst landmarking methods typically reply on Cox proportional
+hazards models, nearly any survival model can also be used.
 
 Whilst packages already exist which implement landmarking, these packages
 implement specific longitudinal and survival models. The aim of `landmarkR` is
-to support a wide array of longitudinal and survival sub-models using a system
-which permits others to add their own models. 
-
+to support a wide array of longitudinal and survival sub-models whilst using a
+modular system which permits others incorporating their own models. 
 
 ## Installation
 
@@ -40,5 +44,18 @@ now, the package can be installed from this repository using `remotes`.
 
 ``` R
 # install.packages("remotes")
-remotes::install_github("vallejosgroup/landmarkR")
+remotes::install_github("vallejosgroup/landmarkR", build_vignettes = TRUE)
 ```
+
+## Getting started
+
+We recommend starting with the `landmarkR` vignette, which provides an
+overview of the package and how to use it. You can access the vignette in R by
+calling
+
+``` R
+vignette("landmarkR")
+```
+
+Alternatively, you can view the vignette
+[online](https://vallejosgroup.github.io/landmarkR/articles/landmarkR.html).
