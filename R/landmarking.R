@@ -70,19 +70,19 @@ setValidity("Landmarking", function(object) {
 #' @export
 Landmarking <- function(data_static, data_dynamic, event_indicator, dynamic_covariates, ids, event_time, times, measurements, dynamic_covariate_names) {
   new("Landmarking",
-      data_static = data_static,
-      data_dynamic = data_dynamic,
-      event_indicator = event_indicator,
-      dynamic_covariates = dynamic_covariates,
-      ids = ids,
-      event_time = event_time,
-      times = times,
-      measurements = measurements,
-      dynamic_covariate_names = dynamic_covariate_names,
-      risk_sets = list(),
-      longitudinal_fits = list(),
-      longitudinal_predictions = list(),
-      survival_fits = list()
+    data_static = data_static,
+    data_dynamic = data_dynamic,
+    event_indicator = event_indicator,
+    dynamic_covariates = dynamic_covariates,
+    ids = ids,
+    event_time = event_time,
+    times = times,
+    measurements = measurements,
+    dynamic_covariate_names = dynamic_covariate_names,
+    risk_sets = list(),
+    longitudinal_fits = list(),
+    longitudinal_predictions = list(),
+    survival_fits = list()
   )
 }
 
@@ -98,7 +98,7 @@ setMethod(
     cat("  Event time:", object@event_time, "\n")
     cat("  Risk sets:", "\n")
     if (length(object@risk_sets) > 0) {
-      for(i in 1:length(object@risk_sets)) {
+      for (i in 1:length(object@risk_sets)) {
         cat("    Landmark ", object@landmarks[i], ": ", head(object@risk_sets[[i]], 10), " ...\n")
       }
     }
@@ -171,8 +171,3 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
 # Accessor for survival fits
 setGeneric("getSurvivalFits", function(object) standardGeneric("getSurvivalFits"))
 setMethod("getSurvivalFits", "Landmarking", function(object) object@survival_fits)
-
-
-
-
-

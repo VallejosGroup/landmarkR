@@ -1,4 +1,3 @@
-
 #' Fits the specified survival model at the landmark times and up to the horizon
 #' times specified by the user
 #'
@@ -28,23 +27,27 @@ setGeneric("fit_survival", function(x, landmarks, horizons, method, dynamic_cova
 #'
 #' @examples
 setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method, dynamic_covariates = c()) {
-   # Check that method is a function with arguments formula, data, ...
+  # Check that method is a function with arguments formula, data, ...
   if (is(method)[1] == "character" && method == "survfit") {
     method <- survival::survfit
   } else if (is(method)[1] == "character" && method == "coxph") {
     method <- survival::coxph
   }
   if (!(is(method)[1] == "function")) {
-    stop("Argument ",
-         method,
-         " must be a function",
-         "\n")
+    stop(
+      "Argument ",
+      method,
+      " must be a function",
+      "\n"
+    )
   }
   if (!("data" %in% names(as.list(args(method))))) {
-    stop("Argument ",
-         method,
-         " must be a function, and data must be an argument to that function",
-         "\n")
+    stop(
+      "Argument ",
+      method,
+      " must be a function, and data must be an argument to that function",
+      "\n"
+    )
   }
   # Check that vectors of landmark times and horizons have the same length
   if (length(landmarks) != length(horizons)) {

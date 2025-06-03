@@ -47,13 +47,12 @@ The first step is to split the dataset into two, one containing static covariate
 event/censoring, and another one containing dynamic covariates.
 
 ```{r}
-
 # DF with Static covariates
 df_static <- epileptic |>
   select(id, with.time, with.status, treat, age, gender, learn.dis) |>
   rename(patient_id = id, event.time = with.time, event.status = with.status) |>
   unique()
-df_static$age <- (df_static$age - mean(df_static$age))/sd(df_static$age)
+df_static$age <- (df_static$age - mean(df_static$age)) / sd(df_static$age)
 
 head(df_static)
 ```
@@ -84,7 +83,6 @@ landmarking_object <- Landmarking(
   measurements = "measurements",
   dynamic_covariate_names = "covariates"
 )
-
 ```
 
 Arguments to the helper function are the following:
@@ -105,7 +103,7 @@ First, we perform a survival without time-varying covariates. We can use this as
 
 ```{r}
 landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25))
+  compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25))
 
 landmarking_object
 ```
@@ -115,8 +113,8 @@ Now we call the function fit_survival to fit the survival model.
 ```{r}
 landmarking_object <- landmarking_object |>
   fit_survival(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
-    horizons = seq(from = 2*365.25, to = 6*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c()
   )
@@ -143,25 +141,25 @@ landmarking_object <- Landmarking(
 
 landmarking_object <- landmarking_object |>
   compute_risk_sets(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25)
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25)
   )
 ```
 
 ```{r}
 landmarking_object <- landmarking_object |>
   fit_longitudinal(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
     method = "lme4",
-    formula = measurements ~ treat + age + gender + learn.dis + (times|patient_id)
+    formula = measurements ~ treat + age + gender + learn.dis + (times | patient_id)
   ) |>
   predict_longitudinal(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
     method = "lme4",
     allow.new.levels = TRUE
   ) |>
   fit_survival(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
-    horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c("dose")
   )
@@ -185,31 +183,29 @@ landmarking_object <- Landmarking(
   measurements = "measurements",
   dynamic_covariate_names = "covariates"
 )
-
 ```
 
 ```{r}
 landmarking_object <- landmarking_object |>
-  compute_risk_sets(seq(from = 365.25, to = 5*365.25, by = 365.25)) |>
+  compute_risk_sets(seq(from = 365.25, to = 5 * 365.25, by = 365.25)) |>
   fit_longitudinal(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
     method = "lcmm",
     formula = measurements ~ treat + age + gender + learn.dis,
-    mixture = ~treat+age+gender+learn.dis,
+    mixture = ~ treat + age + gender + learn.dis,
     subject = "patient_id",
     ng = 2
   ) |>
   predict_longitudinal(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
     method = "lcmm",
     subject = "patient_id",
     avg = FALSE
   ) |>
   fit_survival(
-    landmarks = seq(from = 365.25, to = 5*365.25, by = 365.25),
-    horizons = seq(from = 2*365.25, to =6*365.25, by = 365.25),
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c("dose")
   )
-
 ```
