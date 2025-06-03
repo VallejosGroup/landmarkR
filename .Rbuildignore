@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github
-LICENSE.md
+^LICENSE.md
 data-raw
 ^.vscode/
 devel/
