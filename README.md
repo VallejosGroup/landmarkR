@@ -27,7 +27,7 @@ summarised. Most commonly, the last observation carried forward (LOCF) approach
 is used. However, a more modern approach is to instead fit a linear mixed
 effects model which accounts for observations being measured with error. 
 
-Whilst packages already exist which implement landmarkR, these packages
+Whilst packages already exist which implement landmarking, these packages
 implement specific longitudinal and survival models. The aim of `landmarkR` is
 to support a wide array of longitudinal and survival sub-models using a system
 which permits others to add their own models. 
