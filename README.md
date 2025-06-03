@@ -1,4 +1,4 @@
-# landmarkR
+# landmarkR <img src="man/figures/sticker.png" align="right" width="150"/>
 
 Time-to-event analysis using a wide array of longitudinal and survival
 sub-models.
