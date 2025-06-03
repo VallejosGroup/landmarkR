@@ -40,7 +40,7 @@ setMethod("fit_survival", "Landmarking", function(x, landmarks, horizons, method
          " must be a function",
          "\n")
   }
-  if (!("data" %in% names(as.list(args(lcmm::hlme))))) {
+  if (!("data" %in% names(as.list(args(method))))) {
     stop("Argument ",
          method,
          " must be a function, and data must be an argument to that function",

@@ -3,7 +3,7 @@
 #' @param formula Two-sided linear formula for the fixed effects in the LCMM.
 #' @param data Dataframe with data
 #' @param mixture One-sided formula specifying the class-specific fixed effects.
-#' @param subject Name of the column indcating individual ids in data
+#' @param subject Name of the column indicating individual ids in data
 #' @param ng Number of clusters in the LCMM model
 #' @param ... Additional arguments passed to the lcmm::hlme function.
 #'
@@ -45,8 +45,22 @@ predict_lcmm_ <- function(x, newdata, subject, avg = FALSE) {
   if (nrow(newdata) == nrow(pprob)) {
     cluster_allocation <- data.frame(id = pprob[,subject], cluster = pprob$class)
   } else {
+    # Create a dataframe for individuals not used in training with the most common cluster
     pprob.extra <- data.frame(id = setdiff(newdata[, subject], pprob[,subject]), cluster = mode_cluster)
-    pprob.extra <- cbind(pprob.extra, apply(t(as.data.frame(colMeans(pprob[, -c(1,2)]))), 2, rep, each=nrow(pprob.extra)))
+    
+    # Compute the column means for the probability matrix (excluding id and class columns)
+    prob_means <- colMeans(pprob[, -c(1,2)])
+    
+    # Convert the column means into a dataframe and transpose it
+    prob_means_df <- t(as.data.frame(prob_means))
+    
+    # Repeat the column means for each individual in pprob.extra
+    repeated_means <- apply(prob_means_df, 2, rep, each = nrow(pprob.extra))
+    
+    # Combine the repeated means with pprob.extra
+    pprob.extra <- cbind(pprob.extra, repeated_means)
+    
+    # Reset row names and column names to match the original pprob structure
     rownames(pprob.extra) <- NULL
     colnames(pprob.extra) <- colnames(pprob)
     pprob <- rbind(pprob, pprob.extra) |> arrange(get(subject))
