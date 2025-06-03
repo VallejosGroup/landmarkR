@@ -2,7 +2,7 @@
 title: "Introduction to the landmarkR package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{intro-landmarkR}
+  %\VignetteIndexEntry{Introduction to the landmarkR package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

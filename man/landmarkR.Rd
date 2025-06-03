@@ -11,6 +11,7 @@ Provides a comprehensive framework for conducting time-to-event landmarking anal
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://vallejosgroup.github.io/landmarkR/}
   \item \url{https://github.com/VallejosGroup/landmarkR}
   \item Report bugs at \url{https://github.com/VallejosGroup/landmarkR/issues}
 }
