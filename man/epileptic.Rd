@@ -71,6 +71,6 @@ longitudinal and competing risks data. \emph{Stats Med.} 2008;
 \strong{27(30)}: 6426-6438.
 }
 \seealso{
-\link[joineR:epileptic]{joineR::epileptic}
+\link[joineR:epileptic]{joineR::epileptic}, which this dataset was modified from.
 }
 \keyword{datasets}
