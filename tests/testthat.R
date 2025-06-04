@@ -8,5 +8,6 @@
 
 library(testthat)
 library(landmarkR)
+library(tidyverse)
 
 test_check("landmarkR")
