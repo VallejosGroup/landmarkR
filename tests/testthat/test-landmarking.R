@@ -7,6 +7,7 @@ test_that("Validity checks for Landmarking class work", {
 
   dynamic <- epileptic %>%
     select(-with.time, -with.status, -treat, -gender, -learn.dis, -age) %>%
+    mutate(value = dose, type = "dose") %>%
     select(-dose)
 
   # Test: event_indicator column missing from data_static
