@@ -9,7 +9,7 @@ fit_lcmm_(formula, data, mixture, subject, ng, ...)
 \arguments{
 \item{formula}{Two-sided linear formula for the fixed effects in the LCMM.}
 
-\item{data}{Dataframe with data}
+\item{data}{Data frame with data}
 
 \item{mixture}{One-sided formula specifying the class-specific fixed effects.}
 
@@ -17,11 +17,15 @@ fit_lcmm_(formula, data, mixture, subject, ng, ...)
 
 \item{ng}{Number of clusters in the LCMM model}
 
-\item{...}{Additional arguments passed to the lcmm::hlme function.}
+\item{...}{Additional arguments passed to the \code{\link[lcmm]{hlme}}
+function.}
 }
 \value{
 An object of class hlme
 }
 \description{
 Fits an LCMM model
+}
+\seealso{
+\code{\link[lcmm:hlme]{lcmm::hlme()}}
 }

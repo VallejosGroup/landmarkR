@@ -8,7 +8,7 @@ relevant time-varying covariates, up until the landmarking times}
 fit_longitudinal(x, landmarks, method, formula, ...)
 }
 \arguments{
-\item{x}{An object of class Landmarking.}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
 \item{landmarks}{A vector of Landmark times.}
 
@@ -17,10 +17,11 @@ argument is a formula, and has at least an argument "data".}
 
 \item{formula}{A formula to be used in longitudinal submodel fitting.}
 
-\item{...}{Additional arguments passed to the longitudinal model fitting function (e.g. number of classes/clusters for lcmm).}
+\item{...}{Additional arguments passed to the longitudinal model fitting
+function (e.g. number of classes/clusters for lcmm).}
 }
 \value{
-An object of class Landmarking.
+An object of class \code{\link{Landmarking}}.
 }
 \description{
 Fits the specified longitudinal model for the latent processes underlying the

@@ -7,16 +7,17 @@
 predict_longitudinal(x, landmarks, method, ...)
 }
 \arguments{
-\item{x}{An object of class Landmarking.}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
-\item{landmarks}{Vector of landmark times.}
+\item{landmarks}{A numeric vector of landmark times.}
 
 \item{method}{Longitudinal data analysis method used to make predictions}
 
-\item{...}{Additional arguments passed to the prediction function (e.g. number of classes/clusters for lcmm).}
+\item{...}{Additional arguments passed to the prediction function (e.g.
+number of classes/clusters for lcmm).}
 }
 \value{
-An object of class Landmarking
+An object of class \code{\link{Landmarking}}.
 }
 \description{
 Make predictions for time-varying covariates at specified landmark times

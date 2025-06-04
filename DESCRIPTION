@@ -28,9 +28,12 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     xml2,
-    tidyverse
+    tidyverse,
+    spelling,
+    joineR
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 LazyData: true
 VignetteBuilder: knitr
 URL: https://vallejosgroup.github.io/landmarkR/, https://github.com/VallejosGroup/landmarkR
+Language: en-GB

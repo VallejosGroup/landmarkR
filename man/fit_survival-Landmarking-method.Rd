@@ -8,15 +8,16 @@ times specified by the user}
 \S4method{fit_survival}{Landmarking}(x, landmarks, horizons, method, dynamic_covariates = c())
 }
 \arguments{
-\item{x}{An object of class Landmarking.}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
-\item{landmarks}{Vector of landmark times}
+\item{landmarks}{Numeric vector of landmark times}
 
 \item{horizons}{Vector of horizon times corresponding to the landmark times.}
 
 \item{method}{Method for survival analysis, either "survfit" or "coxph".}
 
-\item{dynamic_covariates}{Vector of time-varying covariates that to be used in the survival model.}
+\item{dynamic_covariates}{Vector of time-varying covariates to be used
+in the survival model.}
 }
 \value{
 An object of class Landmarking.

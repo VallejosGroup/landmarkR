@@ -3,39 +3,47 @@
 \docType{class}
 \name{Landmarking-class}
 \alias{Landmarking-class}
-\title{An S4 class for a landmarking analysis}
+\title{S4 class for performing a landmarking analysis}
 \description{
-An S4 class for a landmarking analysis
+S4 class for performing a landmarking analysis
 }
 \section{Slots}{
 
 \describe{
-\item{\code{landmarks}}{Array of landmark times.}
+\item{\code{landmarks}}{A numeric vector of landmark times.}
 
-\item{\code{data_static}}{Data frame with id, static covariates, censoring indicator and event time.}
+\item{\code{data_static}}{A data frame containing subject ids, static covariates,}
 
-\item{\code{data_dynamic}}{Data frame in long format with id, measurement, measurement time and covariate measured.}
+\item{\code{data_dynamic}}{Data frame in long format with subject ids, measurement
+values, measurement times and measurement name.}
 
 \item{\code{event_indicator}}{Name of the column indicating event or censoring.}
 
-\item{\code{dynamic_covariates}}{List whose name indicate columns for biomarker measurements, and values indicate columns for biomarker measurement times}
+\item{\code{dynamic_covariates}}{Names of dynamic (time-varying) covariates.
+Character vector.}
 
-\item{\code{ids}}{Name of the column indicating patient id.}
+\item{\code{ids}}{Name of the column indicating subject ids.}
 
-\item{\code{times}}{Name of the column indicating time in the dynamic df.}
+\item{\code{times}}{Name of the column indicating observation time in
+\code{data_dynamic}.}
 
-\item{\code{measurements}}{Name of the column indicating measurement values in the dynamic df.}
+\item{\code{measurements}}{Name of the column indicating measurement values in
+\code{data_dynamic}.}
 
-\item{\code{dynamic_covariate_names}}{Name of the column indicating names of the dynamic covariates in the dynamic df.}
+\item{\code{dynamic_covariate_names}}{Name of the column indicating names of the
+dynamic covariates in \code{data_dynamic}.}
 
 \item{\code{event_time}}{Name of the column indicating time of the event/censoring.}
 
 \item{\code{risk_sets}}{List of indices.}
 
-\item{\code{longitudinal_fits}}{List of model fits for the specified landmark times and biomarkers.}
+\item{\code{longitudinal_fits}}{List of model fits for the specified landmark times
+and biomarkers.}
 
-\item{\code{longitudinal_predictions}}{List of model predictions for the specified landmark times and biomarkers.}
+\item{\code{longitudinal_predictions}}{List of model predictions for the specified
+landmark times and biomarkers.}
 
-\item{\code{survival_fits}}{List of survival model fits at each of the specified landmark times.}
+\item{\code{survival_fits}}{List of survival model fits at each of the specified
+landmark times.}
 }}
 
