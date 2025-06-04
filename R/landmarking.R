@@ -47,8 +47,14 @@ setValidity("Landmarking", function(object) {
     "@ids must be a column in dataframe @data_static"
   } else if (!(object@ids %in% colnames(object@data_dynamic))) {
     "@ids must be a column in dataframe @data_dynamic"
-  } else if ((!(object@event_time %in% colnames(object@data_static)))) {
+  } else if (!(object@event_time %in% colnames(object@data_static))) {
     "@event_time must be a column in dataframe @data_static"
+  } else if (!(object@dynamic_covariate_names %in% colnames(object@data_dynamic))) {
+    "@dynamic_covariate_names must be a column in dataframe @data_dynamic"
+  } else if (!(object@times %in% colnames(object@data_dynamic))) {
+    "@times must be a column in dataframe @data_dynamic"
+  } else if (!(object@measurements %in% colnames(object@data_dynamic))) {
+    "@measurements must be a column in dataframe @data_dynamic"
   } else {
     TRUE
   }
