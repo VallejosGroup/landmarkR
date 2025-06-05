@@ -3,7 +3,7 @@
 #'
 #' @param x An object of class \code{\link{Landmarking}}.
 #' @param landmarks Numeric vector of landmark times
-#' @param horizons Vector of horizon times corresponding to the landmark times.
+#' @param windows Vector of prediction windows determining horizon times.
 #' @param method Method for survival analysis, either "survfit" or "coxph".
 #' @param dynamic_covariates Vector of time-varying covariates to be used
 #' in the survival model.
@@ -16,7 +16,7 @@ setGeneric(
   "fit_survival",
   function(x,
            landmarks,
-           horizons,
+           windows,
            method,
            dynamic_covariates = c()) {
     standardGeneric("fit_survival")
@@ -37,7 +37,7 @@ setMethod(
   "Landmarking",
   function(x,
            landmarks,
-           horizons,
+           windows,
            method,
            dynamic_covariates = c()) {
     # Check that method is a function with arguments formula, data, ...
@@ -63,9 +63,6 @@ setMethod(
       )
     }
     # Check that vectors of landmark times and horizons have the same length
-    if (length(landmarks) != length(horizons)) {
-      message("Arguments landmarks and horizons must have equal length")
-    }
     if (length(landmarks) == 1) { # Base case for recursion
       if (!(landmarks %in% x@landmarks)) {
         message(
@@ -84,18 +81,6 @@ setMethod(
       )
       # Recover risk sets (ids of individuals who are at risk at landmark time)
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
-      # Construct dataset for survival analysis (censor events past horizon time)
-      dataset <- x@data_static[at_risk_individuals, ] |>
-        mutate(
-          event_status = ifelse(get(x@event_time) > horizons,
-            0,
-            get(x@event_indicator)
-          ),
-          event_time = ifelse(get(x@event_time) > horizons,
-            horizons,
-            get(x@event_time)
-          )
-        )
       # Add time-varying covariates to formula and dataset for survival analysis
       if (length(dynamic_covariates) == 0) {
         survival_formula <- as.formula(paste0(survival_formula, "1"))
@@ -114,24 +99,38 @@ setMethod(
           )
         )
       }
-
-      # Call to method that performs survival analysis
-      x@survival_fits[[as.character(landmarks)]] <- method(survival_formula,
-        data = dataset
-      )
+      for (window in windows) {
+        horizon <- landmarks + window
+        # Construct dataset for survival analysis (censor events past horizon time)
+        dataset <- x@data_static[at_risk_individuals, ] |>
+          mutate(
+            event_status = ifelse(get(x@event_time) > horizon,
+              0,
+              get(x@event_indicator)
+            ),
+            event_time = ifelse(get(x@event_time) > horizon,
+              horizon,
+              get(x@event_time)
+            )
+          )
+        # Call to method that performs survival analysis
+        x@survival_fits[[paste0(landmarks, "-", window)]] <- method(survival_formula,
+          data = dataset
+        )
+      }
     } else {
       # Recursion
       x <- fit_survival(
         x,
         landmarks[1],
-        horizons[1],
+        windows,
         method,
         dynamic_covariates
       )
       x <- fit_survival(
         x,
         landmarks[-1],
-        horizons[-1],
+        windows,
         method,
         dynamic_covariates
       )

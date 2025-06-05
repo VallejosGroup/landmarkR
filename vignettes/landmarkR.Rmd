@@ -114,7 +114,7 @@ Now we call the function fit_survival to fit the survival model.
 landmarking_object <- landmarking_object |>
   fit_survival(
     landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
+    windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c()
   )
