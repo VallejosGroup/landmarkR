@@ -6,15 +6,11 @@
 #' @slot data_dynamic Data frame in long format with subject ids, measurement
 #'  values, measurement times and measurement name.
 #' @slot event_indicator Name of the column indicating event or censoring.
-#' @slot dynamic_covariates Names of dynamic (time-varying) covariates.
-#' Character vector.
 #' @slot ids Name of the column indicating subject ids.
 #' @slot times Name of the column indicating observation time in
 #'   \code{data_dynamic}.
 #' @slot measurements Name of the column indicating measurement values in
 #'   \code{data_dynamic}.
-#' @slot dynamic_covariate_names Name of the column indicating names of the
-#'   dynamic covariates in \code{data_dynamic}.
 #' @slot event_time Name of the column indicating time of the event/censoring.
 #' @slot risk_sets List of indices.
 #' @slot longitudinal_fits List of model fits for the specified landmark times
@@ -31,14 +27,12 @@ setClass("Landmarking",
   slots = c(
     landmarks = "numeric",
     data_static = "data.frame",
-    data_dynamic = "data.frame",
+    data_dynamic = "list",
     event_indicator = "character",
-    dynamic_covariates = "character",
     ids = "character",
     event_time = "character",
     times = "character",
     measurements = "character",
-    dynamic_covariate_names = "character",
     risk_sets = "list",
     longitudinal_fits = "list",
     longitudinal_predictions = "list",
@@ -53,20 +47,24 @@ setClass("Landmarking",
 #
 # @returns TRUE if the input is valid, else a description of the problem
 setValidity("Landmarking", function(object) {
+  if (is.null(names(object@data_dynamic))) {
+    "@data_dynamic must be a named list of dataframes"
+  }
+  for (covariate in names(object@data_dynamic)) {
+    if (!(object@ids %in% colnames(object@data_dynamic[[covariate]]))) {
+      "@ids must be a column in every dataframe in @data_dynamic"
+    } else if (!(object@times %in% colnames(object@data_dynamic[[covariate]]))) {
+      "@times must be a column in every dataframe in @data_dynamic"
+    } else if (!(object@measurements %in% colnames(object@data_dynamic[[covariate]]))) {
+      "@measurements must be a column in every dataframe in @data_dynamic"
+    }
+  }
   if (!(object@event_indicator %in% colnames(object@data_static))) {
     "@event_indicator must be a column in dataframe @data_static"
   } else if (!(object@ids %in% colnames(object@data_static))) {
     "@ids must be a column in dataframe @data_static"
-  } else if (!(object@ids %in% colnames(object@data_dynamic))) {
-    "@ids must be a column in dataframe @data_dynamic"
   } else if (!(object@event_time %in% colnames(object@data_static))) {
     "@event_time must be a column in dataframe @data_static"
-  } else if (!(object@dynamic_covariate_names %in% colnames(object@data_dynamic))) {
-    "@dynamic_covariate_names must be a column in dataframe @data_dynamic"
-  } else if (!(object@times %in% colnames(object@data_dynamic))) {
-    "@times must be a column in dataframe @data_dynamic"
-  } else if (!(object@measurements %in% colnames(object@data_dynamic))) {
-    "@measurements must be a column in dataframe @data_dynamic"
   } else {
     TRUE
   }
@@ -79,38 +77,30 @@ setValidity("Landmarking", function(object) {
 #' @param data_dynamic Data frame in long format with subject ids, measurement
 #'  values, measurement times and measurement name.
 #' @param event_indicator  Name of the column indicating event or censoring.
-#' @param dynamic_covariates Names of dynamic (time-varying) covariates.
-#' Character vector.
 #' @param ids Name of the column indicating subject ids.
 #' @param event_time Name of the column indicating time of the event/censoring.
 #' @param times Name of the column indicating observation time in
 #'   \code{data_dynamic}.
 #' @param measurements Name of the column indicating measurement values in
 #'   \code{data_dynamic}.
-#' @param dynamic_covariate_names Name of the column indicating names of the
-#'   dynamic covariates in \code{data_dynamic}.
 #'
 #' @returns An object of class Landmarking
 #' @export
 Landmarking <- function(data_static,
                         data_dynamic,
                         event_indicator,
-                        dynamic_covariates,
                         ids,
                         event_time,
                         times,
-                        measurements,
-                        dynamic_covariate_names) {
+                        measurements) {
   new("Landmarking",
     data_static = data_static,
     data_dynamic = data_dynamic,
     event_indicator = event_indicator,
-    dynamic_covariates = dynamic_covariates,
     ids = ids,
     event_time = event_time,
     times = times,
     measurements = measurements,
-    dynamic_covariate_names = dynamic_covariate_names,
     risk_sets = list(),
     longitudinal_fits = list(),
     longitudinal_predictions = list(),

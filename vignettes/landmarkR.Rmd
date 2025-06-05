@@ -74,14 +74,12 @@ Next step is to create an object of class Landmarking, using the helper function
 ```{r}
 landmarking_object <- Landmarking(
   data_static = df_static,
-  data_dynamic = df_dynamic,
+  data_dynamic = list(dose = df_dynamic),
   event_indicator = "event.status",
-  dynamic_covariates = "dose",
   ids = "patient_id",
   event_time = "event.time",
   times = "times",
-  measurements = "measurements",
-  dynamic_covariate_names = "covariates"
+  measurements = "measurements"
 )
 ```
 
@@ -134,14 +132,12 @@ Now we use the package lme4 to fit a linear mixed model of the time-varying cova
 ```{r}
 landmarking_object <- Landmarking(
   data_static = df_static,
-  data_dynamic = df_dynamic,
+  data_dynamic = list(dose = df_dynamic),
   event_indicator = "event.status",
-  dynamic_covariates = "dose",
   ids = "patient_id",
   event_time = "event.time",
   times = "times",
-  measurements = "measurements",
-  dynamic_covariate_names = "covariates"
+  measurements = "measurements"
 )
 
 landmarking_object <- landmarking_object |>
@@ -164,7 +160,7 @@ landmarking_object <- landmarking_object |>
   ) |>
   fit_survival(
     landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
+    windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c("dose")
   )
@@ -179,14 +175,12 @@ Now we use the package lcmm to fit a latent class mixed model of the time-varyin
 ```{r}
 landmarking_object <- Landmarking(
   data_static = df_static,
-  data_dynamic = df_dynamic,
+  data_dynamic = list(dose = df_dynamic),
   event_indicator = "event.status",
-  dynamic_covariates = "dose",
   ids = "patient_id",
   event_time = "event.time",
   times = "times",
-  measurements = "measurements",
-  dynamic_covariate_names = "covariates"
+  measurements = "measurements"
 )
 ```
 
@@ -209,7 +203,7 @@ landmarking_object <- landmarking_object |>
   ) |>
   fit_survival(
     landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-    horizons = seq(from = 2 * 365.25, to = 6 * 365.25, by = 365.25),
+    windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25),
     method = "coxph",
     dynamic_covariates = c("dose")
   )

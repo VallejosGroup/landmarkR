@@ -71,34 +71,9 @@ setMethod(
           " has not been computed\n"
         )
       }
-      # Construct formula for survival analysis
-      survival_formula <- paste0(
-        "Surv(",
-        x@event_time,
-        ", ",
-        x@event_indicator,
-        ") ~ "
-      )
       # Recover risk sets (ids of individuals who are at risk at landmark time)
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
-      # Add time-varying covariates to formula and dataset for survival analysis
-      if (length(dynamic_covariates) == 0) {
-        survival_formula <- as.formula(paste0(survival_formula, "1"))
-      } else {
-        survival_formula <- as.formula(paste0(
-          survival_formula,
-          paste(dynamic_covariates,
-            collapse = " + "
-          )
-        ))
-        dataset <- cbind(
-          dataset,
-          do.call(
-            cbind,
-            x@longitudinal_predictions[[as.character(landmarks)]]
-          )
-        )
-      }
+
       for (window in windows) {
         horizon <- landmarks + window
         # Construct dataset for survival analysis (censor events past horizon time)
@@ -113,6 +88,32 @@ setMethod(
               get(x@event_time)
             )
           )
+        # Construct formula for survival analysis
+        survival_formula <- paste0(
+          "Surv(",
+          x@event_time,
+          ", ",
+          x@event_indicator,
+          ") ~ "
+        )
+        # Add time-varying covariates to formula and dataset for survival analysis
+        if (length(dynamic_covariates) == 0) {
+          survival_formula <- as.formula(paste0(survival_formula, "1"))
+        } else {
+          survival_formula <- as.formula(paste0(
+            survival_formula,
+            paste(dynamic_covariates,
+                  collapse = " + "
+            )
+          ))
+        dataset <- cbind(
+          dataset,
+          do.call(
+            cbind,
+            x@longitudinal_predictions[[as.character(landmarks)]]
+          )
+        )
+        }
         # Call to method that performs survival analysis
         x@survival_fits[[paste0(landmarks, "-", window)]] <- method(survival_formula,
           data = dataset
