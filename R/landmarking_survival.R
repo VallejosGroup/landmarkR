@@ -138,3 +138,78 @@ setMethod(
     x
   }
 )
+
+#' Make predictions for time-to-event outcomes at specified horizon times
+#'
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks A numeric vector of landmark times.
+#' @param windows Vector of prediction windows determining horizon times.
+#' @param method R function that is used to make predictions
+#' @param ... Additional arguments passed to the prediction function (e.g.
+#'   number of classes/clusters for lcmm).
+#'
+#' @returns An object of class \code{\link{Landmarking}}.
+#' @export
+#'
+#' @examples
+setGeneric(
+  "predict_survival",
+  function(x, landmarks, windows, method, ...) {
+    standardGeneric("predict_survival")
+  }
+)
+
+#' Make predictions for time-to-event outcomes at specified horizon times
+#'
+#' @inheritParams predict_survival
+#'
+#' @returns An object of class \code{\link{Landmarking}}.
+#' @export
+#'
+#' @examples
+setMethod(
+  "predict_survival", "Landmarking",
+  function(x, landmarks, windows, method, ...) {
+    # Check that method is a function with arguments formula, data, ...
+    if (is(method)[1] == "character" && method == "coxph") {
+      method <- predict
+    }
+    if (!(is(method)[1] == "function")) {
+      stop(
+        "Argument method",
+        " must be a function",
+        "\n"
+      )
+    }
+    # Base case for recursion
+    if (length(landmarks) == 1) {
+      # Check that relevant risk set is available
+      if (!(landmarks %in% x@landmarks)) {
+        stop("Risk set for landmark time ", landmarks, " has not been computed\n")
+      }
+      for (window in windows) {
+        model_name <- paste0(landmarks, "-", window)
+        # Check that relevant model fit is available
+        if (!(model_name %in% names(x@survival_fits))) {
+          stop(
+            "Survival model has not been fit for prediction window",
+            window,
+            " at landmark time",
+            landmarks,
+            "\n"
+          )
+        }
+
+        x@survival_predictions[[model_name]] <- method(
+          x@survival_fits[[model_name]],
+          ...
+        )
+      }
+    } else {
+      # Recursion
+      x <- predict_survival(x, landmarks[1],  windows, method, ...)
+      x <- predict_survival(x, landmarks[-1], windows, method, ...)
+    }
+    x
+  }
+)

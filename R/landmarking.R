@@ -23,6 +23,8 @@
 #'   landmark times and biomarkers.
 #' @slot survival_fits List of survival model fits at each of the specified
 #'   landmark times.
+#' @slot survival_predictions List of time-to-eventpredictions for the specified
+#'   landmark times and prediction windows.
 #'
 #' @export
 setClass("Landmarking",
@@ -40,7 +42,8 @@ setClass("Landmarking",
     risk_sets = "list",
     longitudinal_fits = "list",
     longitudinal_predictions = "list",
-    survival_fits = "list"
+    survival_fits = "list",
+    survival_predictions = "list"
   )
 )
 
@@ -111,7 +114,8 @@ Landmarking <- function(data_static,
     risk_sets = list(),
     longitudinal_fits = list(),
     longitudinal_predictions = list(),
-    survival_fits = list()
+    survival_fits = list(),
+    survival_predictions = list()
   )
 }
 
