@@ -6,7 +6,7 @@
 in into a dataframe with the static covariates and a list of dataframes,
 each associated to a dynamic covariate.}
 \usage{
-split_wide_df(df, ids, times, static, dynamic)
+split_wide_df(df, ids, times, static, dynamic, measurement_name)
 }
 \arguments{
 \item{df}{A dataframe in wide format.}
@@ -21,6 +21,9 @@ covariates.}
 
 \item{dynamic}{A vector with the column names in df that store dynamic
 covariates.}
+
+\item{measurement_name}{The name for the columns where values of
+dynamic covariates will be stored.}
 }
 \value{
 A dataframe with the static covariates, and a list of dataframes,

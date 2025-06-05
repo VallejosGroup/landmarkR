@@ -39,7 +39,6 @@ split_wide_df <- function(df, ids, times, static, dynamic, measurement_name) {
     stop("@ids must be a column name in @df.")
   }
   df_static <- df[, c(ids, static)] |>
-    select(ids, static) |>
     unique()
   df_dynamic = list()
   for (dyncovariate in dynamic) {
