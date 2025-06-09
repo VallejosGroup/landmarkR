@@ -3,7 +3,7 @@
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1":{
-			"packages":"cmake"
+			"packages":"cmake,qpdf"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
 			"version": "release",
