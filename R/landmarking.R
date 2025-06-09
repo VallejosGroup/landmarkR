@@ -48,7 +48,7 @@ setClass("Landmarking",
 # @returns TRUE if the input is valid, else a description of the problem
 setValidity("Landmarking", function(object) {
   if (is.null(names(object@data_dynamic))) {
-    "@data_dynamic must be a named list of dataframes"
+    return("@data_dynamic must be a named list of dataframes")
   }
   error_str <- NULL
   for (covariate in names(object@data_dynamic)) {

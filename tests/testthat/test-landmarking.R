@@ -14,6 +14,21 @@ test_that("Validity checks for Landmarking class work", {
   static <- epilectic_dfs$df_static
   dynamic <- epilectic_dfs$df_dynamic
 
+  temp <- dynamic
+  names(temp) <- NULL
+
+  expect_error(
+    landmarkR::Landmarking(
+      data_static = static,
+      data_dynamic = temp,
+      event_indicator = "with.status",
+      ids = "id",
+      event_time = "with.time",
+      times = "time",
+      measurements = "value"
+    ),
+    "@data_dynamic must be a named list of dataframes"
+  )
 
   # Test: event_indicator column missing from data_static
   expect_error(
