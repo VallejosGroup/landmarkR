@@ -6,3 +6,4 @@ data-raw
 ^.vscode/
 devel/
 \_pkgdown.yml
+^.devcontainer

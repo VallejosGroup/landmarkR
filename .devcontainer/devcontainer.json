@@ -1,0 +1,27 @@
+{
+	"name": "Combination of r-rig and rstudio-server",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"features": {
+		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1":{
+			"packages":"cmake,qpdf"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "release",
+			"vscodeRSupport": "lsp",
+			"installDevTools": "true"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/rstudio-server:0": {},
+		"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages:0": {}
+	},
+	"postAttachCommand": {
+		"rstudio-start": "rserver"
+	},
+	"forwardPorts": [
+		8787
+	],
+	"portsAttributes": {
+		"8787": {
+			"label": "RStudio IDE"
+		}
+	}
+}
