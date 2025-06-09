@@ -24,7 +24,7 @@ split_wide_df <- function(df, ids, times, static, dynamic, measurement_name) {
   } else if (!(is(ids)[1] == "character")) {
     stop("@ids must be a string.")
   } else if (!(is(times)[1] == "character")) {
-    stop("@static must be a string.")
+    stop("@times must be a string.")
   } else if (!(is(measurement_name)[1] == "character")) {
     stop("@measurement_name must be a string.")
   } else if (!(is(static)[1] == "character")) {
@@ -40,7 +40,7 @@ split_wide_df <- function(df, ids, times, static, dynamic, measurement_name) {
   }
   df_static <- df[, c(ids, static)] |>
     unique()
-  df_dynamic = list()
+  df_dynamic <- list()
   for (dyncovariate in dynamic) {
     df_dynamic[[dyncovariate]] <- df[, c(ids, times, dyncovariate)]
     colnames(df_dynamic[[dyncovariate]])[ncol(df_dynamic[[dyncovariate]])] <-
