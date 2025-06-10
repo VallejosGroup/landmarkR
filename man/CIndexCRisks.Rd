@@ -7,7 +7,7 @@
 CIndexCRisks(
   predictions,
   time,
-  cens.code,
+  cens.code = 0,
   status,
   cause,
   tau,
@@ -17,32 +17,26 @@ CIndexCRisks(
 \arguments{
 \item{predictions}{Numeric vector of model predictions.}
 
-\item{time}{time vector of times. Time-to-event.}
+\item{time}{Numeric vector describing the time to the event of interest or censoring.}
 
-\item{cens.code}{value of censoring status, commonly censor patients have status of 0.}
+\item{cens.code}{Value used to denote censoring in \code{status}. Defaults to
+0.}
 
-\item{status}{vector of events. 1) If survival -> \link{0,...,1}. 2) If competing risks -> \link{0,...,K}.}
+\item{status}{Vector of censoring status.}
 
-\item{cause}{event of interest.}
+\item{cause}{Event of interest.}
 
-\item{tau}{evaluation time of interest.}
+\item{tau}{Time c-index is evaluated.}
 
-\item{method}{'survival' if the predictions are survival probabilitites or 'cifs' if they are cumulative incidence functions}
-
-\item{predictions:}{vector of model predictions.}
+\item{method}{\code{'survival'} if the predictions are survival probabilities
+or \code{'cifs'} if they are cumulative incidence functions}
 }
 \value{
 Concordance index value.
-
-numerical value, concordance index value as a measure of discrimination error.
 }
 \description{
 Assess discriminative performance of predictions obtained from a conventional
 or competing risks time-to-event model using time-dependent concordance index.
-
-Discrimination error. Time-dependent Concordance Index
-This measures the proportion of correctly ordered risk pairs for the event k, based
-on the predicted risk of the event up to time tau
 }
 \details{
 Uses the proportion of correctly ordered risk pairs for the event \eqn{k},
@@ -64,22 +58,6 @@ risk by the model than the subject j, for event \eqn{E_k} until time \eqn{t}.
 
 N_t == number of subjects with survival time < time point and experience event of interest
 Tied event times are included
-
-\deq{C_k(\tau) = \frac{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot Q_{ij} \cdot N_i^k(\tau)}{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot N_i^k(\tau)}}
-
-A == risk ordering of patients, small time means patient 'i' at higher risk than patient 'j' experiencing event of interest
-A\link{i,j} = 0 for tied event times.
-
-B == risk ordering of patients, large time for patient 'i' means lower risk than patient 'j' if not experienced the event of interest.
-Ties are included in B
-
-Q == the risk ordering of the subjects, i.e., is subject i assigned a higher risk by the model than the subject j, for event Ek until time t.
-Q\link{i,j} = 0 for tied predictions.
-
-N_t == number of subjects with survival time < time point and experience event of interest
-Tied event times are included
-
-Ref: https://arxiv.org/pdf/1810.11207v1
 }
 \references{
 Ahuja K, Schaar M van der. Joint Concordance Index. Published online August 17, 2019. doi:\href{https://doi.org/10.48550/arXiv.1810.11207}{10.48550/arXiv.1810.11207}

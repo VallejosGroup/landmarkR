@@ -9,13 +9,13 @@ BinaryBrierScore(predictions, time, status, tau, cause)
 \arguments{
 \item{predictions}{Numeric vector of model predictions.}
 
-\item{time}{time vector of times. Time-to-event.}
+\item{time}{Numeric vector describing the time to the event of interest or censoring.}
 
-\item{status}{vector of events. 1) If survival -> \link{0,...,1}. 2) If competing risks -> \link{0,...,K}.}
+\item{status}{Vector of censoring status.}
 
 \item{tau}{Time Brier score is evaluated.}
 
-\item{cause}{event of interest.}
+\item{cause}{Event of interest.}
 }
 \description{
 Computes the Binary Brier Score (BBS) for binary outcomes at a specified
