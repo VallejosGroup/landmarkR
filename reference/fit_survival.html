@@ -42,7 +42,7 @@ times specified by the user</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_survival</span><span class="op">(</span><span class="va">x</span>, <span class="va">landmarks</span>, <span class="va">horizons</span>, <span class="va">method</span>, dynamic_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_survival</span><span class="op">(</span><span class="va">x</span>, <span class="va">landmarks</span>, <span class="va">windows</span>, <span class="va">method</span>, dynamic_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,8 +57,8 @@ times specified by the user</p>
 <dd><p>Numeric vector of landmark times</p></dd>
 
 
-<dt id="arg-horizons">horizons<a class="anchor" aria-label="anchor" href="#arg-horizons"></a></dt>
-<dd><p>Vector of horizon times corresponding to the landmark times.</p></dd>
+<dt id="arg-windows">windows<a class="anchor" aria-label="anchor" href="#arg-windows"></a></dt>
+<dd><p>Vector of prediction windows determining horizon times.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>

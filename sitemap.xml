@@ -6,8 +6,14 @@
 <url><loc>https://vallejosgroup.github.io/landmarkR/authors.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/index.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/news/index.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/BinaryBrierScore.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/CIndexCRisks.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/Landmarking-class.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/Landmarking.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/brier_score-Landmarking-method.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/brier_score.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/c_index-Landmarking-method.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/c_index.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/compute_risk_sets-Landmarking-method.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/compute_risk_sets.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/epileptic.html</loc></url>
@@ -21,5 +27,8 @@
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_lcmm_.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_longitudinal-Landmarking-method.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_longitudinal.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_survival-Landmarking-method.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_survival.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/split_wide_df.html</loc></url>
 </urlset>
 

@@ -59,11 +59,6 @@ values, measurement times and measurement name.</p></dd>
 <dd><p>Name of the column indicating event or censoring.</p></dd>
 
 
-<dt><code>dynamic_covariates</code></dt>
-<dd><p>Names of dynamic (time-varying) covariates.
-Character vector.</p></dd>
-
-
 <dt><code>ids</code></dt>
 <dd><p>Name of the column indicating subject ids.</p></dd>
 
@@ -76,11 +71,6 @@ Character vector.</p></dd>
 <dt><code>measurements</code></dt>
 <dd><p>Name of the column indicating measurement values in
 <code>data_dynamic</code>.</p></dd>
-
-
-<dt><code>dynamic_covariate_names</code></dt>
-<dd><p>Name of the column indicating names of the
-dynamic covariates in <code>data_dynamic</code>.</p></dd>
 
 
 <dt><code>event_time</code></dt>
@@ -104,6 +94,11 @@ landmark times and biomarkers.</p></dd>
 <dt><code>survival_fits</code></dt>
 <dd><p>List of survival model fits at each of the specified
 landmark times.</p></dd>
+
+
+<dt><code>survival_predictions</code></dt>
+<dd><p>List of time-to-event predictions for the specified
+landmark times and prediction windows.</p></dd>
 
 
 </dl></div>
