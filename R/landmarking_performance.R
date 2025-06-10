@@ -3,9 +3,9 @@
 #' Computes concordance index (c-index) at the desired landmark times and
 #' prediction windows.
 #'
-#' @param x
-#' @param landmarks
-#' @param windows
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks A numeric vector of landmark times.
+#' @param windows A vector of prediction windows determining horizon times.
 #'
 #' @returns
 #' @export
@@ -18,6 +18,11 @@ setGeneric(
  }
 )
 
+#' Computes concordance index (c-index) at the desired landmark times and
+#' prediction windows.
+#'
+#' @inheritParams c_index
+
 setMethod(
  "c_index",
  "Landmarking",
@@ -27,12 +32,11 @@ setMethod(
 )
 #' Brier Score
 #'
-#' Computes concordance index (c-index) at the desired landmark times and
-#' prediction windows.
-#'
-#' @param x
-#' @param landmarks
-#' @param windows
+#' Computes Brier score at the desired landmark times and prediction windows.
+#
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks A numeric vector of landmark times.
+#' @param windows A vector of prediction windows determining horizon times.
 #'
 #' @returns
 #' @export
@@ -44,6 +48,10 @@ setGeneric(
    standardGeneric("brier_score")
  }
 )
+
+#' Computes Brier score at the desired landmark times and prediction windows.
+#'
+#' @inheritParams brier_score
 
 setMethod(
  "brier_score",
