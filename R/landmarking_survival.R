@@ -91,9 +91,9 @@ setMethod(
         # Construct formula for survival analysis
         survival_formula <- paste0(
           "Surv(",
-          x@event_time,
+          "event_time",
           ", ",
-          x@event_indicator,
+          "event_status",
           ") ~ "
         )
         # Add time-varying covariates to formula and dataset for survival analysis

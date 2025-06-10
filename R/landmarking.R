@@ -47,29 +47,30 @@ setClass("Landmarking",
 #
 # @returns TRUE if the input is valid, else a description of the problem
 setValidity("Landmarking", function(object) {
-  if (is.null(names(object@data_dynamic))) {
-    return("@data_dynamic must be a named list of dataframes")
-  }
   error_str <- NULL
+  if (is.null(names(object@data_dynamic))) {
+    error_str <- c(error_str, "@data_dynamic must be a named list of dataframes")
+  }
   for (covariate in names(object@data_dynamic)) {
     if (!(object@ids %in% colnames(object@data_dynamic[[covariate]]))) {
-      error_str <- "@ids must be a column in every dataframe in @data_dynamic"
+      error_str <- c(error_str, "@ids must be a column in every dataframe in @data_dynamic")
     } else if (!(object@times %in% colnames(object@data_dynamic[[covariate]]))) {
-      error_str <- "@times must be a column in every dataframe in @data_dynamic"
+      error_str <- c(error_str, "@times must be a column in every dataframe in @data_dynamic")
     } else if (!(object@measurements %in% colnames(object@data_dynamic[[covariate]]))) {
-      error_str <- "@measurements must be a column in every dataframe in @data_dynamic"
+      error_str <- c(error_str, "@measurements must be a column in every dataframe in @data_dynamic")
     }
   }
-  if (!is.null(error_str)) {
-    error_str
-  } else if (!(object@event_indicator %in% colnames(object@data_static))) {
-    "@event_indicator must be a column in dataframe @data_static"
+  if (!(object@event_indicator %in% colnames(object@data_static))) {
+    error_str <- c(error_str, "@event_indicator must be a column in dataframe @data_static")
   } else if (!(object@ids %in% colnames(object@data_static))) {
-    "@ids must be a column in dataframe @data_static"
+    error_str <- c(error_str, "@ids must be a column in dataframe @data_static")
   } else if (!(object@event_time %in% colnames(object@data_static))) {
-    "@event_time must be a column in dataframe @data_static"
+    error_str <- c(error_str, "@event_time must be a column in dataframe @data_static")
+  }
+  if (length(error_str) == 0) {
+    return(TRUE)
   } else {
-    TRUE
+    return(error_str)
   }
 })
 
