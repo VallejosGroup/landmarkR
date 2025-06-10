@@ -7,7 +7,11 @@
 c_index(x, landmarks, windows)
 }
 \arguments{
-\item{windows}{}
+\item{x}{An object of class \code{\link{Landmarking}}.}
+
+\item{landmarks}{A numeric vector of landmark times.}
+
+\item{windows}{A vector of prediction windows determining horizon times.}
 }
 \description{
 Computes concordance index (c-index) at the desired landmark times and
