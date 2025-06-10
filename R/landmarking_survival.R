@@ -90,7 +90,7 @@ setMethod(
           )
         # Construct formula for survival analysis
         survival_formula <- paste0(
-          "Surv(",
+          "survival::Surv(",
           "event_time",
           ", ",
           "event_status",
