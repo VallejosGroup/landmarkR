@@ -49,7 +49,7 @@ setMethod(
         "\n"
       )
     }
-    if (!("data" %in% names(as.list(args(lcmm::hlme))))) {
+    if (!("data" %in% names(as.list(args(method))))) {
       stop(
         "Argument ",
         method,
@@ -179,7 +179,6 @@ setMethod(
           filter(get(x@ids) %in% risk_set)
         newdata[, x@times] <- landmarks
 
-        # TODO: If method is lcmm, then fit lme4 first to initialise parameter value
         x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <- method(
           x@longitudinal_fits[[as.character(landmarks)]][[predictor]],
           newdata = newdata,

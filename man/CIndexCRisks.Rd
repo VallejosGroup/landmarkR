@@ -13,6 +13,16 @@ CIndexCRisks(
   tau,
   method = c("survival", "cifs")
 )
+
+CIndexCRisks(
+  predictions,
+  time,
+  cens.code,
+  status,
+  cause,
+  tau,
+  method = c("survival", "cifs")
+)
 }
 \arguments{
 \item{time}{time vector of times. Time-to-event.}
@@ -31,13 +41,35 @@ CIndexCRisks(
 }
 \value{
 numerical value, concordance index value as a measure of discrimination error.
+
+numerical value, concordance index value as a measure of discrimination error.
 }
 \description{
 Discrimination error. Time-dependent Concordance Index
 This measures the proportion of correctly ordered risk pairs for the event k, based
 on the predicted risk of the event up to time tau
+
+Discrimination error. Time-dependent Concordance Index
+This measures the proportion of correctly ordered risk pairs for the event k, based
+on the predicted risk of the event up to time tau
 }
 \details{
+\deq{C_k(\tau) = \frac{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot Q_{ij} \cdot N_i^k(\tau)}{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot N_i^k(\tau)}}
+
+A == risk ordering of patients, small time means patient 'i' at higher risk than patient 'j' experiencing event of interest
+A\link{i,j} = 0 for tied event times.
+
+B == risk ordering of patients, large time for patient 'i' means lower risk than patient 'j' if not experienced the event of interest.
+Ties are included in B
+
+Q == the risk ordering of the subjects, i.e., is subject i assigned a higher risk by the model than the subject j, for event Ek until time t.
+Q\link{i,j} = 0 for tied predictions.
+
+N_t == number of subjects with survival time < time point and experience event of interest
+Tied event times are included
+
+Ref: https://arxiv.org/pdf/1810.11207v1
+
 \deq{C_k(\tau) = \frac{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot Q_{ij} \cdot N_i^k(\tau)}{\sum_{i=1}^N \sum_{j=1}^N (A_{ij} + B_{ij}) \cdot N_i^k(\tau)}}
 
 A == risk ordering of patients, small time means patient 'i' at higher risk than patient 'j' experiencing event of interest
