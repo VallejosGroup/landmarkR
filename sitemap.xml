@@ -10,10 +10,6 @@
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/CIndexCRisks.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/Landmarking-class.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/Landmarking.html</loc></url>
-<url><loc>https://vallejosgroup.github.io/landmarkR/reference/brier_score-Landmarking-method.html</loc></url>
-<url><loc>https://vallejosgroup.github.io/landmarkR/reference/brier_score.html</loc></url>
-<url><loc>https://vallejosgroup.github.io/landmarkR/reference/c_index-Landmarking-method.html</loc></url>
-<url><loc>https://vallejosgroup.github.io/landmarkR/reference/c_index.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/compute_risk_sets-Landmarking-method.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/compute_risk_sets.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/epileptic.html</loc></url>
@@ -24,6 +20,8 @@
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/fit_survival.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/index.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/landmarkR.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/performance_metrics-Landmarking-method.html</loc></url>
+<url><loc>https://vallejosgroup.github.io/landmarkR/reference/performance_metrics.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_lcmm_.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_longitudinal-Landmarking-method.html</loc></url>
 <url><loc>https://vallejosgroup.github.io/landmarkR/reference/predict_longitudinal.html</loc></url>

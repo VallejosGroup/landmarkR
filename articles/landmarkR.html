@@ -212,76 +212,22 @@ times.</p>
 <span>    type <span class="op">=</span> <span class="st">"survival"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">landmarking_object</span><span class="op">@</span><span class="va">survival_fits</span></span>
-<span><span class="co">#&gt; $`365.25-365.25`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -334.1049 </span></span>
-<span><span class="co">#&gt;   n= 430 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`365.25-730.5`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -463.348 </span></span>
-<span><span class="co">#&gt;   n= 430 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`730.5-365.25`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -129.2431 </span></span>
-<span><span class="co">#&gt;   n= 270 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`730.5-730.5`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -193.7952 </span></span>
-<span><span class="co">#&gt;   n= 270 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1095.75-365.25`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -64.55215 </span></span>
-<span><span class="co">#&gt;   n= 168 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1095.75-730.5`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -104.0342 </span></span>
-<span><span class="co">#&gt;   n= 168 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1461-365.25`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -39.482 </span></span>
-<span><span class="co">#&gt;   n= 111 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1461-730.5`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -46.43855 </span></span>
-<span><span class="co">#&gt;   n= 111 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1826.25-365.25`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -6.956545 </span></span>
-<span><span class="co">#&gt;   n= 47 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1826.25-730.5`</span></span>
-<span><span class="co">#&gt; Call:  method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Null model</span></span>
-<span><span class="co">#&gt;   log likelihood= -6.956545 </span></span>
-<span><span class="co">#&gt;   n= 47</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/performance_metrics.html">performance_metrics</a></span><span class="op">(</span></span>
+<span>  <span class="va">landmarking_object</span>,</span>
+<span>  landmarks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">5</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span>,</span>
+<span>  windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span> <span class="op">*</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt;                landmark window       cindex     brier</span></span>
+<span><span class="co">#&gt; 365.25-365.25    365.25 365.25 0.0003981090 0.6581341</span></span>
+<span><span class="co">#&gt; 365.25-730.5     730.50 365.25 0.0003156939 0.5512772</span></span>
+<span><span class="co">#&gt; 730.5-365.25    1095.75 365.25 0.0020968357 0.7595386</span></span>
+<span><span class="co">#&gt; 730.5-730.5     1461.00 365.25 0.0188705816 0.6545841</span></span>
+<span><span class="co">#&gt; 1095.75-365.25  1826.25 365.25 0.0000000000 0.7875128</span></span>
+<span><span class="co">#&gt; 1095.75-730.5    365.25 730.50 0.0000000000 0.6674395</span></span>
+<span><span class="co">#&gt; 1461-365.25      730.50 730.50 0.0040816327 0.7804207</span></span>
+<span><span class="co">#&gt; 1461-730.5      1095.75 730.50 0.0037500000 0.7406510</span></span>
+<span><span class="co">#&gt; 1826.25-365.25  1461.00 730.50 0.2461538462 0.8805288</span></span>
+<span><span class="co">#&gt; 1826.25-730.5   1826.25 730.50 0.2461538462 0.8805288</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="landmarking-analysis-with-lme4-coxph">Landmarking analysis with lme4 + coxph<a class="anchor" aria-label="anchor" href="#landmarking-analysis-with-lme4-coxph"></a>
@@ -321,6 +267,12 @@ Cox PH submodel using the longitudinal predictions as covariates.</p>
 <span>    windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span> <span class="op">*</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span>,</span>
 <span>    method <span class="op">=</span> <span class="st">"coxph"</span>,</span>
 <span>    dynamic_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dose"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/predict_survival.html">predict_survival</a></span><span class="op">(</span></span>
+<span>    landmarks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">5</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span>,</span>
+<span>    windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span> <span class="op">*</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"coxph"</span>, </span>
+<span>    type <span class="op">=</span> <span class="st">"survival"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :</span></span>
 <span><span class="co">#&gt; Model failed to converge with max|grad| = 0.107497 (tol = 0.002, component 1)</span></span>
@@ -345,106 +297,22 @@ Cox PH submodel using the longitudinal predictions as covariates.</p>
 <span><span class="co">#&gt;  - Rescale variables?;Model is nearly unidentifiable: large eigenvalue ratio</span></span>
 <span><span class="co">#&gt;  - Rescale variables?</span></span>
 <span></span>
-<span><span class="va">landmarking_object</span><span class="op">@</span><span class="va">survival_fits</span></span>
-<span><span class="co">#&gt; $`365.25-365.25`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z       p</span></span>
-<span><span class="co">#&gt; dose 0.3264    1.3860   0.1065 3.064 0.00219</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=8.33  on 1 df, p=0.003896</span></span>
-<span><span class="co">#&gt; n= 430, number of events= 57 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`365.25-730.5`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;         coef exp(coef) se(coef)     z        p</span></span>
-<span><span class="co">#&gt; dose 0.31473   1.36989  0.09006 3.495 0.000475</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=10.87  on 1 df, p=0.0009766</span></span>
-<span><span class="co">#&gt; n= 430, number of events= 81 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`730.5-365.25`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z      p</span></span>
-<span><span class="co">#&gt; dose 0.3371    1.4009   0.1086 3.105 0.0019</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=8.31  on 1 df, p=0.00395</span></span>
-<span><span class="co">#&gt; n= 270, number of events= 24 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`730.5-730.5`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;         coef exp(coef) se(coef)     z        p</span></span>
-<span><span class="co">#&gt; dose 0.30112   1.35138  0.09007 3.343 0.000828</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=9.71  on 1 df, p=0.001834</span></span>
-<span><span class="co">#&gt; n= 270, number of events= 37 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1095.75-365.25`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       coef exp(coef) se(coef)     z      p</span></span>
-<span><span class="co">#&gt; dose 0.318     1.374    0.148 2.148 0.0317</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=4.06  on 1 df, p=0.04381</span></span>
-<span><span class="co">#&gt; n= 168, number of events= 13 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1095.75-730.5`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z      p</span></span>
-<span><span class="co">#&gt; dose 0.2349    1.2647   0.1168 2.011 0.0443</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=3.62  on 1 df, p=0.05705</span></span>
-<span><span class="co">#&gt; n= 168, number of events= 22 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1461-365.25`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z     p</span></span>
-<span><span class="co">#&gt; dose 0.1388    1.1489   0.2050 0.677 0.498</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=0.43  on 1 df, p=0.5106</span></span>
-<span><span class="co">#&gt; n= 111, number of events= 9 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1461-730.5`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)    z     p</span></span>
-<span><span class="co">#&gt; dose 0.1476    1.1590   0.1822 0.81 0.418</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=0.61  on 1 df, p=0.4336</span></span>
-<span><span class="co">#&gt; n= 111, number of events= 11 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1826.25-365.25`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z    p</span></span>
-<span><span class="co">#&gt; dose 0.2412    1.2728   0.3747 0.644 0.52</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=0.36  on 1 df, p=0.5464</span></span>
-<span><span class="co">#&gt; n= 47, number of events= 2 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`1826.25-730.5`</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; method(formula = survival_formula, data = dataset)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;        coef exp(coef) se(coef)     z    p</span></span>
-<span><span class="co">#&gt; dose 0.2412    1.2728   0.3747 0.644 0.52</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Likelihood ratio test=0.36  on 1 df, p=0.5464</span></span>
-<span><span class="co">#&gt; n= 47, number of events= 2</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/performance_metrics.html">performance_metrics</a></span><span class="op">(</span></span>
+<span>  <span class="va">landmarking_object</span>,</span>
+<span>  landmarks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">5</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span>,</span>
+<span>  windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span> <span class="op">*</span> <span class="fl">365.25</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">365.25</span>, by <span class="op">=</span> <span class="fl">365.25</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt;                landmark window    cindex     brier</span></span>
+<span><span class="co">#&gt; 365.25-365.25    365.25 365.25 0.1897487 0.6649994</span></span>
+<span><span class="co">#&gt; 365.25-730.5     730.50 365.25 0.1535851 0.5634078</span></span>
+<span><span class="co">#&gt; 730.5-365.25    1095.75 365.25 0.3059474 0.7692882</span></span>
+<span><span class="co">#&gt; 730.5-730.5     1461.00 365.25 0.2427827 0.6695132</span></span>
+<span><span class="co">#&gt; 1095.75-365.25  1826.25 365.25 0.3832884 0.7943001</span></span>
+<span><span class="co">#&gt; 1095.75-730.5    365.25 730.50 0.1953668 0.6759755</span></span>
+<span><span class="co">#&gt; 1461-365.25      730.50 730.50 0.1523810 0.7816032</span></span>
+<span><span class="co">#&gt; 1461-730.5      1095.75 730.50 0.1262500 0.7428385</span></span>
+<span><span class="co">#&gt; 1826.25-365.25  1461.00 730.50 0.4615385 0.8822255</span></span>
+<span><span class="co">#&gt; 1826.25-730.5   1826.25 730.50 0.4615385 0.8822255</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="landmarking-analysis-with-lcmm-coxph">Landmarking analysis with lcmm + coxph<a class="anchor" aria-label="anchor" href="#landmarking-analysis-with-lcmm-coxph"></a>
