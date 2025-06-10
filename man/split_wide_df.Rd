@@ -16,17 +16,17 @@ split_wide_df(df, ids, times, static, dynamic, measurement_name)
 \item{times}{The name of the column that identifies measurement times
 in \code{df}.}
 
-\item{static}{A vector with the column names in df that store static
+\item{static}{A vector with the column names in \code{df} that store static
 covariates.}
 
-\item{dynamic}{A vector with the column names in df that store dynamic
+\item{dynamic}{A vector with the column names in \code{df} that store dynamic
 covariates.}
 
 \item{measurement_name}{The name for the columns where values of
 dynamic covariates will be stored.}
 }
 \value{
-A dataframe with the static covariates, and a list of dataframes,
+A data frame with the static covariates, and a list of data frames,
 one per dynamic covariate.
 }
 \description{
