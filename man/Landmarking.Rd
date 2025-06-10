@@ -8,12 +8,10 @@ Landmarking(
   data_static,
   data_dynamic,
   event_indicator,
-  dynamic_covariates,
   ids,
   event_time,
   times,
-  measurements,
-  dynamic_covariate_names
+  measurements
 )
 }
 \arguments{
@@ -24,9 +22,6 @@ values, measurement times and measurement name.}
 
 \item{event_indicator}{Name of the column indicating event or censoring.}
 
-\item{dynamic_covariates}{Names of dynamic (time-varying) covariates.
-Character vector.}
-
 \item{ids}{Name of the column indicating subject ids.}
 
 \item{event_time}{Name of the column indicating time of the event/censoring.}
@@ -36,9 +31,6 @@ Character vector.}
 
 \item{measurements}{Name of the column indicating measurement values in
 \code{data_dynamic}.}
-
-\item{dynamic_covariate_names}{Name of the column indicating names of the
-dynamic covariates in \code{data_dynamic}.}
 }
 \value{
 An object of class Landmarking

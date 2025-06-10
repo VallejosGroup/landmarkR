@@ -75,12 +75,10 @@ setMethod(
       at_risk_individuals <- x@risk_sets[[as.character(landmarks)]]
       # Loop that iterates over all time-varying covariates to fit a longitudinal
       # model for the underlying trajectories
-      for (predictor in x@dynamic_covariates) {
+      for (predictor in names(x@data_dynamic)) {
         # Construct dataset for the longitudinal analysis (static measurements +
         # time-varying covariate and its recording time)
-        dataframe <- x@data_dynamic |>
-          # Subset with records of the relevant time-varying predictor
-          filter(get(x@dynamic_covariate_names) == predictor) |>
+        dataframe <- x@data_dynamic[[predictor]] |>
           # Subset with individuals who are at risk only
           filter(get(x@ids) %in% at_risk_individuals) |>
           # Subset with observations prior to landmark time
@@ -165,7 +163,7 @@ setMethod(
       x@longitudinal_predictions[[as.character(landmarks)]] <- list()
       # Loop that iterates over all time-varying covariates, to fit a longitudinal
       # model for the underlying trajectories
-      for (predictor in x@dynamic_covariates) {
+      for (predictor in names(x@data_dynamic)) {
         # Check that relevant model fit is available
         if (!(predictor %in% names(x@longitudinal_fits[[as.character(landmarks)]]))) {
           stop(

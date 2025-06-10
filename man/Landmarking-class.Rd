@@ -19,9 +19,6 @@ values, measurement times and measurement name.}
 
 \item{\code{event_indicator}}{Name of the column indicating event or censoring.}
 
-\item{\code{dynamic_covariates}}{Names of dynamic (time-varying) covariates.
-Character vector.}
-
 \item{\code{ids}}{Name of the column indicating subject ids.}
 
 \item{\code{times}}{Name of the column indicating observation time in
@@ -29,9 +26,6 @@ Character vector.}
 
 \item{\code{measurements}}{Name of the column indicating measurement values in
 \code{data_dynamic}.}
-
-\item{\code{dynamic_covariate_names}}{Name of the column indicating names of the
-dynamic covariates in \code{data_dynamic}.}
 
 \item{\code{event_time}}{Name of the column indicating time of the event/censoring.}
 
@@ -45,5 +39,8 @@ landmark times and biomarkers.}
 
 \item{\code{survival_fits}}{List of survival model fits at each of the specified
 landmark times.}
+
+\item{\code{survival_predictions}}{List of time-to-eventpredictions for the specified
+landmark times and prediction windows.}
 }}
 
