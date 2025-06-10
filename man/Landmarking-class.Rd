@@ -40,7 +40,7 @@ landmark times and biomarkers.}
 \item{\code{survival_fits}}{List of survival model fits at each of the specified
 landmark times.}
 
-\item{\code{survival_predictions}}{List of time-to-eventpredictions for the specified
+\item{\code{survival_predictions}}{List of time-to-event predictions for the specified
 landmark times and prediction windows.}
 }}
 

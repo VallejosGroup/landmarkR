@@ -29,5 +29,10 @@ Authors:
   \item Charlie Lees \email{charlie.lees@ed.ac.uk}
 }
 
+Other contributors:
+\itemize{
+  \item Begoña Bolos Sierra [contributor]
+}
+
 }
 \keyword{internal}

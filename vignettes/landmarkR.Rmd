@@ -234,10 +234,5 @@ landmarking_object <- landmarking_object |>
     method = "coxph", 
     type = "survival"
   )
-performance_metrics(
-  landmarking_object,
-  landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-  windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25)
-)
 
 ```

@@ -3,11 +3,11 @@
 #' Computes concordance index (c-index) and Brier scores at the specified landmark
 #' times and prediction windows.
 #'
-#' @param x Object of class Landmarking.
-#' @param landmarks Numeric vector of landmark times.
-#' @param windows Vector of prediction windows determining horizon times.
-#' @param c_index Logical. If TRUE (default), C index is reported.
-#' @param brier Logical. If TRUE (default), Brier score is reported.
+#' @param x An object of class \code{\link{Landmarking}}.
+#' @param landmarks A numeric vector of landmark times.
+#' @param windows A vector of prediction windows determining horizon times.
+#' @param c_index A logical. If TRUE (default), C index is reported.
+#' @param brier A logical. If TRUE (default), Brier score is reported.
 #'
 #' @returns Data frame with performance metrics across the specified landmark
 #' times and prediction windows.
