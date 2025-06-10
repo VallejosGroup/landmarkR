@@ -1,69 +1,64 @@
-#' C-index
+#' Performance metrics
 #'
-#' Computes concordance index (c-index) at the desired landmark times and
-#' prediction windows.
+#' Computes concordance index (c-index) and Brier scores at the specified landmark
+#' times and prediction windows.
 #'
 #' @param x An object of class \code{\link{Landmarking}}.
 #' @param landmarks A numeric vector of landmark times.
 #' @param windows A vector of prediction windows determining horizon times.
+#' @param c_index A logical. If TRUE (default), C index is reported.
+#' @param brier A logical. If TRUE (default), Brier score is reported.
+#'
+#' @returns Data frame with performance metrics across the specified landmark
+#' times and prediction windows.
+#' @export
+#'
+#' @examples
+setGeneric(
+ "performance_metrics",
+ function(x, landmarks, windows, c_index = TRUE, brier = TRUE) {
+   standardGeneric("performance_metrics")
+ }
+)
+
+#' Performance metrics
+#'
+#' Computes concordance index (c-index) and Brier scores at the specified landmark
+#' times and prediction windows.
+#'
+#' @inheritParams performance_metrics
 #'
 #' @returns
 #' @export
 #'
 #' @examples
-setGeneric(
- "c_index",
- function(x, landmarks, windows) {
-   standardGeneric("c_index")
- }
-)
-
-#' Computes concordance index (c-index) at the desired landmark times and
-#' prediction windows.
-#'
-#' @inheritParams c_index
-
 setMethod(
- "c_index",
+ "performance_metrics",
  "Landmarking",
- function(x, landmarks, windows) {
-   # TODO
- }
-)
-#' Brier Score
-#'
-#' Computes Brier score at the desired landmark times and prediction windows.
-#
-#' @param x An object of class \code{\link{Landmarking}}.
-#' @param landmarks A numeric vector of landmark times.
-#' @param windows A vector of prediction windows determining horizon times.
-#'
-#' @returns
-#' @export
-#'
-#' @examples
-setGeneric(
- "brier_score",
- function(x, landmarks, windows) {
-   standardGeneric("brier_score")
- }
-)
-
-#' Computes Brier score at the desired landmark times and prediction windows.
-#'
-#' @inheritParams brier_score
-
-setMethod(
- "brier_score",
- "Landmarking",
- function(x, landmarks, windows) {
+ function(x, landmarks, windows, c_index = TRUE, brier = TRUE) {
    error_str <- NULL
-   if (!(is(x) == "Landmarking")) {
-
+   if (!inherits(x, "Landmarking")) {
+     error_str <- c(error_str, "@x must be an object of class Landmarking")
    }
-   scores <- list()
+   if (is(landmarks)[1] != "numeric") {
+     error_str <- c(error_str, "@landmarks must be a vector of numeric values")
+   }
+   if (is(windows)[1] != "numeric") {
+     error_str <- c(error_str, "@windows must be a vector of numeric values")
+   }
+   if (is(c_index)[1] != "logical") {
+     error_str <- c(error_str, "@c_index must be a logical")
+   }
+   if (is(brier)[1] != "logical") {
+     error_str <- c(error_str, "@brier must be a logical")
+   }
+   if (length(error_str) > 0 ) {
+     stop(paste(error_str, collapse = ". "))
+   }
+   scores <- expand.grid(landmark = landmarks, window = windows)
+   brier_list <- list()
+   cindex_list <- list()
    for (landmark in landmarks) {
-     scores[[as.character(landmark)]] <- list()
      for (window in windows) {
        horizon <- landmark + window
        at_risk_individuals <- x@risk_sets[[as.character(landmark)]]
@@ -81,16 +76,36 @@ setMethod(
            )
          )
 
-       predictions <- x@survival_predictions[[paste0(horizon, "-", window)]]
-       scores[[as.character(landmark)]][[as.character(window)]] <-
-         BinaryBrierScore(
-           predictions = predictions,
-           time = dataset$event_time,
-           status = dataset$event_status,
-           tau = horizon,
-           cause = 1
-       )
+       predictions <- x@survival_predictions[[paste0(landmark, "-", window)]]
+       if (brier == TRUE) {
+         brier_list[[paste0(landmark, "-", window)]] <-
+           BinaryBrierScore(
+             predictions = predictions,
+             time = dataset$event_time,
+             status = dataset$event_status,
+             tau = horizon,
+             cause = 1
+         )
+       }
+       if (c_index == TRUE) {
+         cindex_list[[paste0(landmark, "-", window)]] <-
+           CIndexCRisks(
+             predictions = predictions,
+             time = dataset$event_time,
+             status = dataset$event_status,
+             tau = horizon,
+             cause = 1,
+             method = "survival",
+             cens.code = 0
+           )
+       }
      }
+   }
+   if (c_index == TRUE) {
+     scores <- cbind(scores, cindex = unlist(cindex_list))
+   }
+   if (brier == TRUE) {
+     scores <- cbind(scores, brier = unlist(brier_list))
    }
    return(scores)
  }

@@ -54,17 +54,21 @@ setValidity("Landmarking", function(object) {
   for (covariate in names(object@data_dynamic)) {
     if (!(object@ids %in% colnames(object@data_dynamic[[covariate]]))) {
       error_str <- c(error_str, "@ids must be a column in every dataframe in @data_dynamic")
-    } else if (!(object@times %in% colnames(object@data_dynamic[[covariate]]))) {
+    }
+    if (!(object@times %in% colnames(object@data_dynamic[[covariate]]))) {
       error_str <- c(error_str, "@times must be a column in every dataframe in @data_dynamic")
-    } else if (!(object@measurements %in% colnames(object@data_dynamic[[covariate]]))) {
+    }
+    if (!(object@measurements %in% colnames(object@data_dynamic[[covariate]]))) {
       error_str <- c(error_str, "@measurements must be a column in every dataframe in @data_dynamic")
     }
   }
   if (!(object@event_indicator %in% colnames(object@data_static))) {
     error_str <- c(error_str, "@event_indicator must be a column in dataframe @data_static")
-  } else if (!(object@ids %in% colnames(object@data_static))) {
+  }
+  if (!(object@ids %in% colnames(object@data_static))) {
     error_str <- c(error_str, "@ids must be a column in dataframe @data_static")
-  } else if (!(object@event_time %in% colnames(object@data_static))) {
+  }
+  if (!(object@event_time %in% colnames(object@data_static))) {
     error_str <- c(error_str, "@event_time must be a column in dataframe @data_static")
   }
   if (length(error_str) == 0) {
