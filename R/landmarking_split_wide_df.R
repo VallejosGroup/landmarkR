@@ -6,14 +6,14 @@
 #' @param ids The name of the column that identifies individuals in \code{df}.
 #' @param times The name of the column that identifies measurement times
 #'  in \code{df}.
-#' @param static A vector with the column names in df that store static
+#' @param static A vector with the column names in \code{df} that store static
 #'  covariates.
-#' @param dynamic A vector with the column names in df that store dynamic
+#' @param dynamic A vector with the column names in \code{df} that store dynamic
 #'  covariates.
 #' @param measurement_name The name for the columns where values of
 #' dynamic covariates will be stored.
 #'
-#' @returns A dataframe with the static covariates, and a list of dataframes,
+#' @returns A data frame with the static covariates, and a list of data frames,
 #' one per dynamic covariate.
 #' @export
 #'
