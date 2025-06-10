@@ -97,6 +97,7 @@ CIndexCRisks <- function(predictions,
 #' The BBS is defined as the mean squared difference between the predicted
 #' probabilities and the true outcome.
 #' @inheritParams CIndexCRisks
+#' @param tau Time Brier score is evaluated.
 
 BinaryBrierScore <- function(predictions,
                              time,

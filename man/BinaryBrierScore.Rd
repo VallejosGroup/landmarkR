@@ -13,7 +13,7 @@ BinaryBrierScore(predictions, time, status, tau, cause)
 
 \item{status}{Vector of censoring status.}
 
-\item{tau}{Time c-index is evaluated.}
+\item{tau}{Time Brier score is evaluated.}
 
 \item{cause}{Event of interest.}
 }
