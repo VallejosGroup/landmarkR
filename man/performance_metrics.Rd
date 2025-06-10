@@ -7,15 +7,15 @@
 performance_metrics(x, landmarks, windows, c_index = TRUE, brier = TRUE)
 }
 \arguments{
-\item{x}{Object of class Landmarking.}
+\item{x}{An object of class \code{\link{Landmarking}}.}
 
-\item{landmarks}{Numeric vector of landmark times.}
+\item{landmarks}{A numeric vector of landmark times.}
 
-\item{windows}{Vector of prediction windows determining horizon times.}
+\item{windows}{A vector of prediction windows determining horizon times.}
 
-\item{c_index}{Logical. If TRUE (default), C index is reported.}
+\item{c_index}{A logical. If TRUE (default), C index is reported.}
 
-\item{brier}{Logical. If TRUE (default), Brier score is reported.}
+\item{brier}{A logical. If TRUE (default), Brier score is reported.}
 }
 \value{
 Data frame with performance metrics across the specified landmark

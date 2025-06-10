@@ -13,16 +13,6 @@ CIndexCRisks(
   tau,
   method = c("survival", "cifs")
 )
-
-CIndexCRisks(
-  predictions,
-  time,
-  cens.code,
-  status,
-  cause,
-  tau,
-  method = c("survival", "cifs")
-)
 }
 \arguments{
 \item{predictions}{Numeric vector of model predictions.}
