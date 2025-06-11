@@ -34,6 +34,7 @@ setClass("Landmarking",
     times = "character",
     measurements = "character",
     risk_sets = "list",
+    risk_sets_test = "list",
     longitudinal_fits = "list",
     longitudinal_predictions = "list",
     survival_fits = "list",
@@ -110,6 +111,7 @@ Landmarking <- function(data_static,
     times = times,
     measurements = measurements,
     risk_sets = list(),
+    risk_sets_test = list(),
     longitudinal_fits = list(),
     longitudinal_predictions = list(),
     survival_fits = list(),
@@ -166,8 +168,10 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 
 #' Compute the list of individuals at risk at given landmark times,
 #' and stores them in an object of class Landmarking
+#'
 #' @param x An object of class \code{\link{Landmarking}}.
 #' @param landmarks Numeric vector of landmark times
+#' @param K Number of cross-validation folds.
 #' @param ... Additional arguments (not used)
 #'
 #' @returns An object of class \code{\link{Landmarking}} including desired risk
@@ -177,7 +181,7 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #' @examples
 setGeneric(
   "compute_risk_sets",
-  function(x, landmarks, ...) standardGeneric("compute_risk_sets")
+  function(x, landmarks, K = 1) standardGeneric("compute_risk_sets")
 )
 
 
@@ -191,7 +195,7 @@ setGeneric(
 #' @export
 #'
 #' @examples
-setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
+setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, K = 1) {
   if (length(landmarks) == 1) { # If the vector of landmark times is of length 1
     if (landmarks %in% x@landmarks) {
       # Risk set for given landmark time is already in memory
@@ -200,12 +204,28 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
     # Add landmark time to the Landmarking object
     x@landmarks <- c(x@landmarks, landmarks)
     # Compute risk set for given landmark time
+    browser()
     x@risk_sets[[as.character(landmarks)]] <-
       which(x@data_static[, x@event_time] >= landmarks)
+
+    # Split risk set into testing and training
+    if (K > 1) {
+      N <- length(which(x@data_static[, x@event_time] >= landmarks))
+      Ntest <- round(N/K)
+      Ntrain <- N - Ntest
+      x@risk_sets_test[[as.character(landmarks)]] <- sample(
+        x@risk_sets[[as.character(landmarks)]],
+        Ntest
+      ) |> sort()
+      x@risk_sets[[as.character(landmarks)]] <- setdiff(
+        x@risk_sets[[as.character(landmarks)]],
+        x@risk_sets_test[[as.character(landmarks)]]
+      )
+    }
   } else {
     # Recursion to compute risk sets one-by-one
-    x <- compute_risk_sets(x, landmarks[1])
-    x <- compute_risk_sets(x, landmarks[-1])
+    x <- compute_risk_sets(x, landmarks[1], K)
+    x <- compute_risk_sets(x, landmarks[-1], K)
   }
   x
 })

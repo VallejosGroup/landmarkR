@@ -107,7 +107,7 @@ First, we perform a survival without time-varying covariates. We can use this as
 
 ```{r}
 landmarking_object <- landmarking_object |>
-  compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25))
+  compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25), K = 10)
 
 landmarking_object
 ```
