@@ -1,11 +1,13 @@
 #' Title
 #'
-#' @slot folds List of Landmarking objects, one per cross-validation fold.
+#' @slot folds Vector of integers associating observations to CV folds.
+#' @slot landmarking_list List of Landmarking objects, one per CV fold.
 #'
 #' @export
 setClass("LandmarkingCV",
   slots = c(
-    folds = "list"
+    folds = "integer",
+    landmarking_list = "list"
   )
 )
 
@@ -24,17 +26,28 @@ LandmarkingCV <- function(data_static,
                           times,
                           measurements,
                           K = 10) {
-  browser()
   N <- nrow(data_static)
-  folds <- c(0, rep(1:K, floor(N/K)))
+  individuals <- data_static[, ids]
+  folds <- rep(1:K, floor(N/K))
   if (N %% K > 0) {
     folds <- c(folds, 1:(N %% K))
   }
+  folds <- sample(folds)
+  names(folds) <- individuals
 
-  folds = list()
+  landmarking_list <- list()
   for (k in 1:K) {
-    folds[[k]] <- Landmarking(data_static,
-                              data_dynamic,
+
+    data_static_training <- data_static[which(folds != k), ]
+    ids_in_training <- data_static_training[, ids]
+    data_dynamic_training <- list()
+    for (predictor in names(data_dynamic)) {
+      data_dynamic_training[[predictor]] <- data_dynamic[[predictor]] |>
+        filter(get(ids) %in% ids_in_training)
+    }
+
+    landmarking_list[[k]] <- Landmarking(data_static_training,
+                              data_dynamic_training,
                               event_indicator,
                               ids,
                               event_time,
@@ -42,6 +55,9 @@ LandmarkingCV <- function(data_static,
                               measurements)
   }
   new("LandmarkingCV",
-      folds = folds
+      folds = folds,
+      landmarking_list = landmarking_list
   )
 }
+
+

@@ -10,6 +10,8 @@ Title
 \section{Slots}{
 
 \describe{
-\item{\code{folds}}{List of Landmarking objects, one per cross-validation fold.}
+\item{\code{folds}}{Vector of integers associating observations to CV folds.}
+
+\item{\code{landmarking_list}}{List of Landmarking objects, one per CV fold.}
 }}
 

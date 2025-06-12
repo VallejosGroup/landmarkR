@@ -140,6 +140,33 @@ setMethod(
   }
 )
 
+#' Fits the specified survival model at the landmark times and up to the horizon
+#' times specified by the user
+#'
+#' @inheritParams fit_survival
+#'
+#' @returns An object of class LandmarkingCV.
+#' @export
+#'
+#' @examples
+setMethod(
+  "fit_survival",
+  "LandmarkingCV",
+  function(x,
+           landmarks,
+           windows,
+           method,
+           dynamic_covariates = c()) {
+    for (fold in 1:max(x@folds)) {
+      x@landmarking_list[[fold]] <- fit_survival(x@landmarking_list[[fold]],
+                                                 landmarks,
+                                                 windows,
+                                                 method,
+                                                 dynamic_covariates)
+    }
+    x
+  }
+)
 #' Make predictions for time-to-event outcomes at specified horizon times
 #'
 #' @param x An object of class \code{\link{Landmarking}}.
@@ -210,6 +237,27 @@ setMethod(
       # Recursion
       x <- predict_survival(x, landmarks[1],  windows, method, ...)
       x <- predict_survival(x, landmarks[-1], windows, method, ...)
+    }
+    x
+  }
+)
+
+#' Make predictions for time-to-event outcomes at specified horizon times
+#'
+#' @inheritParams predict_survival
+#'
+#' @returns An object of class \code{\link{LandmarkingCV}}.
+#' @export
+#'
+#' @examples
+setMethod(
+  "predict_survival", "LandmarkingCV",
+  function(x, landmarks, windows, method, ...) {
+    for (fold in 1:max(x@folds)) {
+      x@landmarking_list[[fold]] <- predict_survival(x@landmarking_list[[fold]],
+                                                 landmarks,
+                                                 windows,
+                                                 method)
     }
     x
   }

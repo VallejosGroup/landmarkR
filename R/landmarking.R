@@ -204,7 +204,6 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, K = 1) {
     # Add landmark time to the Landmarking object
     x@landmarks <- c(x@landmarks, landmarks)
     # Compute risk set for given landmark time
-    browser()
     x@risk_sets[[as.character(landmarks)]] <-
       x@data_static[which(x@data_static[, x@event_time] >= landmarks), x@ids]
   } else {
@@ -214,6 +213,24 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, K = 1) {
   }
   x
 })
+
+#' Compute the list of individuals at risk at given landmark times,
+#' and stores them in an object of class LandmarkingCV
+#'
+#' @inheritParams compute_risk_sets
+#'
+#' @returns An object of class LandmarkingCV, including desired risk sets for the
+#'   relevant landmark times.
+#' @export
+#'
+#' @examples
+setMethod("compute_risk_sets", "LandmarkingCV", function(x, landmarks, K = 1) {
+  for (fold in 1:max(x@folds)) {
+    x@landmarking_list[[fold]] <- compute_risk_sets(x@landmarking_list[[fold]], landmarks, K)
+  }
+  x
+})
+
 
 # Accessor for survival fits
 setGeneric(

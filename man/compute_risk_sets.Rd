@@ -5,12 +5,14 @@
 \title{Compute the list of individuals at risk at given landmark times,
 and stores them in an object of class Landmarking}
 \usage{
-compute_risk_sets(x, landmarks, ...)
+compute_risk_sets(x, landmarks, K = 1)
 }
 \arguments{
 \item{x}{An object of class \code{\link{Landmarking}}.}
 
 \item{landmarks}{Numeric vector of landmark times}
+
+\item{K}{Number of cross-validation folds.}
 
 \item{...}{Additional arguments (not used)}
 }

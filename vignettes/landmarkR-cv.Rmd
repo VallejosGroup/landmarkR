@@ -86,7 +86,7 @@ landmarking_object <- LandmarkingCV(
   event_time = "with.time",
   times = "time",
   measurements = "value",
-  K = 5
+  K = 10
 )
 ```
 
@@ -129,11 +129,11 @@ landmarking_object <- landmarking_object |>
     type = "survival"
   )
 
-performance_metrics(
-  landmarking_object,
-  landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-  windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25)
-)
+# performance_metrics(
+#   landmarking_object,
+#   landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+#   windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25)
+# )
 
 ```
 
@@ -142,7 +142,7 @@ performance_metrics(
 Now we use the package lme4 to fit a linear mixed model of the time-varying covariate, dose. This first step is followed by fitting a Cox PH submodel using the longitudinal predictions as covariates.
 
 ```{r}
-landmarking_object <- Landmarking(
+landmarking_object <- LandmarkingCV(
   data_static = static,
   data_dynamic = dynamic,
   event_indicator = "with.status",
@@ -183,11 +183,11 @@ landmarking_object <- landmarking_object |>
     type = "survival"
   )
 
-performance_metrics(
-  landmarking_object,
-  landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
-  windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25)
-)
+# performance_metrics(
+#   landmarking_object,
+#   landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+#   windows = seq(from = 1 * 365.25, to = 2 * 365.25, by = 365.25)
+# )
 ```
 
 # Landmarking analysis with lcmm + coxph

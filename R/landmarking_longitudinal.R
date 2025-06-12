@@ -100,6 +100,29 @@ setMethod(
   }
 )
 
+#' Fits the specified longitudinal model for the latent processes underlying the
+#' relevant time-varying covariates, up until the landmarking times
+#'
+#' @inheritParams fit_longitudinal
+#' @returns An object of class \code{\link{LandmarkingCV}}.
+#' @export
+#'
+#' @examples
+setMethod(
+  "fit_longitudinal",
+  "LandmarkingCV",
+  function(x, landmarks, method, formula, ...) {
+    for (fold in 1:max(x@folds)) {
+      x@landmarking_list[[fold]] <- fit_longitudinal(x@landmarking_list[[fold]],
+                                                 landmarks,
+                                                 method,
+                                                 formula,
+                                                 ...)
+    }
+    x
+  }
+)
+
 #' Make predictions for time-varying covariates at specified landmark times
 #'
 #' @param x An object of class \code{\link{Landmarking}}.
@@ -189,6 +212,27 @@ setMethod(
       # Recursion
       x <- predict_longitudinal(x, landmarks[1], method, ...)
       x <- predict_longitudinal(x, landmarks[-1], method, ...)
+    }
+    x
+  }
+)
+
+#' Make predictions for time-varying covariates at specified landmark times
+#'
+#' @inheritParams predict_longitudinal
+#'
+#' @returns An object of class \code{\link{LandmarkingCV}}.
+#' @export
+#'
+#' @examples
+setMethod(
+  "predict_longitudinal", "LandmarkingCV",
+  function(x, landmarks, method, ...) {
+    for (fold in 1:max(x@folds)) {
+      x@landmarking_list[[fold]] <- predict_longitudinal(x@landmarking_list[[fold]],
+                                                     landmarks,
+                                                     method,
+                                                     ...)
     }
     x
   }
