@@ -206,22 +206,7 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, K = 1) {
     # Compute risk set for given landmark time
     browser()
     x@risk_sets[[as.character(landmarks)]] <-
-      which(x@data_static[, x@event_time] >= landmarks)
-
-    # Split risk set into testing and training
-    if (K > 1) {
-      N <- length(which(x@data_static[, x@event_time] >= landmarks))
-      Ntest <- round(N/K)
-      Ntrain <- N - Ntest
-      x@risk_sets_test[[as.character(landmarks)]] <- sample(
-        x@risk_sets[[as.character(landmarks)]],
-        Ntest
-      ) |> sort()
-      x@risk_sets[[as.character(landmarks)]] <- setdiff(
-        x@risk_sets[[as.character(landmarks)]],
-        x@risk_sets_test[[as.character(landmarks)]]
-      )
-    }
+      x@data_static[which(x@data_static[, x@event_time] >= landmarks), x@ids]
   } else {
     # Recursion to compute risk sets one-by-one
     x <- compute_risk_sets(x, landmarks[1], K)
