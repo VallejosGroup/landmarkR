@@ -85,7 +85,8 @@ landmarking_object <- Landmarking(
   ids = "id",
   event_time = "with.time",
   times = "time",
-  measurements = "value"
+  measurements = "value",
+  K = 10
 )
 ```
 

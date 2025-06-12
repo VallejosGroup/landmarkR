@@ -100,7 +100,19 @@ Landmarking <- function(data_static,
                         ids,
                         event_time,
                         times,
-                        measurements) {
+                        measurements,
+                        K = 1) {
+  N <- nrow(data_static)
+  if (K == 1) {
+    data_static <- cbind(data_static, fold = rep(0, N))
+  } else {
+    folds <- rep(1:K, floor(N/K))
+    if (N %% K > 0) {
+      folds <- c(folds, 1:(N %% K))
+    }
+    data_static <- cbind(data_static, fold = sample(folds))
+  }
+
   new("Landmarking",
     data_static = data_static,
     data_dynamic = data_dynamic,
