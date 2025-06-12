@@ -110,3 +110,20 @@ setMethod(
    return(scores)
  }
 )
+#' Performance metrics
+#'
+#' Computes concordance index (c-index) and Brier scores at the specified landmark
+#' times and prediction windows.
+#'
+#' @inheritParams performance_metrics
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+setMethod(
+  "performance_metrics",
+  "LandmarkingCV",
+  function(x, landmarks, windows, c_index = TRUE, brier = TRUE) {
+  }
+)

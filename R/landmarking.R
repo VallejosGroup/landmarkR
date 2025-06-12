@@ -226,7 +226,10 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, K = 1) {
 #' @examples
 setMethod("compute_risk_sets", "LandmarkingCV", function(x, landmarks, K = 1) {
   for (fold in 1:max(x@folds)) {
+    browser()
     x@landmarking_list[[fold]] <- compute_risk_sets(x@landmarking_list[[fold]], landmarks, K)
+    x@landmarking_list[[fold]]@risk_sets_test[[as.character(landmarks)]] <-
+      x@data_static[which(x@data_static[, x@event_time] >= landmarks), x@ids]
   }
   x
 })
