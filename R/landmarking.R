@@ -201,7 +201,7 @@ setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
     x@landmarks <- c(x@landmarks, landmarks)
     # Compute risk set for given landmark time
     x@risk_sets[[as.character(landmarks)]] <-
-      which(x@data_static[, x@event_time] >= landmarks)
+      x@data_static[which(x@data_static[, x@event_time] >= landmarks), x@ids]
   } else {
     # Recursion to compute risk sets one-by-one
     x <- compute_risk_sets(x, landmarks[1])
