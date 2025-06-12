@@ -24,6 +24,7 @@ LandmarkingCV <- function(data_static,
                           times,
                           measurements,
                           K = 10) {
+  browser()
   N <- nrow(data_static)
   folds <- c(0, rep(1:K, floor(N/K)))
   if (N %% K > 0) {
