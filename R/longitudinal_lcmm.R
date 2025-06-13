@@ -81,8 +81,10 @@ predict_lcmm_ <- function(x, newdata, subject, avg = FALSE) {
   # Make predictions with lcmm package
   predictions <- lcmm::predictY(x, newdata = newdata)
   if (nrow(predictions$pred) != nrow(newdata)) {
-    stop(paste("lcmm::predictY did not make predictions for all observations.",
-               "Probable reason: static covariates contain missing data. "))
+    stop(sprintf(
+      "lcmm::predictY produced %d predictions but expected %d. Probable reason: static covariates contain missing data.",
+      nrow(predictions$pred), nrow(newdata)
+    ))
   }
   # Choose correct cluster for prediction
   if (avg == FALSE) {
