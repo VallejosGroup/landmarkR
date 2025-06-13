@@ -106,13 +106,13 @@ setMethod(
                   collapse = " + "
             )
           ))
-        dataset <- cbind(
-          dataset,
-          do.call(
-            cbind,
-            x@longitudinal_predictions[[as.character(landmarks)]]
+          dataset <- cbind(
+            dataset,
+            do.call(
+              bind_cols,
+              x@longitudinal_predictions[[as.character(landmarks)]]
+            )
           )
-        )
         }
         # Call to method that performs survival analysis
         x@survival_fits[[paste0(landmarks, "-", window)]] <- method(survival_formula,
