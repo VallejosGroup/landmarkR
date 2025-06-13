@@ -1,7 +1,7 @@
 test_that("LCMM works as expected", {
   set.seed(123)
 
-  epilectic_dfs <- split_wide_df(
+  epileptic_dfs <- split_wide_df(
     epileptic,
     ids = "id",
     times = "time",
@@ -28,7 +28,7 @@ test_that("LCMM works as expected", {
     measurements = "value"
   )
 
-  x <- landmarking_object <- landmarking_object |>
+  x <- landmarking_object |>
     compute_risk_sets(seq(from = 365.25, to = 5 * 365.25, by = 365.25)) |>
     fit_longitudinal(
       landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
