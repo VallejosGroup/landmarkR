@@ -77,7 +77,7 @@ setMethod(
       for (window in windows) {
         horizon <- landmarks + window
         # Construct dataset for survival analysis (censor events past horizon time)
-        dataset <- x@data_static[at_risk_individuals, ] |>
+        dataset <- x@data_static[which(x@data_static[, x@event_time] >= landmarks), ] |>
           mutate(
             event_status = ifelse(get(x@event_time) > horizon,
               0,
