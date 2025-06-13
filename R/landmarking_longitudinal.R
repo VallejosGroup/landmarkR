@@ -9,9 +9,8 @@
 #' @param ... Additional arguments passed to the longitudinal model fitting
 #'   function (e.g. number of classes/clusters for lcmm).
 #' @returns An object of class \code{\link{Landmarking}}.
-#' @export
 #'
-#' @examples
+#' @export
 setGeneric(
   "fit_longitudinal",
   function(x,
@@ -23,11 +22,44 @@ setGeneric(
   }
 )
 
+#' Fit specified longitudinal models for time-dependent covariates
+#'
 #' Fits the specified longitudinal model for the latent processes underlying the
-#' relevant time-varying covariates, up until the landmarking times
+#' relevant time-varying covariates up to the landmark time(s)
 #'
 #' @inheritParams fit_longitudinal
 #' @returns An object of class \code{\link{Landmarking}}.
+#'
+#' @examples
+#' # Fit a linear mixed-effects model
+#'
+#' data(epileptic)
+#'
+#' epileptic_dfs <- split_wide_df(
+#'   epileptic,
+#'   ids = "id",
+#'   times = "time",
+#'   static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+#'   dynamic = c("dose"),
+#'   measurement_name = "value"
+#' )
+#'
+#' landmarking_object <- Landmarking(
+#'   data_static = epileptic_dfs$df_static,
+#'   data_dynamic = epileptic_dfs$df_dynamic,
+#'   event_indicator = "with.status",
+#'   ids = "id",
+#'   event_time = "with.time",
+#'   times = "time",
+#'   measurements = "value"
+#'   ) |>
+#'   compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25)) |>
+#'   fit_longitudinal(
+#'     landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+#'     method = "lme4",
+#'     formula = value ~ treat + age + gender + learn.dis + (time | id)
+#'   )
+#' )
 #' @export
 #'
 #' @examples

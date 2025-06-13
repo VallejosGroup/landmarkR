@@ -22,3 +22,26 @@ relevant landmark times.
 Compute the list of individuals at risk at given landmark times,
 and stores them in an object of class Landmarking
 }
+\examples{
+data(epileptic)
+
+epileptic_dfs <- split_wide_df(
+  epileptic,
+  ids = "id",
+  times = "time",
+  static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+  dynamic = c("dose"),
+  measurement_name = "value"
+)
+
+landmarking_object <- Landmarking(
+  data_static = epileptic_dfs$df_static,
+  data_dynamic = epileptic_dfs$df_dynamic,
+  event_indicator = "with.status",
+  ids = "id",
+  event_time = "with.time",
+  times = "time",
+  measurements = "value"
+) |>
+  compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25))
+}

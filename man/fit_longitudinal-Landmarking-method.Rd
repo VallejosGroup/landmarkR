@@ -2,8 +2,7 @@
 % Please edit documentation in R/landmarking_longitudinal.R
 \name{fit_longitudinal,Landmarking-method}
 \alias{fit_longitudinal,Landmarking-method}
-\title{Fits the specified longitudinal model for the latent processes underlying the
-relevant time-varying covariates, up until the landmarking times}
+\title{Fit specified longitudinal models for time-dependent covariates}
 \usage{
 \S4method{fit_longitudinal}{Landmarking}(x, landmarks, method, formula, ...)
 }
@@ -25,5 +24,36 @@ An object of class \code{\link{Landmarking}}.
 }
 \description{
 Fits the specified longitudinal model for the latent processes underlying the
-relevant time-varying covariates, up until the landmarking times
+relevant time-varying covariates up to the landmark time(s)
+}
+\examples{
+# Fit a linear mixed-effects model
+
+data(epileptic)
+
+epileptic_dfs <- split_wide_df(
+  epileptic,
+  ids = "id",
+  times = "time",
+  static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+  dynamic = c("dose"),
+  measurement_name = "value"
+)
+
+landmarking_object <- Landmarking(
+  data_static = epileptic_dfs$df_static,
+  data_dynamic = epileptic_dfs$df_dynamic,
+  event_indicator = "with.status",
+  ids = "id",
+  event_time = "with.time",
+  times = "time",
+  measurements = "value"
+  ) |>
+  compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25)) |>
+  fit_longitudinal(
+    landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
+    method = "lme4",
+    formula = value ~ treat + age + gender + learn.dis + (time | id)
+  )
+)
 }

@@ -1,8 +1,11 @@
-#' Split a wide dataframe containing static and dynamic covariates and splits
-#' in into a dataframe with the static covariates and a list of dataframes,
-#' each associated to a dynamic covariate.
+#' Separate a wide format data frame describing static and dynamic covariates
+#' into long format data frames
 #'
-#' @param df A dataframe in wide format.
+#' Splits a wide format data frame into a data frame of static covariates and a
+#' list of data frames where each element of the list is associated with a
+#' dynamic covariate.
+#'
+#' @param df A data frame in wide format.
 #' @param ids The name of the column that identifies individuals in \code{df}.
 #' @param times The name of the column that identifies measurement times
 #'  in \code{df}.
@@ -13,11 +16,20 @@
 #' @param measurement_name The name for the columns where values of
 #' dynamic covariates will be stored.
 #'
-#' @returns A data frame with the static covariates, and a list of data frames,
-#' one per dynamic covariate.
+#' @returns A list containing df_static, a data frame of all static observations
+#'   and  df_dynamic, a list of data frames, one per dynamic covariate.
 #' @export
 #'
 #' @examples
+#' data(epileptic)
+#' epileptic_dfs <- split_wide_df(
+#'   epileptic,
+#'   ids = "id",
+#'   times = "time",
+#'   static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+#'   dynamic = c("dose"),
+#'   measurement_name = "value"
+#' )
 split_wide_df <- function(df, ids, times, static, dynamic, measurement_name) {
   if (!("data.frame" %in% is(df))) {
     stop("@df must be a data frame.")

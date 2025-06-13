@@ -2,14 +2,13 @@
 % Please edit documentation in R/landmarking_split_wide_df.R
 \name{split_wide_df}
 \alias{split_wide_df}
-\title{Split a wide dataframe containing static and dynamic covariates and splits
-in into a dataframe with the static covariates and a list of dataframes,
-each associated to a dynamic covariate.}
+\title{Separate a wide format data frame describing static and dynamic covariates
+into long format data frames}
 \usage{
 split_wide_df(df, ids, times, static, dynamic, measurement_name)
 }
 \arguments{
-\item{df}{A dataframe in wide format.}
+\item{df}{A data frame in wide format.}
 
 \item{ids}{The name of the column that identifies individuals in \code{df}.}
 
@@ -26,11 +25,22 @@ covariates.}
 dynamic covariates will be stored.}
 }
 \value{
-A data frame with the static covariates, and a list of data frames,
-one per dynamic covariate.
+A list containing df_static, a data frame of all static observations
+and  df_dynamic, a list of data frames, one per dynamic covariate.
 }
 \description{
-Split a wide dataframe containing static and dynamic covariates and splits
-in into a dataframe with the static covariates and a list of dataframes,
-each associated to a dynamic covariate.
+Splits a wide format data frame into a data frame of static covariates and a
+list of data frames where each element of the list is associated with a
+dynamic covariate.
+}
+\examples{
+data(epileptic)
+epileptic_dfs <- split_wide_df(
+  epileptic,
+  ids = "id",
+  times = "time",
+  static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+  dynamic = c("dose"),
+  measurement_name = "value"
+)
 }

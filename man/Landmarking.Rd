@@ -38,3 +38,27 @@ An object of class Landmarking
 \description{
 Creates an S4 class for a landmarking analysis
 }
+\examples{
+data(epileptic)
+
+epileptic_dfs <- split_wide_df(
+  epileptic,
+  ids = "id",
+  times = "time",
+  static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+  dynamic = c("dose"),
+  measurement_name = "value"
+)
+
+landmarking_object <- Landmarking(
+  data_static = epileptic_dfs$df_static,
+  data_dynamic = epileptic_dfs$df_dynamic,
+  event_indicator = "with.status",
+  ids = "id",
+  event_time = "with.time",
+  times = "time",
+  measurements = "value"
+)
+
+
+}

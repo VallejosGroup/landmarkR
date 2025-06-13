@@ -93,6 +93,31 @@ setValidity("Landmarking", function(object) {
 #'   \code{data_dynamic}.
 #'
 #' @returns An object of class Landmarking
+#'
+#' @examples
+#' data(epileptic)
+#'
+#' epileptic_dfs <- split_wide_df(
+#'   epileptic,
+#'   ids = "id",
+#'   times = "time",
+#'   static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+#'   dynamic = c("dose"),
+#'   measurement_name = "value"
+#' )
+#'
+#' landmarking_object <- Landmarking(
+#'   data_static = epileptic_dfs$df_static,
+#'   data_dynamic = epileptic_dfs$df_dynamic,
+#'   event_indicator = "with.status",
+#'   ids = "id",
+#'   event_time = "with.time",
+#'   times = "time",
+#'   measurements = "value"
+#' )
+
+#'
+#'
 #' @export
 Landmarking <- function(data_static,
                         data_dynamic,
@@ -174,7 +199,6 @@ setMethod("getRiskSets", "Landmarking", function(object) object@risk_sets)
 #'   sets for the specified landmark times.
 #' @export
 #'
-#' @examples
 setGeneric(
   "compute_risk_sets",
   function(x, landmarks, ...) standardGeneric("compute_risk_sets")
@@ -191,6 +215,27 @@ setGeneric(
 #' @export
 #'
 #' @examples
+#' data(epileptic)
+#'
+#' epileptic_dfs <- split_wide_df(
+#'   epileptic,
+#'   ids = "id",
+#'   times = "time",
+#'   static = c("with.time", "with.status", "treat", "age", "gender", "learn.dis"),
+#'   dynamic = c("dose"),
+#'   measurement_name = "value"
+#' )
+#'
+#' landmarking_object <- Landmarking(
+#'   data_static = epileptic_dfs$df_static,
+#'   data_dynamic = epileptic_dfs$df_dynamic,
+#'   event_indicator = "with.status",
+#'   ids = "id",
+#'   event_time = "with.time",
+#'   times = "time",
+#'   measurements = "value"
+#' ) |>
+#'   compute_risk_sets(landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25))
 setMethod("compute_risk_sets", "Landmarking", function(x, landmarks, ...) {
   if (length(landmarks) == 1) { # If the vector of landmark times is of length 1
     if (landmarks %in% x@landmarks) {
