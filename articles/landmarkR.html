@@ -115,7 +115,7 @@ covariates to dataframes in long format containing longitudinal
 measurement of the relevant dynamic covariate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># DF with Static covariates</span></span>
-<span><span class="va">epilectic_dfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/split_wide_df.html">split_wide_df</a></span><span class="op">(</span></span>
+<span><span class="va">epileptic_dfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/split_wide_df.html">split_wide_df</a></span><span class="op">(</span></span>
 <span>  <span class="va">epileptic</span>,</span>
 <span>  ids <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  times <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -123,7 +123,7 @@ measurement of the relevant dynamic covariate.</p>
 <span>  dynamic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dose"</span><span class="op">)</span>,</span>
 <span>  measurement_name <span class="op">=</span> <span class="st">"value"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">static</span> <span class="op">&lt;-</span> <span class="va">epilectic_dfs</span><span class="op">$</span><span class="va">df_static</span></span>
+<span><span class="va">static</span> <span class="op">&lt;-</span> <span class="va">epileptic_dfs</span><span class="op">$</span><span class="va">df_static</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">static</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    id with.time with.status treat   age gender learn.dis</span></span>
 <span><span class="co">#&gt; 1   1      2400           0   CBZ 75.67      M        No</span></span>
@@ -134,7 +134,7 @@ measurement of the relevant dynamic covariate.</p>
 <span><span class="co">#&gt; 45  6      2237           0   LTG 28.06      M       Yes</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># DF with Dynamic covariates</span></span>
-<span><span class="va">dynamic</span> <span class="op">&lt;-</span> <span class="va">epilectic_dfs</span><span class="op">$</span><span class="va">df_dynamic</span></span>
+<span><span class="va">dynamic</span> <span class="op">&lt;-</span> <span class="va">epileptic_dfs</span><span class="op">$</span><span class="va">df_dynamic</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dynamic</span><span class="op">[[</span><span class="st">"dose"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   id time value</span></span>
 <span><span class="co">#&gt; 1  1   86  2.00</span></span>
