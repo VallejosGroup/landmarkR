@@ -186,14 +186,14 @@ setMethod(
           )
           predictions <- rep(NA, length(risk_set))
           names(predictions) <- risk_set
-          last_observatios <- x@data_dynamic[[dynamic_covariate]] |>
+          last_observations <- x@data_dynamic[[dynamic_covariate]] |>
             filter(get(x@ids) %in% risk_set) |>
             filter(get(x@times) <= landmarks) |>
             arrange(get(x@ids), get(x@times)) |>
             group_by(get(x@ids)) |>
             filter(row_number() == n()) |>
             pull(value, name = get(x@ids))
-          predictions[names(last_observatios)] <- last_observatios
+          predictions[names(last_observations)] <- last_observations
           if (any(is.na(predictions))) {
             warning("Some observations have no measurement available for",
                     "dynamic covariate",
