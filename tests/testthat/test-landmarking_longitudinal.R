@@ -10,8 +10,8 @@ test_that("LCMM works as expected", {
     measurement_name = "value"
   )
 
-  static <- epilectic_dfs$df_static
-  dynamic <- epilectic_dfs$df_dynamic
+  static <- epileptic_dfs$df_static
+  dynamic <- epileptic_dfs$df_dynamic
 
   # dynamic$dose[sample(1:nrow(dynamic$dose), nrow(dynamic$dose) * 0.1), "value"] <- NA
 
