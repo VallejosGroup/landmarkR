@@ -220,14 +220,14 @@ setMethod(
           )
         }
 
-        x@longitudinal_predictions[[as.character(landmarks)]][[predictor]] <- method(
-          x@longitudinal_fits[[as.character(landmarks)]][[predictor]],
+        x@longitudinal_predictions[[as.character(landmarks)]][[dynamic_covariate]] <- method(
+          x@longitudinal_fits[[as.character(landmarks)]][[dynamic_covariate]],
           newdata = newdata,
           ...
         )
-        if (length(x@longitudinal_predictions[[as.character(landmarks)]][[predictor]]) != nrow(newdata)) {
-          stop(paste("Number of predictions for predictor",
-          predictor,
+        if (length(x@longitudinal_predictions[[as.character(landmarks)]][[dynamic_covariate]]) != nrow(newdata)) {
+          stop(paste("Number of predictions for dynamic_covariate",
+          dynamic_covariate,
           "at landmark time",
           landmarks,
           "differs from number of observations in the risk set."))
