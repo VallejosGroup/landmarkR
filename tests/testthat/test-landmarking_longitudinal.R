@@ -16,7 +16,6 @@ test_that("LCMM works as expected", {
   # dynamic$dose[sample(1:nrow(dynamic$dose), nrow(dynamic$dose) * 0.1), "value"] <- NA
 
   sample_missing <- sample(1:nrow(static), nrow(static) * 0.1)
-
   static[sample_missing, "treat"] <- NA
 
   landmarking_object <- Landmarking(
@@ -41,12 +40,16 @@ test_that("LCMM works as expected", {
     )
 
 
-  expect_error(predict_longitudinal(x,
+  expect_error(
+    predict_longitudinal(x,
       landmarks = seq(from = 365.25, to = 5 * 365.25, by = 365.25),
       method = "lcmm",
       subject = "id",
       avg = FALSE
     ),
-    "lcmm::predictY produced 387 predictions but expected 430. Probable reason: static covariates contain missing data.")
-
+    paste(
+      "lcmm::predictY produced 387 predictions but expected 430.",
+      "Probable reason: static covariates contain missing data."
+    )
+  )
 })
